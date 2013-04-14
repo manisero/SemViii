@@ -2,5 +2,6 @@ bin/
 obj/
 _ReSharper.*/
 *.suo
+*.user
 *.testsettings
 *.vsmdi

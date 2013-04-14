@@ -40,12 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contig.cs" />
-    <Compile Include="DNAAssembly.cs" />
-    <Compile Include="IDNAAssembler.cs" />
-    <Compile Include="PairedEndTag.cs" />
+    <Compile Include="DNAAssemblance\DNAAssembly.cs" />
+    <Compile Include="DNAAssemblance\IAssemblyValidator.cs" />
+    <Compile Include="DNAAssemblance\IDNAAssembler.cs" />
+    <Compile Include="DNAAssemblance\PairedEndTag.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_Impl\DNAAssembler.cs" />
+    <Compile Include="DNAAssemblance\_Impl\AssemblyValidator.cs" />
+    <Compile Include="DNAAssemblance\_Impl\DNAAssembler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
