@@ -5,3 +5,5 @@ _ReSharper.*/
 *.user
 *.testsettings
 *.vsmdi
+*.aux
+*.log
