@@ -1,6 +1,7 @@
 \documentclass[a4paper,10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[MeX]{polski}
+\usepackage{graphicx}
 
 \title{[MBI.A] Asembler DNA, sparowane końce - dokumentacja wstępna}
 \author{Michał Aniserowicz, Jakub Turek}
@@ -14,9 +15,9 @@
 
 Zadanie polega na implementacji aplikacji, która umożliwia tworzenie \emph{scaffoldów} na podstawie dostarczonych zbiorów \emph{contigów} oraz sekwencji PET. 
 
-\begin{verbatim}
-  <insert drawing in here>
-\end{verbatim}
+\begin{center}
+  \includegraphics[width=.9\textwidth]{contig_pet.png}
+\end{center}
 
 \section*{Założenia}
 
@@ -51,9 +52,30 @@ Sekwencja \emph{contigów} dobierana będzie w~sposób losowy. Jako zadanie doda
  
 \section*{Implementacja}
 
-Projekt zostanie zaimplementowany w~języku C\#\footnote{W~przypadku, gdy będzie to rzutowało na obniżoną ocenę (brak przenośności) projekt zostanie wykonany w~technologii Java.}. \verb+<insert technology description here>+
+Projekt zostanie zaimplementowany w~języku C\#\footnote{W~przypadku, gdy wybór technologii będzie rzutował na obniżenie oceny końcowej (brak przenośności) projekt zostanie zaimplementowany w~języku Java.}. \verb+<insert technology description here>+
 
-Aplikacja będzie posiadała interfejs okienkowy umożliwiający odczyt danych wejściowych z/zapis danych wyjściowych do pliku. Dan
+Aplikacja będzie posiadała interfejs okienkowy umożliwiający odczyt danych wejściowych z/zapis danych wyjściowych do pliku. Na dane wejściowe składają się:
 
+\begin{itemize}
+ \item Opis \emph{conitgów} w~postaci łańcuchów tekstowych oddzielonych znakami nowej linii.
+ 
+  \begin{verbatim}
+    ACAGCTTA
+    CCGGGTAC
+    TACAGCTT
+  \end{verbatim}
+  \item Opis sekwencji PET w~postaci dwóch sekwencji (początek, koniec) oraz długości łańcucha. Dane w~sekwencji oddzielone przecinkami, natomiast kolejne PET'y oddzielone znakami nowej linii.
+  
+  \begin{verbatim}
+   GATC,CCAT,100
+   GGCT,AGAA,1500
+  \end{verbatim}
+\end{itemize}
+
+Dane wyjściowe to uporządkowana sekwencja \emph{contigów} oddzielonych znakami spacji reprezentującymi długość przerwy (\emph{gap}).
+
+  \begin{verbatim}
+   CCGGGTAC       TACAGCTT  ACAGCTTA
+  \end{verbatim}
 
 \end{document}
