@@ -28,7 +28,7 @@ W~ogólnym przypadku rekonstrukcja sekwencji \emph{contigów} nie jest możliwa.
   \item Badane są wyłącznie takie permutacje \emph{contigów}, dla których wystąpienie początku sekwencji PET implikuje przynajmniej częściowe wystąpienie jej końca w~dalszej części łańcucha. Innymi słowy początek lub koniec sekwencji PET nie może w~całości wystąpić w~przerwie (\emph{gap}) \emph{scaffoldu}.
   
     \begin{itemize}
-	  \item Wyjątkiem od tej reguły jest początek i~koniec sekwencji, gdzie mogą występować, odpowiednio, niesparowane końce lub początki sekwencji PET.
+	  \item Wyjątkiem od tej reguły jest początek i~koniec \emph{scaffoldu}, gdzie mogą występować, odpowiednio, niesparowane końce lub początki sekwencji PET.
     \end{itemize}
   
   \item Sekwencje należące do różnych par sparowanych końców mogą częściowo zachodzić na siebie.
@@ -42,7 +42,7 @@ Do rozwiązania zadania użyty zostanie algorytm typu brute-force działający w
  \item Wybierana jest początkowa permutacja \emph{contigów}.
  \item Dla danej permutacji obliczany jest ranking \emph{R}:
    \begin{itemize}
-    \item Ranking \emph{R} określa, dla danej kombinacji \emph{contigów}, maksymalną ilość pokrywających się zasad dla zbioru dopasowań sekwencji PET do łańcucha.
+    \item Ranking \emph{R} określa, dla danej kombinacji \emph{contigów}, liczbę pokrywających się zasad dla zbioru dopasowań sekwencji PET do łańcucha.
    \end{itemize}
  \item Sprawdzane jest czy wartość \emph{R} jest większa niż dotychczas uzyskana maksymalna wartość rankingu. Jeżeli tak, rozwiązanie zachowywane jest jako najlepsze.
  \item Algorytm jest powtarzany dla każdej unikalnej permutacji \emph{contigów}.
@@ -52,9 +52,9 @@ Sekwencja \emph{contigów} dobierana będzie w~sposób losowy. Jako zadanie doda
  
 \section*{Implementacja}
 
-Projekt zostanie zaimplementowany w~języku C\#\footnote{W~przypadku, gdy wybór technologii będzie rzutował na obniżenie oceny końcowej (brak przenośności) projekt zostanie zaimplementowany w~języku Java.}. \verb+<insert technology description here>+
+Projekt zostanie zaimplementowany w~języku C\#\footnote{W~przypadku, gdy wybór technologii będzie rzutował na obniżenie oceny końcowej (brak przenośności) projekt zostanie zaimplementowany w~języku Java.} (platforma .NET). Testy jednostkowe zostaną napisane w~oparciu o~platformę Visual Studio Unit Testing Framework, z~użyciem bibliotek Moq\footnote{http://code.google.com/p/moq/} oraz AutoMoq\footnote{https://github.com/darrencauthon/AutoMoq}.
 
-Aplikacja będzie posiadała interfejs okienkowy umożliwiający odczyt danych wejściowych z/zapis danych wyjściowych do pliku. Na dane wejściowe składają się:
+Aplikacja będzie posiadała interfejs okienkowy stworzony w~technologii WPF, umożliwiający odczyt danych wejściowych z/zapis danych wyjściowych do pliku. Na dane wejściowe składają się:
 
 \begin{itemize}
  \item Opis \emph{conitgów} w~postaci łańcuchów tekstowych oddzielonych znakami nowej linii.
