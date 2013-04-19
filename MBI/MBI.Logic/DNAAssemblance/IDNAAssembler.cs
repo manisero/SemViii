@@ -4,6 +4,6 @@ namespace MBI.Logic.DNAAssemblance
 {
 	public interface IDNAAssembler
 	{
-		IList<DNAAssembly> Assemble(string[] contigs, PairedEndTag[] pairedEndTags);
+		IList<Scaffold> Assemble(string[] contigs, PairedEndTag[] pairedEndTags);
 	}
 }

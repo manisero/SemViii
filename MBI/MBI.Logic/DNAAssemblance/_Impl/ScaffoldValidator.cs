@@ -2,7 +2,7 @@
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
-	public class AssemblyValidator : IAssemblyValidator
+	public class ScaffoldValidator : IScaffoldValidator
 	{
 		public int Validate(IEnumerable<string> contigs, IEnumerable<PairedEndTag> pairedEndTags)
 		{

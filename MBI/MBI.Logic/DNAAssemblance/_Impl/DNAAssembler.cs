@@ -6,16 +6,16 @@ namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class DNAAssembler : IDNAAssembler
 	{
-		private readonly IAssemblyValidator _assemblyValidator;
+		private readonly IScaffoldValidator _assemblyValidator;
 
-		public DNAAssembler(IAssemblyValidator assemblyValidator)
+		public DNAAssembler(IScaffoldValidator assemblyValidator)
 		{
 			_assemblyValidator = assemblyValidator;
 		}
 
-		public IList<DNAAssembly> Assemble(string[] contigs, PairedEndTag[] pairedEndTags)
+		public IList<Scaffold> Assemble(string[] contigs, PairedEndTag[] pairedEndTags)
 		{
-			var result = new List<DNAAssembly>();
+			var result = new List<Scaffold>();
 
 			foreach (var permutation in contigs.GetPermutations())
 			{
@@ -23,7 +23,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 				if (rank > 0)
 				{
-					result.Add(new DNAAssembly { Contigs = permutation.ToArray(), Rank = rank });
+					result.Add(new Scaffold { Contigs = permutation.ToArray(), Rank = rank });
 				}
 			}
 

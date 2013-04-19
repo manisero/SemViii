@@ -2,7 +2,7 @@
 
 namespace MBI.Logic.DNAAssemblance
 {
-	public interface IAssemblyValidator
+	public interface IScaffoldValidator
 	{
 		int Validate(IEnumerable<string> contigs, IEnumerable<PairedEndTag> pairedEndTags);
 	}

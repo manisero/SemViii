@@ -1,7 +1,7 @@
 ﻿using MBI.Logic.DNAAssemblance;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MBI.Logic.Tests.AssemblyValidatorTests
+namespace MBI.Logic.Tests.ScaffoldValidatorTests
 {
 	[TestClass]
 	public class FullMatchTests : AssemblyValidatorTestsBase

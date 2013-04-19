@@ -1,6 +1,6 @@
 ﻿namespace MBI.Logic.DNAAssemblance
 {
-	public class DNAAssembly
+	public class Scaffold
 	{
 		public string[] Contigs { get; set; }
 
