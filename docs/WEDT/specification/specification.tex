@@ -25,7 +25,7 @@ Projekt obejmuje implementację klasyfikatora następujących typów serwisów:
  \item [Blog] rodzaj internetowego dziennika (pamiętnika), który zawiera odrębnie, chronologicznie uporządkowane wpisy. Przykład serwisu: \url{http://rafalstec.blox.pl/}.
  \item [Serwisy informacyjne] portale zawierające najnowsze wiadomości z~różnych dziedzin życia, takich jak polityka, finanse, technologie. Przykład serwisu: \url{http://onet.pl/}.
  \item [,,Kwejki''] serwisy społecznościowe oparte w~głównej mierze na grafikach. Przykład serwisu: \url{http://kwejk.pl/}.
- \item [Sklepy internetowe] portale umożliwiające wyszukiwanie najtańszych przedmiotów w~ramach zadanych parametrów. Przykład serwisu: \url{http://ceneo.pl/}.
+ \item [Sklepy internetowe] portale umożliwiające zakup szerokiego asortymentu akcesoriów elektronicznych oraz komputerowych. Przykład serwisu: \url{http://wicomp.pl/}.
 \end{description}
 
 Dane wejściowe aplikacji stanowić będzie adres witryny internetowej. Na wyjście wyprowadzona zostanie nazwa kategorii lub informacja, że serwis nie został zaklasyfikowany do żadnej z~powyższych kategorii.
@@ -50,6 +50,15 @@ Dane wejściowe aplikacji stanowić będzie adres witryny internetowej. Na wyjś
   \caption{Fragment kodu źródłowego witryny http://kwejk.pl.}
   \label{fig:kwejk_listing}
 \end{figure}
+
+\subsection*{Technologia}
+
+Projekt zostanie zaimplementowany w~języku Python, przy wykorzystaniu wersji drugiej (2.7.4) interpretera języka. Implementacja będzie testowana w~środowiskach Windows oraz Unix (Ubuntu). Do implementacji zostaną wykorzystane standardowe moduły języka, między innymi:
+
+\begin{description}
+ \item[re] wyrażenia regularne,
+ \item[htmllib] parser języka HTML.
+\end{description}
 
 
 \section*{Struktura danych}
@@ -182,6 +191,52 @@ Algorytm kategoryzacji ,,kwejków'' polega na odnalezieniu powtarzającej się s
 
 \subsection*{Sklepy internetowe}
 
+Strony sklepów komputerowych lub ze sprzętem elektronicznym charakteryzują się \emph{kafelkowym} ułożeniem głównej części witryny. Każdy \emph{kafelek} odpowiada specyficznej kategorii towaru, jest ozdobiony pojedynczą grafiką i~zawiera wiele odnośników do stron w~domenie lokalnej, które odpowiadają podkategoriom produktów. Cechą charakterystyczną jest również zwielokrotniona nawigacja obejmująca:
 
+\begin{itemize}
+ \item klasyczne menu po lewej lub prawej stronie,
+ \item dwa paski nawigacyjne umieszczone bezpośrednio nad i~pod \emph{kafelkami},
+ \item menu z~tabularyczną strukturą linków znajdujące się w~stopce strony.
+\end{itemize}
+
+\noindent Istotnym elementem układu strony jest również duży logotyp sklepu, umieszczony w~górej części strony. 
+
+Algorytm klasyfikacji sklepów internetowych oparty będzie na poszukiwaniu \emph{kafelków}. Do ich odnalezienia wykorzystane zostanie poszukiwanie regularnej struktury w~drzewie, o~następującej charakterystyce:
+
+\begin{itemize}
+ \item identyczne klasy elementów rozmieszczonych w~układzie tabelarycznym,
+ \item każdy element zawiera niewielkich rozmiarów grafikę,
+ \item każda kategoria opisana jest promocyjnym towarem - wyszukiwanie wzorca regularnego \verb+<kwota> <waluta>+ w~tekście.
+\end{itemize}
+
+\section*{Testowanie}
+
+Testy opierać się będą na wykorzystaniu gotowego zestawu wstępnie skategoryzowanych witryn. Program testowy, dla każdej strony w~zbiorze, wywoła aplikację kategoryzującą i~na podstawie danych oceni, czy witryna została przydzielona do prawidłowej grupy. Na tej podstawie zostanie obliczona procentowa skuteczność każdego z~algorytmów kategoryzacji. Zbiór witryn testowych dobierany będzie według następujących kryteriów:
+
+\begin{itemize}
+ \item Reprezentatywny (liczący przynajmniej 100 elementów) zbiór próbek dla każdej z~kategorii.
+ \item W~ramach każdego zestawu występują strony w~przynajmniej trzech różnych językach naturalnych.
+ \item Dodatkowy, liczny zbiór witryn, których nie można przydzielić do żadnej z~kategorii.
+\end{itemize}
+
+\noindent Przykładowe, niepełne listy skategoryzowanych witryn zostały dołączone do dokumentacji.
+
+Dla każdego z~algorytmów zostaną wyznaczone następujące zbiory:
+
+\begin{itemize}
+ \item $TP$ (true positives) - poprawne przydzielenie witryny do kategorii (algorytm wskazał, że witryna należy do kategorii, gdy w~rzeczywistości do niej należy),
+ \item $TN$ (true negatives) - poprawne nieprzydzielenie witryny do kategorii (algorytm wskazał, że witryna nie należy do kategorii, gdy w~rzeczywistości do niej nie należy),
+ \item $FP$ (false positives) - błędne przydzelenie witryny do kategorii (algorytm wskazał, że witryna należy do kategorii, gdy w~rzeczywistości do niej nie należy),
+ \item $FN$ (false negatives) - błędne nieprzydzielenie witryny do kategorii (algorytm wskazał, że witryna nie należy do żadnej kategorii, gdy w~rzeczywistości do niej należy).
+\end{itemize}
+
+\noindent Na podstawie tych wartości, dla każdego algorytmu zostaną wyznaczone:
+
+\begin{itemize}
+ \item precyzja - $\frac{|TP|}{|TP| + |FP|}$,
+ \item zupełność - $\frac{|TP|}{|TP| + |FN|}$,
+ \item dokładność - $\frac{|TP| + |TN|}{|TP| + |TN| + |FP| + |FN|}$,
+ \item zaszumienie - $\frac{|FP|}{|FP| + |TN|}$.
+\end{itemize}
 
 \end{document}
