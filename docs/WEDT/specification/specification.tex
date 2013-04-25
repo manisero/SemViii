@@ -25,7 +25,7 @@ Projekt obejmuje implementację klasyfikatora następujących typów serwisów:
  \item [Blog] rodzaj internetowego dziennika (pamiętnika), który zawiera odrębnie, chronologicznie uporządkowane wpisy. Przykład serwisu: \url{http://rafalstec.blox.pl/}.
  \item [Serwisy informacyjne] portale zawierające najnowsze wiadomości z~różnych dziedzin życia, takich jak polityka, finanse, technologie. Przykład serwisu: \url{http://onet.pl/}.
  \item [,,Kwejki''] serwisy społecznościowe oparte w~głównej mierze na grafikach. Przykład serwisu: \url{http://kwejk.pl/}.
- \item [Sklepy internetowe] portale umożliwiające zakupy w~sieci przedmiotów z~różnych kategorii. Przykład serwisu: \url{http://allegro.pl/}.
+ \item [Sklepy internetowe] portale umożliwiające wyszukiwanie najtańszych przedmiotów w~ramach zadanych parametrów. Przykład serwisu: \url{http://ceneo.pl/}.
 \end{description}
 
 Dane wejściowe aplikacji stanowić będzie adres witryny internetowej. Na wyjście wyprowadzona zostanie nazwa kategorii lub informacja, że serwis nie został zaklasyfikowany do żadnej z~powyższych kategorii.
@@ -70,7 +70,7 @@ Aplikacja umożliwiać będzie budowanie pełnego drzewa HTML. W~korzeniu drzewa
 
 \begin{figure}[h!]
 \centering
-  \includegraphics[width=\textwidth]{html_tree_full.jpg}
+  \includegraphics[width=.9\textwidth]{html_tree_full.jpg}
   \caption{Pełne drzewo HTML dla kodu przedstawionego na listingu \ref{fig:kwejk_listing}.}
   \label{fig:html_tree_full}
 \end{figure}
@@ -89,9 +89,99 @@ Ze względu na rozmiary oraz skomplikowanie struktury dla dużych portali, takic
 
 \begin{figure}[h!]
 \centering
-  \includegraphics[width=\textwidth]{html_tree_cropped.jpg}
+  \includegraphics[width=.9\textwidth]{html_tree_cropped.jpg}
   \caption{Drzewo HTML z~rysunku \ref{fig:html_tree_full} zredukowane do tagów div.}
   \label{fig:html_tree_cropped}
 \end{figure}
+
+\section*{Algorytm}
+\subsection*{Blogi}
+
+Algorytm kategoryzacji blogów będzie rozpoznawał dzienniki internetowe w~dwukolumnowym układzie. W~szerszej kolumnie znajdują się notki, natomiast węższa kolumna to menu strony. Notki posiadają pewną stałą strukturę wewnętrzną. Na pojedynczy wpis składają się: tytuł, treść, data, informacja o~autorze oraz link do komentarzy. Menu charakteryzuje się natomiast występowaniem dużej ilości podobnych odnośników jeden pod drugim (archiwum dla kolejnych miesięcy, kategorie wpisów, odnośniki do zaprzyjaźnionych blogów). Szablon bloga przedstawia rysunek \ref{fig:blog_template}. Przykłady stron o~takiej strukturze przedstawiono na rysunkach \ref{fig:blog_scott} oraz \ref{fig:blog_simon}.
+
+\begin{figure}[h!]
+\centering
+  \includegraphics[width=.5\textwidth]{blog_template.png}
+  \caption{Szablon, na którym oparta jest większość współczesnych blogów.}
+  \label{fig:blog_template}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+  \includegraphics[width=.9\textwidth]{blog_scott.png}
+  \caption{Przykład dwukolumnowej struktury bloga.}
+  \label{fig:blog_scott}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+  \includegraphics[width=.9\textwidth]{blog_simon.png}
+  \caption{Przykład dwukolumnowej struktury bloga.}
+  \label{fig:blog_simon}
+\end{figure}
+
+Algorytm rozpoznawania blogów będzie działał według następującego schematu:
+
+\begin{enumerate}
+ \item Odnalezienie w~drzewie powtarzającego się układu węzłów, które reprezentują notkę. Cechy charakterystyczne takiego układu to:
+    \begin{itemize}
+     \item Duża ilość tekstu zawartego pomiędzy tagami strukturalnymi, z~niewielką ilością odnośników.
+     \item Można wyróżnić przynajmniej tytuł notki oraz odnośnik do komentarzy.
+     \item Odpowiadające tagi strukturalne mają identyczne właściwości - klasy kaskadowych arkuszy styli.
+     \item Kolejne struktury umieszczone są w~kodzie jedna pod drugą oraz wszystkie mają wspólnego rodzica.
+     \item Powtarzalność struktury wynosi co najmniej pięć (założenie heurystyczne).
+    \end{itemize}
+  \item Odnalezienie w~drzewie układu węzłów, który repreprezentuje menu strony (schematyczne odnośniki występujące jeden pod drugim i~prowadzące głównie do adresów w~domenie lokalnej - archiwum oraz kategorie).
+  \item Badanie wzajemnych pozycji odnalezionych kolumn - powinny być umieszczone horyzontalnie względem siebie.
+  \item Odnalezienie nagłówka strony, czyli największego elementu graficznego / tekstowego na stronie, występującego pojedynczo. 
+  \item Badanie wzajemnych pozycji przypuszczalnego nagłówka strony oraz kolumn zawierających menu i~wpisy. Nagłówek strony musi znajdować się ponad pozostałymi kolumnami.
+\end{enumerate}
+
+\noindent Jeżeli wszystkie elementy udało się odnaleźć oraz spełnione są przytoczone założenia przestrzenne, to witryna kategoryzowana jest jako blog.
+
+\subsection*{Strony informacyjne}
+
+Strony informacyjne charakteryzują się liczną zawartością odnośników w~domenie lokalnej. Podobnie jak w~przypadku blogów, dominuje układ dwukolumnowy, przy czym kolumna szersza jest zazwyczaj nieustrukturalizowana, natomiast kolumna węższa zawiera wiele odnośników jeden pod drugim. Logotyp nie jest dominującym elementem strony i~ciężko wyznaczyć go na bazie wielkości, zazwyczaj położony jest w~lewym górnym rogu witryny. Ponadto, strony informacyjne charakteryzują się wykorzystaniem trzypoziomowej strukturyzacji oferowanej przez HTML5, za pomocą tagów \verb+<div>+, \verb+<article>+ oraz \verb+<section>+.
+
+Algorytm rozpoznawania stron informacyjnych będzie działał według następującego schematu:
+
+\begin{enumerate}
+ \item Zbadanie proporcji zwykłego tekstu występującego w~ramach odnośników (\verb+<a>...</a>+) oraz innych tagów zawierających tekst widoczny na witrynie.
+ \item Określenie częstotliwości wykorzystania tagów \verb+<article>+ oraz \verb+<span>+ do strukturyzacji zagnieżdzonych odnośników do domen lokalnych (newsy).
+ \item Odnalezienie wąskiej kolumny zawierającej odnośniki do wiadomości.
+\end{enumerate}
+
+Jeżeli proporcje w~punkcie 1. są $\gg 1$ oraz częstotliwość w~punkcie 2. jest wysoka, a~także udało odnaleźć się kolumnę z~punktu 3. to strona klasyfikowana jest jako strona informacyjna.
+
+\subsection*{,,Kwejki''}
+
+Strony typu \emph{kwejk} charakteryzują się występowaniem pojedynczej, centralnej kolumny, która zawiera dużych rozmiarów obrazy umieszczone jeden pod drugim. Obrazy te są najczęściej prezentowane w~ramach jednego ,,pudełka'', a~więc są osadzone w~regularnej strukturze tagów HTML. Ponad obrazami znajduje się logotyp oraz menu strony, natomiast pod nimi umieszczone jest małe menu nawigacyjne, prezentujące kolejne liczby (strony). Ogólny szablon stron typu \emph{kwejk} przedstawia rysunek \ref{fig:image_meme_template}, natomiast rysunki \ref{fig:image_meme_kwejk} oraz \ref{fig:image_meme_demotywatory} pokazują przykłady takich stron.
+
+\begin{figure}[h!]
+\centering
+  \includegraphics[width=.5\textwidth]{image_meme_template.png}
+  \caption{Szablon stron typu \emph{kwejk}.}
+  \label{fig:image_meme_template}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+  \includegraphics[width=.9\textwidth]{image_meme_kwejk.png}
+  \caption{Portal społecznościowy http://kwejk.pl oparty na grafikach.}
+  \label{fig:image_meme_kwejk}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+  \includegraphics[width=.9\textwidth]{image_meme_demotywatory.png}
+  \caption{Portal społecznościowy http://demotywatory.pl oparty na grafikach.}
+  \label{fig:image_meme_demotywatory}
+\end{figure}
+
+Algorytm kategoryzacji ,,kwejków'' polega na odnalezieniu powtarzającej się struktury węzłów, o wspólnym rodzicu i~identycznych właściwościach, w~każdym z których osadzona jest pojedyncza grafika. Jeżeli taka struktura występuje, badane jest położenie tej struktury na stronie. W~przypadku, gdy kolumna jest wyśrodkowana, strona może zostać zakwalifikowana jako ,,kwejk''.
+
+\subsection*{Sklepy internetowe}
+
+
 
 \end{document}
