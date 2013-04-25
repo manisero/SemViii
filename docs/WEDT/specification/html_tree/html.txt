@@ -1,0 +1,13 @@
+<div class="tooltip-title-container">
+	<div class="tooltip-title-left-corner">
+		<div class="tooltip-title">
+			<p class="tooltip-title-h2">
+				<a href="/obrazek/1763501/autor-gry-o-tron.html">
+					Autor Gry o Tron?
+				</a>
+			</p>
+		</div>
+		<div class="tooltip-title-right-corner"></div>
+		<div class="clr"></div>
+	</div>
+</div>
