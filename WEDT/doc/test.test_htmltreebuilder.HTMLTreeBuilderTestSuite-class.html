@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>test.htmltreenode_test.BaseTreeNodeTest</title>
+  <title>test.test_htmltreebuilder.HTMLTreeBuilderTestSuite</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -31,7 +31,8 @@
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="https://github.com/manisero/SemViii">Structure-based web page classifier</a></th>
+            ><a class="navbar" target="_top" href="https://github.com/manisero/SemViii">
+Structure-based web page classifier</a></th>
           </tr></table></th>
   </tr>
 </table>
@@ -40,8 +41,8 @@
     <td width="100%">
       <span class="breadcrumbs">
         Package&nbsp;test ::
-        <a href="test.htmltreenode_test-module.html">Module&nbsp;htmltreenode_test</a> ::
-        Class&nbsp;BaseTreeNodeTest
+        <a href="test.test_htmltreebuilder-module.html">Module&nbsp;test_htmltreebuilder</a> ::
+        Class&nbsp;HTMLTreeBuilderTestSuite
       </span>
     </td>
     <td>
@@ -51,54 +52,25 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="test.htmltreenode_test.BaseTreeNodeTest-class.html"
+            >]&nbsp;|&nbsp;<a href="test.test_htmltreebuilder.HTMLTreeBuilderTestSuite-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class BaseTreeNodeTest</h1><p class="nomargin-top"><span class="codelink"><a href="test.htmltreenode_test-pysrc.html#BaseTreeNodeTest">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class HTMLTreeBuilderTestSuite</h1><p class="nomargin-top"><span class="codelink"><a href="test.test_htmltreebuilder-pysrc.html#HTMLTreeBuilderTestSuite">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-            object --+    
-                     |    
-unittest.case.TestCase --+
-                         |
-                        <strong class="uidshort">BaseTreeNodeTest</strong>
+                  object --+        
+                           |        
+unittest.suite.BaseTestSuite --+    
+                               |    
+        unittest.suite.TestSuite --+
+                                   |
+                                  <strong class="uidshort">HTMLTreeBuilderTestSuite</strong>
 </pre>
 
-<dl><dt>Known Subclasses:</dt>
-<dd>
-      <ul class="subclass-list">
-<li><a href="test.htmltreenode_test.AddNodesHTMLTreeNodeTest-class.html">AddNodesHTMLTreeNodeTest</a></li><li>, <a href="test.htmltreenode_test.NextHTMLTreeNodeTest-class.html">NextHTMLTreeNodeTest</a></li><li>, <a href="test.htmltreenode_test.PreviousHTMLTreeNodeTest-class.html">PreviousHTMLTreeNodeTest</a></li>  </ul>
-</dd></dl>
-
 <hr />
-<!-- ==================== NESTED CLASSES ==================== -->
-<a name="section-NestedClasses"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Nested Classes</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-NestedClasses"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
-</tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>unittest.case.TestCase</code></b>:
-      <code><a href="exceptions.AssertionError-class.html">failureException</a></code>
-      </p>
-    </td>
-  </tr>
-</table>
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -122,10 +94,10 @@ unittest.case.TestCase --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="test.htmltreenode_test.BaseTreeNodeTest-class.html#setUp" class="summary-sig-name">setUp</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Hook method for setting up the test fixture before exercising it.</td>
+          <td><span class="summary-sig"><a href="test.test_htmltreebuilder.HTMLTreeBuilderTestSuite-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      x.__init__(...) initializes x; see help(type(x)) for signature</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="test.htmltreenode_test-pysrc.html#BaseTreeNodeTest.setUp">source&nbsp;code</a></span>
+            <span class="codelink"><a href="test.test_htmltreebuilder-pysrc.html#HTMLTreeBuilderTestSuite.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -135,77 +107,28 @@ unittest.case.TestCase --+
   </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>unittest.case.TestCase</code></b>:
+    <p class="indent-wrapped-lines"><b>Inherited from <code>unittest.suite.TestSuite</code></b>:
+      <code>debug</code>,
+      <code>run</code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>unittest.suite.TestSuite</code></b> (private):
+      <code>_addClassOrModuleLevelException</code>,
+      <code>_get_previous_module</code>,
+      <code>_handleClassSetUp</code>,
+      <code>_handleModuleFixture</code>,
+      <code>_handleModuleTearDown</code>,
+      <code>_tearDownPreviousClass</code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>unittest.suite.BaseTestSuite</code></b>:
       <code>__call__</code>,
       <code>__eq__</code>,
-      <code>__hash__</code>,
-      <code>__init__</code>,
+      <code>__iter__</code>,
       <code>__ne__</code>,
       <code>__repr__</code>,
-      <code>__str__</code>,
-      <code>addCleanup</code>,
-      <code>addTypeEqualityFunc</code>,
-      <code>assertAlmostEqual</code>,
-      <code>assertAlmostEquals</code>,
-      <code>assertDictContainsSubset</code>,
-      <code>assertDictEqual</code>,
-      <code>assertEqual</code>,
-      <code>assertEquals</code>,
-      <code>assertFalse</code>,
-      <code>assertGreater</code>,
-      <code>assertGreaterEqual</code>,
-      <code>assertIn</code>,
-      <code>assertIs</code>,
-      <code>assertIsInstance</code>,
-      <code>assertIsNone</code>,
-      <code>assertIsNot</code>,
-      <code>assertIsNotNone</code>,
-      <code>assertItemsEqual</code>,
-      <code>assertLess</code>,
-      <code>assertLessEqual</code>,
-      <code>assertListEqual</code>,
-      <code>assertMultiLineEqual</code>,
-      <code>assertNotAlmostEqual</code>,
-      <code>assertNotAlmostEquals</code>,
-      <code>assertNotEqual</code>,
-      <code>assertNotEquals</code>,
-      <code>assertNotIn</code>,
-      <code>assertNotIsInstance</code>,
-      <code>assertNotRegexpMatches</code>,
-      <code>assertRaises</code>,
-      <code>assertRaisesRegexp</code>,
-      <code>assertRegexpMatches</code>,
-      <code>assertSequenceEqual</code>,
-      <code>assertSetEqual</code>,
-      <code>assertTrue</code>,
-      <code>assertTupleEqual</code>,
-      <code>assert_</code>,
-      <code>countTestCases</code>,
-      <code>debug</code>,
-      <code>defaultTestResult</code>,
-      <code>doCleanups</code>,
-      <code>fail</code>,
-      <code>failIf</code>,
-      <code>failIfAlmostEqual</code>,
-      <code>failIfEqual</code>,
-      <code>failUnless</code>,
-      <code>failUnlessAlmostEqual</code>,
-      <code>failUnlessEqual</code>,
-      <code>failUnlessRaises</code>,
-      <code>id</code>,
-      <code>run</code>,
-      <code>shortDescription</code>,
-      <code>skipTest</code>,
-      <code>tearDown</code>
+      <code>addTest</code>,
+      <code>addTests</code>,
+      <code>countTestCases</code>
       </p>
-    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>unittest.case.TestCase</code></b> (private):
-      <code>_addSkip</code>,
-      <code>_baseAssertEqual</code>,
-      <code>_deprecate</code>,
-      <code>_formatMessage</code>,
-      <code>_getAssertEqualityFunc</code>,
-      <code>_truncateMessage</code>
-      </p></div>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
       <code>__format__</code>,
@@ -215,33 +138,8 @@ unittest.case.TestCase --+
       <code>__reduce_ex__</code>,
       <code>__setattr__</code>,
       <code>__sizeof__</code>,
+      <code>__str__</code>,
       <code>__subclasshook__</code>
-      </p>
-    </td>
-  </tr>
-</table>
-<!-- ==================== CLASS METHODS ==================== -->
-<a name="section-ClassMethods"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Class Methods</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-ClassMethods"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
-</tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>unittest.case.TestCase</code></b>:
-      <code>setUpClass</code>,
-      <code>tearDownClass</code>
       </p>
     </td>
   </tr>
@@ -265,14 +163,9 @@ unittest.case.TestCase --+
 </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>unittest.case.TestCase</code></b>:
-      <code>longMessage</code>,
-      <code>maxDiff</code>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>unittest.suite.BaseTestSuite</code></b>:
+      <code>__hash__</code>
       </p>
-    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>unittest.case.TestCase</code></b> (private):
-      <code>_classSetupFailed</code>,
-      <code>_diffThreshold</code>
-      </p></div>
     </td>
   </tr>
 </table>
@@ -319,24 +212,25 @@ unittest.case.TestCase --+
   </td>
 </tr>
 </table>
-<a name="setUp"></a>
+<a name="__init__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">setUp</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="test.htmltreenode_test-pysrc.html#BaseTreeNodeTest.setUp">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="test.test_htmltreebuilder-pysrc.html#HTMLTreeBuilderTestSuite.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Hook method for setting up the test fixture before exercising it.</p>
+  <p>x.__init__(...) initializes x; see help(type(x)) for signature</p>
   <dl class="fields">
     <dt>Overrides:
-        unittest.case.TestCase.setUp
+        object.__init__
         <dd><em class="note">(inherited documentation)</em></dd>
     </dt>
   </dl>
@@ -364,14 +258,15 @@ unittest.case.TestCase --+
       <th class="navbar" align="right" width="100%">
         <table border="0" cellpadding="0" cellspacing="0">
           <tr><th class="navbar" align="center"
-            ><a class="navbar" target="_top" href="https://github.com/manisero/SemViii">Structure-based web page classifier</a></th>
+            ><a class="navbar" target="_top" href="https://github.com/manisero/SemViii">
+Structure-based web page classifier</a></th>
           </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Apr 28 00:23:02 2013
+    Generated by Epydoc 3.0.1 on Sun Apr 28 16:29:33 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

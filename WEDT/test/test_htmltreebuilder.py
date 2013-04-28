@@ -1,8 +1,14 @@
-'''
-Created on 28-04-2013
+"""
+    C{HTMLTreeBuilder} unit tests. Function covered:
+    
+        - C{build_tree(html, valid_tags, valid_attributes)}
+        
+    @author: Jakub Turek
+    @contact: jkbturek(at)gmail(dot)com
+    @date: 28-04-2013
+    @version: 1.0
+"""
 
-@author: turekj
-'''
 import unittest
 from tree.htmltreebuilder import HTMLTreeBuilder
 

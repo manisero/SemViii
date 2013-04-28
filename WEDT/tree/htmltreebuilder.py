@@ -1,8 +1,13 @@
-'''
-Created on 28-04-2013
-
-@author: turekj
-'''
+"""
+    HTML tree builder. Constructs C{HTMLTreeNode} out of any given HTML.
+    
+    Usage: invoke C{build_tree(html, valid_tags, valid_attributes)} function. 
+    
+    @author: Jakub Turek
+    @contact: jkbturek(at)gmail(dot)com
+    @date: 28-04-2013
+    @version: 1.0
+"""
 from HTMLParser import HTMLParser
 from tree.htmltreenode import HTMLTreeNode
 
@@ -37,6 +42,16 @@ class HTMLTreeBuilder(HTMLParser):
         self.__last_node.append_text(data)
     
     def build_tree(self, html, valid_tags = None, valid_attributes = None):
+        """
+            Builds C{HTMLTreeNode} out of C{html}.
+            
+            @param html: HTML source code to process
+            @param valid_tags: List of HTML tags converted to tree nodes. If C{None} constructs tree of all tags.
+            @param valid_attributes: List of HTML tag attributes stored in tree nodes. If C{None} stores all the attributes.
+            
+            @rtype: HTMLTreeNode
+        """
+        
         self.__root = None
         self.__valid_tags = valid_tags
         self.__valid_attributes = valid_attributes
