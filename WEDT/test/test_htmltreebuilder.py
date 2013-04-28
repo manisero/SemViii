@@ -157,4 +157,8 @@ class BuildTreeWithExclusionHTMLTreeBuilderTest(BaseHTMLTreeBuilderTest):
         self.assertEquals(div_sub_entry_text_node.get_attributes()['lang'], "en")
         self.assertEquals(len(div_sub_entry_text_node.get_nodes()), 0)
         
-        self.assertIsNone(div_sub_entry_text_node.next())           
+        self.assertIsNone(div_sub_entry_text_node.next())   
+
+class HTMLTreeBuilderTestSuite(unittest.TestSuite):
+    def __init__(self):
+        self.addTests([BuildTreeHTMLTreeBuilderTest(), BuildTreeWithExclusionHTMLTreeBuilderTest()])
