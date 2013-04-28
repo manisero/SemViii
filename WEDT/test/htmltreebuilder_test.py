@@ -14,19 +14,21 @@ class BuildTreeHTMLTreeBuilderTest(BaseHTMLTreeBuilderTest):
     def setUp(self):
         BaseHTMLTreeBuilderTest.setUp(self)
         
-        self.html = """<div class="BlogEntry">
-                    <h2 id="EntryHeader">
-                    <a href="entry_link.html">
-                    entry_link
-                    </a>
-                    </h2>
-                    <p class="EntryContent">
-                    Content
-                    </p>
-                    </div>"""
+        self.html = ("<div class=\"BlogEntry\">"
+                    "<h2 id=\"EntryHeader\">"
+                    "<a href=\"entry_link.html\">"
+                    "entry_link"
+                    "</a>"
+                    "</h2>"
+                    "<p class=\"EntryContent\">"
+                    "Content"
+                    "</p>"
+                    "</div>")
     
     def runTest(self):
         html_tree = self.tree_builder.build_tree(self.html)
+        
+        self.assertIsNotNone(html_tree)
         
         div_blog_entry_node = html_tree
         
@@ -68,5 +70,5 @@ class BuildTreeHTMLTreeBuilderTest(BaseHTMLTreeBuilderTest):
         self.assertEquals(p_entry_content_node.get_attributes()['class'], "EntryContent")
         self.assertEquals(len(p_entry_content_node.get_nodes()), 0)                     
         
-        self.assertEquals(p_entry_content_node.next, None)
+        self.assertEquals(p_entry_content_node.next(), None)
         

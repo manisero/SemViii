@@ -45,6 +45,9 @@ class HTMLTreeNode:
     def set_parent(self, parent):
         self.__parent = parent
         
+    def append_text(self, text):
+        self.__text += str(text)
+        
     def add_node(self, node):
         self.__nodes.append(node)
         node.set_parent(self)
