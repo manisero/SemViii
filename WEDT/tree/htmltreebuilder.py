@@ -9,11 +9,17 @@ from tree.htmltreenode import HTMLTreeNode
 class HTMLTreeBuilder(HTMLParser):
     __root = None
     __valid_tags = None
-    __valid_attibutes = None
+    __valid_attributes = None
     __last_node = None
     
     def handle_starttag(self, tag, attrs):
+        if self.__valid_tags is not None and tag not in self.__valid_tags:
+            return
+        
         attributes = { attribute: value for attribute, value in reversed(attrs)}
+        
+        if self.__valid_attributes is not None:
+            attributes = { attribute: attributes[attribute] for attribute in filter(lambda x: x in attributes, self.__valid_attributes)}
         
         node = HTMLTreeNode(tag, "", attributes)
         
@@ -33,7 +39,7 @@ class HTMLTreeBuilder(HTMLParser):
     def build_tree(self, html, valid_tags = None, valid_attributes = None):
         self.__root = None
         self.__valid_tags = valid_tags
-        self.__valid_attibutes = valid_attributes
+        self.__valid_attributes = valid_attributes
         self.__last_node = None
         
         self.feed(html)

@@ -70,5 +70,91 @@ class BuildTreeHTMLTreeBuilderTest(BaseHTMLTreeBuilderTest):
         self.assertEquals(p_entry_content_node.get_attributes()['class'], "EntryContent")
         self.assertEquals(len(p_entry_content_node.get_nodes()), 0)                     
         
-        self.assertEquals(p_entry_content_node.next(), None)
+        self.assertIsNone(p_entry_content_node.next())
+
+class BuildTreeWithExclusionHTMLTreeBuilderTest(BaseHTMLTreeBuilderTest):
+    def setUp(self):
+        BaseHTMLTreeBuilderTest.setUp(self)
         
+        self.html = ("<div class=\"BlogEntry\" style=\"font-weight:bold\">"
+                     "<p class=\"EntryContent\">"
+                     "It's just <b>very important</b> blog entry with <i>linked image</i>: "
+                     "<a href=\"image_link.jpg\">"
+                     "located on the right "
+                     "<img class=\"BlogIconImage\" style=\"width: 150px; height: 150px\" src=\"image_link.jpg\" alt=\"Link to the image!\">"
+                     "</a>"
+                     "</p>"
+                     "<div class=\"SubEntry\" dir=\"rtl\">"
+                     "SubEntry"
+                     "<div class=\"SubEntryText\" lang=\"en\">"
+                     "Text"
+                     "</div>"
+                     "</div>"
+                     "</div>")
+        
+        self.valid_tags = ['div', 'a', 'img']
+        self.valid_attributes = ['class', 'href', 'src', 'alt', 'lang']
+        
+    def runTest(self):
+        html_tree = self.tree_builder.build_tree(self.html, self.valid_tags, self.valid_attributes)
+         
+        self.assertIsNotNone(html_tree)
+        
+        div_blog_entry_node = html_tree
+        
+        self.assertEquals(div_blog_entry_node.get_tag(), "div")
+        self.assertEquals(div_blog_entry_node.get_text(), "It's just very important blog entry with linked image: ")
+        self.assertEquals(div_blog_entry_node.get_parent(), html_tree)
+        self.assertEquals(len(div_blog_entry_node.get_attributes()), 1)
+        self.assertTrue("class" in div_blog_entry_node.get_attributes())
+        self.assertEquals(div_blog_entry_node.get_attributes()['class'], "BlogEntry")
+        self.assertEquals(len(div_blog_entry_node.get_nodes()), 2)
+        
+        a_image_link_node = div_blog_entry_node.next()
+        
+        self.assertEquals(a_image_link_node.get_tag(), "a")
+        self.assertEquals(a_image_link_node.get_text(), "located on the right ")
+        self.assertEquals(a_image_link_node.get_parent(), div_blog_entry_node)
+        self.assertEquals(len(a_image_link_node.get_attributes()), 1)
+        self.assertTrue("href" in a_image_link_node.get_attributes())
+        self.assertEquals(a_image_link_node.get_attributes()['href'], "image_link.jpg")
+        self.assertEquals(len(a_image_link_node.get_nodes()), 1)
+        
+        img_blog_icon_image_node = a_image_link_node.next()
+        
+        self.assertEquals(img_blog_icon_image_node.get_tag(), "img")
+        self.assertEquals(img_blog_icon_image_node.get_text(), "")
+        self.assertEquals(img_blog_icon_image_node.get_parent(), a_image_link_node)
+        self.assertEquals(len(img_blog_icon_image_node.get_attributes()), 3)
+        self.assertTrue("class" in img_blog_icon_image_node.get_attributes())
+        self.assertEquals(img_blog_icon_image_node.get_attributes()['class'], "BlogIconImage")
+        self.assertTrue("src" in img_blog_icon_image_node.get_attributes())
+        self.assertEquals(img_blog_icon_image_node.get_attributes()['src'], "image_link.jpg")
+        self.assertTrue("alt" in img_blog_icon_image_node.get_attributes())
+        self.assertEquals(img_blog_icon_image_node.get_attributes()['alt'], "Link to the image!")
+        self.assertEquals(len(img_blog_icon_image_node.get_nodes()), 0)                
+         
+        
+        div_sub_entry_note = img_blog_icon_image_node.next()
+        
+        self.assertEquals(div_sub_entry_note.get_tag(), "div")
+        self.assertEquals(div_sub_entry_note.get_text(), "SubEntry")
+        self.assertEquals(div_sub_entry_note.get_parent(), div_blog_entry_node)
+        self.assertEquals(len(div_sub_entry_note.get_attributes()), 1)
+        self.assertTrue("class" in div_sub_entry_note.get_attributes())
+        self.assertEquals(div_sub_entry_note.get_attributes()['class'], "SubEntry")
+        self.assertEquals(len(div_sub_entry_note.get_nodes()), 1)     
+        
+        div_sub_entry_text_node = div_sub_entry_note.next()
+        
+        self.assertEquals(div_sub_entry_text_node.get_tag(), "div")
+        self.assertEquals(div_sub_entry_text_node.get_text(), "Text")
+        self.assertEquals(div_sub_entry_text_node.get_parent(), div_sub_entry_note)
+        self.assertEquals(len(div_sub_entry_text_node.get_attributes()), 2)
+        self.assertTrue("class" in div_sub_entry_text_node.get_attributes())
+        self.assertEquals(div_sub_entry_text_node.get_attributes()['class'], "SubEntryText")
+        self.assertTrue("lang" in div_sub_entry_text_node.get_attributes())
+        self.assertEquals(div_sub_entry_text_node.get_attributes()['lang'], "en")
+        self.assertEquals(len(div_sub_entry_text_node.get_nodes()), 0)
+        
+        self.assertIsNone(div_sub_entry_text_node.next())           
