@@ -27,7 +27,7 @@ class GetRepeatingPatternMethodTest(BaseBlogRecognizerTest):
         self.root.add_nodes([self.header, self.firstEntry, self.firstDate, self.secondEntry, self.thirdEntry, self.secondDate, self.footer])
         
     def runTest(self):
-        pattern = self.blog_recognizer.get_repeating_pattern(self.root, "div", "class", 2)
+        pattern = self.blog_recognizer.get_repeating_pattern(self.root, ["div"], "class", 2)
         
         self.assertEquals(len(pattern), 2)
         

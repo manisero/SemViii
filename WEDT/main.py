@@ -15,7 +15,7 @@ if __name__ == "__main__":
 			print >> sys.stderr, str(ex)
 			sys.exit(-1)
 			
-		html_tree = HTMLTreeBuilder().build_tree(content, ['div'], ['class'])
+		html_tree = HTMLTreeBuilder().build_tree(content, ['div', 'a', 'h1', 'h2', 'h3', 'h4', 'h5'], ['class'])
 
 		print 'Is this a blog? ' + str(BlogRecognizer().is_blog(html_tree))
 			
