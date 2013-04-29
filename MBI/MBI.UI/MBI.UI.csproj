@@ -55,6 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="ViewModelLocation\IViewModelFactory.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="ViewModelLocation\ViewModelLocator.cs" />
+    <Compile Include="ViewModelLocation\_Impl\ActivatorBasedViewModelFactory.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
