@@ -8,3 +8,6 @@ _ReSharper.*/
 *.aux
 *.log
 *.backup
+*~
+*.pyc
+*.out
