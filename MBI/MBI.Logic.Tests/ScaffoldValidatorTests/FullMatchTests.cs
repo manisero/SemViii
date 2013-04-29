@@ -1,12 +1,12 @@
 ﻿using MBI.Logic.DNAAssemblance;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace MBI.Logic.Tests.ScaffoldValidatorTests
 {
-	[TestClass]
+	[TestFixture]
 	public class FullMatchTests : AssemblyValidatorTestsBase
 	{
-		[TestMethod]
+		[Test]
 		public void validates_two_contigs_based_on_one_PET()
 		{
 			// Arrange
@@ -17,7 +17,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			TestValidate(contigs, new[] { pet }, 4);
 		}
 
-		[TestMethod]
+		[Test]
 		public void validates_three_contigs_based_on_two_PETs()
 		{
 			// Arrange

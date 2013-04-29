@@ -2,26 +2,26 @@
 using MBI.Logic.DNAAssemblance;
 using MBI.Logic.DNAAssemblance._Impl;
 using MBI.Logic.Tests.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace MBI.Logic.Tests
 {
-	[TestClass]
+	[TestFixture]
 	public class DNAAssemblerTests
 	{
 		private IScaffoldValidator _scaffoldValidatorMock;
 		private DNAAssembler _dnaAssembler;
 
-		[TestInitialize]
+		[SetUp]
 		public void SetUp()
 		{
 			_scaffoldValidatorMock = MockRepository.GenerateStrictMock<IScaffoldValidator>();
 			_dnaAssembler = new DNAAssembler(_scaffoldValidatorMock);
 		}
 
-		[TestMethod]
+		[Test]
 		public void assigns_ranks_to_assemblies()
 		{
 			// Arrange
@@ -42,7 +42,7 @@ namespace MBI.Logic.Tests
 			_scaffoldValidatorMock.VerifyAllExpectations();
 		}
 
-		[TestMethod]
+		[Test]
 		public void rejects_assemblies_of_rank_0()
 		{
 			// Arrange
@@ -61,7 +61,7 @@ namespace MBI.Logic.Tests
 			_scaffoldValidatorMock.VerifyAllExpectations();
 		}
 
-		[TestMethod]
+		[Test]
 		public void sorts_assemblies_by_rank()
 		{
 			// Arrange
@@ -92,7 +92,7 @@ namespace MBI.Logic.Tests
 			_scaffoldValidatorMock.VerifyAllExpectations();
 		}
 
-		[TestMethod]
+		[Test]
 		public void validates_all_contigs_combinations()
 		{
 			// Arrange

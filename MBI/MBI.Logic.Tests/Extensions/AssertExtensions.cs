@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using NUnit.Framework;
 
 namespace MBI.Logic.Tests.Extensions
 {

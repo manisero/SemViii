@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MBI.Logic.DNAAssemblance;
 using MBI.Logic.DNAAssemblance._Impl;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace MBI.Logic.Tests.ScaffoldValidatorTests
 {
