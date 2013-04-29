@@ -2,6 +2,7 @@ import sys
 from web.webpagecontentdownloader import WebPageContentDownloader
 from tree.htmltreebuilder import HTMLTreeBuilder
 from algorithm.blogrecognizer import BlogRecognizer
+from algorithm.imagebasedwebsiterecognizer import ImageBasedWebsiteRecognizer
 
 if __name__ == "__main__":
 	
@@ -15,9 +16,10 @@ if __name__ == "__main__":
 			print >> sys.stderr, str(ex)
 			sys.exit(-1)
 			
-		html_tree = HTMLTreeBuilder().build_tree(content, ['div', 'a', 'h1', 'h2', 'h3', 'h4', 'h5'], ['class'])
+		html_tree = HTMLTreeBuilder().build_tree(content, ['div', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'img', 'script'], ['class', 'src'])
 
 		print 'Is this a blog? ' + str(BlogRecognizer().is_blog(html_tree))
+		print 'Is this an image-based social media webpage? ' + str(ImageBasedWebsiteRecognizer().is_image_based_website(html_tree))
 			
 
 	else:
