@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyParsing\IStreamReader.cs" />
+    <Compile Include="AssemblyParsing\_Impl\StreamReader.cs" />
     <Compile Include="DNAAssembly.cs" />
-    <Compile Include="AssemblyParser\_Impl\AssemblyParser.cs" />
-    <Compile Include="AssemblyParser\IAssemblyParser.cs" />
+    <Compile Include="AssemblyParsing\_Impl\AssemblyParser.cs" />
+    <Compile Include="AssemblyParsing\IAssemblyParser.cs" />
     <Compile Include="Scaffold.cs" />
     <Compile Include="DNAAssemblance\IScaffoldValidator.cs" />
     <Compile Include="DNAAssemblance\IDNAAssembler.cs" />

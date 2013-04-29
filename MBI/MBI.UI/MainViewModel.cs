@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using MBI.Logic;
-using MBI.Logic.AssemblyParser;
+using MBI.Logic.AssemblyParsing;
 using MBI.UI.Commands;
 using Microsoft.Win32;
 
