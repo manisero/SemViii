@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace MBI.Logic.AssemblyParsing._Impl
+namespace MBI.Logic.Serialization._Impl
 {
 	public class AssemblyParser : IAssemblyParser
 	{
-		private readonly IStreamReader _streamReader;
+		private readonly IStreamHandler _streamHandler;
 
-		public AssemblyParser(IStreamReader streamReader)
+		public AssemblyParser(IStreamHandler streamHandler)
 		{
-			_streamReader = streamReader;
+			_streamHandler = streamHandler;
 		}
 
 		public DNAAssembly Parse(Stream inputStream)
 		{
-			var inputText = _streamReader.Read(inputStream);
+			var inputText = _streamHandler.Read(inputStream);
 
 			ValiateInputText(inputText);
 

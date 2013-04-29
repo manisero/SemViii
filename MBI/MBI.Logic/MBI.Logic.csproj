@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyParsing\IStreamReader.cs" />
-    <Compile Include="AssemblyParsing\_Impl\StreamReader.cs" />
+    <Compile Include="Serialization\IScaffoldSerializer.cs" />
+    <Compile Include="Serialization\IStreamHandler.cs" />
+    <Compile Include="Serialization\_Impl\ScaffoldSerializer.cs" />
+    <Compile Include="Serialization\_Impl\StreamHandler.cs" />
     <Compile Include="DNAAssembly.cs" />
-    <Compile Include="AssemblyParsing\_Impl\AssemblyParser.cs" />
-    <Compile Include="AssemblyParsing\IAssemblyParser.cs" />
+    <Compile Include="Serialization\_Impl\AssemblyParser.cs" />
+    <Compile Include="Serialization\IAssemblyParser.cs" />
     <Compile Include="Scaffold.cs" />
     <Compile Include="DNAAssemblance\IScaffoldValidator.cs" />
     <Compile Include="DNAAssemblance\IDNAAssembler.cs" />

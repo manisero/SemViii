@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace MBI.Logic.AssemblyParsing
+namespace MBI.Logic.Serialization
 {
 	public interface IAssemblyParser
 	{
