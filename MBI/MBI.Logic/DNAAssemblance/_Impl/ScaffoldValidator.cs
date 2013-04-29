@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class ScaffoldValidator : IScaffoldValidator
 	{
-		public int Validate(IEnumerable<string> contigs, IEnumerable<PairedEndTag> pairedEndTags)
+		public int Validate(string[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = 0;
 			var flags = pairedEndTags.ToDictionary(x => x, x => false);
