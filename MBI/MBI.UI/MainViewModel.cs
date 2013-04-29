@@ -1,9 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using MBI.Logic;
+using MBI.Logic.DNAAssemblance;
 using MBI.Logic.Serialization;
 using MBI.UI.Commands;
 using Microsoft.Win32;
+using System.Linq;
 
 namespace MBI.UI
 {
@@ -12,6 +14,8 @@ namespace MBI.UI
 		#region Dependencies
 
 		private readonly IAssemblyParser _assemblyParser;
+		private readonly IDNAAssembler _dnaAssembler;
+		private readonly IScaffoldSerializer _scaffoldSerializer;
 
 		#endregion
 
@@ -33,9 +37,11 @@ namespace MBI.UI
 
 		#region Constructor
 
-		public MainViewModel(IAssemblyParser assemblyParser)
+		public MainViewModel(IAssemblyParser assemblyParser, IDNAAssembler dnaAssembler, IScaffoldSerializer scaffoldSerializer)
 		{
 			_assemblyParser = assemblyParser;
+			_dnaAssembler = dnaAssembler;
+			_scaffoldSerializer = scaffoldSerializer;
 		}
 
 		#endregion
@@ -55,7 +61,15 @@ namespace MBI.UI
 
 		private void ExecuteAssemblance()
 		{
-			MessageBox.Show("foo");
+			var scaffolds = _dnaAssembler.Assemble(Assembly.Contigs, Assembly.PairedEndTags);
+
+			var dialog = new SaveFileDialog();
+			dialog.ShowDialog();
+
+			if (!string.IsNullOrEmpty(dialog.FileName))
+			{
+				_scaffoldSerializer.Serialize(scaffolds.First(), dialog.OpenFile());
+			}
 		}
 
 		#endregion
