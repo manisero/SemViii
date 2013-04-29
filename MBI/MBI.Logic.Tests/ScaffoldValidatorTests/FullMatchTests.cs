@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace MBI.Logic.Tests.ScaffoldValidatorTests
 {
 	[TestFixture]
-	public class FullMatchTests : AssemblyValidatorTestsBase
+	public class FullMatchTests : ScaffoldValidatorTestsBase
 	{
 		[Test]
 		[Sequential]

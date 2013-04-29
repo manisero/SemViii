@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace MBI.Logic.Tests.ScaffoldValidatorTests
 {
-	public class AssemblyValidatorTestsBase
+	public class ScaffoldValidatorTestsBase
 	{
 		protected void TestValidate(string[] contigs, PairedEndTag pet, int expectedResult)
 		{
