@@ -50,6 +50,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SerializationTests\AssemblyParserTests.cs" />
+    <Compile Include="SerializationTests\ScaffoldSerializerTests.cs" />
+    <Compile Include="SerializationTests\StreamHandlerTests.cs" />
     <Compile Include="ScaffoldValidatorTests\NoMatchTests.cs" />
     <Compile Include="ScaffoldValidatorTests\ScaffoldValidatorTestsBase.cs" />
     <Compile Include="DNAAssemblerTests.cs" />
