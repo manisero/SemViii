@@ -27,5 +27,31 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			// Act * Assert
 			TestValidate(contigs, pet, 2);
 		}
+
+		[Test]
+		[Sequential]
+		public void rejects_not_paired_beginning(
+			[Values("aaccdd", "aabBcc", "aaBbcc", "aabcbc")] string contig)
+		{
+			// Arrange
+			var contigs = new[] { contig, "xxyyzz" };
+			var pet = new PairedEndTag { Beginning = "bb", End = "yy", Length = 1000 };
+
+			// Act * Assert
+			TestValidate(contigs, pet, 0);
+		}
+
+		[Test]
+		[Sequential]
+		public void rejects_not_paired_end(
+			[Values("wwxxzz", "xxyYzz", "xxYyzz", "xyxyzz")] string contig)
+		{
+			// Arrange
+			var contigs = new[] { "aabbcc", contig };
+			var pet = new PairedEndTag { Beginning = "bb", End = "yy", Length = 1000 };
+
+			// Act * Assert
+			TestValidate(contigs, pet, 0);
+		}
 	}
 }
