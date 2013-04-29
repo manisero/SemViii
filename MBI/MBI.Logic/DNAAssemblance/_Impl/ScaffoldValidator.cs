@@ -12,7 +12,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			foreach (var pet in pairedEndTags)
 			{
 				var beginningFound = false;
-				var lengthSoFar = 0;
+				var totalLength = 0;
 
 				foreach (var contig in contigs)
 				{
@@ -20,9 +20,9 @@ namespace MBI.Logic.DNAAssemblance._Impl
 					{
 						if (contig.Contains(pet.End))
 						{
-							lengthSoFar += GetPetEndLengthInContig(contig, pet.End);
+							totalLength += GetPetEndLengthInContig(contig, pet.End);
 
-							if (lengthSoFar <= pet.Length)
+							if (totalLength <= pet.Length)
 							{
 								result += pet.Beginning.Length + pet.End.Length;
 							}
@@ -31,13 +31,13 @@ namespace MBI.Logic.DNAAssemblance._Impl
 						}
 						else
 						{
-							lengthSoFar += contig.Length;
+							totalLength += contig.Length;
 						}
 					}
 					else if (contig.Contains(pet.Beginning))
 					{
 						beginningFound = true;
-						lengthSoFar += GetPetBeginningLengthInContig(contig, pet.Beginning);
+						totalLength += GetPetBeginningLengthInContig(contig, pet.Beginning);
 					}
 				}
 			}
@@ -47,12 +47,12 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 		private int GetPetBeginningLengthInContig(string contig, string petBeginning)
 		{
-			return contig.Split(new[] { petBeginning }, 2, StringSplitOptions.None)[1].Length + petBeginning.Length;
+			return contig.Split(new[] { petBeginning }, StringSplitOptions.None).Last().Length + petBeginning.Length;
 		}
 
 		private int GetPetEndLengthInContig(string contig, string petEnd)
 		{
-			return contig.Split(new[] { petEnd }, 2, StringSplitOptions.None)[0].Length + petEnd.Length;
+			return contig.Split(new[] { petEnd }, StringSplitOptions.None).First().Length + petEnd.Length;
 		}
 	}
 }
