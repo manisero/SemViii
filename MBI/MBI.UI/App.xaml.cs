@@ -1,6 +1,8 @@
 ﻿using System.Windows;
+using MBI.UI.Bootstrap.Ninject;
 using MBI.UI.ViewModelLocation;
 using MBI.UI.ViewModelLocation._Impl;
+using Ninject;
 
 namespace MBI.UI
 {
@@ -12,7 +14,9 @@ namespace MBI.UI
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
-			((ViewModelLocator)Resources["Locator"]).ViewModelFactory = new ActivatorBasedViewModelFactory();
+
+			var viewModelFactory = new NinjectViewModelFactory(new StandardKernel(new LogicModule()));
+			((ViewModelLocator)Resources["Locator"]).ViewModelFactory = viewModelFactory;
 		}
 	}
 }
