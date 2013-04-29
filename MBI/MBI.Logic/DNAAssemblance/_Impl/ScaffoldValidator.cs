@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
@@ -7,25 +8,51 @@ namespace MBI.Logic.DNAAssemblance._Impl
 		public int Validate(string[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = 0;
-			var flags = pairedEndTags.ToDictionary(x => x, x => false);
 
-			foreach (var contig in contigs)
+			foreach (var pet in pairedEndTags)
 			{
-				foreach (var tag in pairedEndTags)
-				{
-					if (contig.Contains(tag.Beginning))
-					{
-						flags[tag] = true;
-					}
+				var beginningFound = false;
+				var lengthSoFar = 0;
 
-					if (flags[tag] && contig.Contains(tag.End))
+				foreach (var contig in contigs)
+				{
+					if (beginningFound)
 					{
-						result += tag.Beginning.Length + tag.End.Length;
+						if (contig.Contains(pet.End))
+						{
+							lengthSoFar += GetPetEndLengthInContig(contig, pet.End);
+
+							if (lengthSoFar <= pet.Length)
+							{
+								result += pet.Beginning.Length + pet.End.Length;
+							}
+
+							continue;
+						}
+						else
+						{
+							lengthSoFar += contig.Length;
+						}
+					}
+					else if (contig.Contains(pet.Beginning))
+					{
+						beginningFound = true;
+						lengthSoFar += GetPetBeginningLengthInContig(contig, pet.Beginning);
 					}
 				}
 			}
 
 			return result;
+		}
+
+		private int GetPetBeginningLengthInContig(string contig, string petBeginning)
+		{
+			return contig.Split(new[] { petBeginning }, 2, StringSplitOptions.None)[1].Length + petBeginning.Length;
+		}
+
+		private int GetPetEndLengthInContig(string contig, string petEnd)
+		{
+			return contig.Split(new[] { petEnd }, 2, StringSplitOptions.None)[0].Length + petEnd.Length;
 		}
 	}
 }
