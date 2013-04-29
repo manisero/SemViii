@@ -12,6 +12,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			foreach (var pet in pairedEndTags)
 			{
 				var beginningFound = false;
+				var endFound = false;
 				var totalLength = 0;
 
 				foreach (var contig in contigs)
@@ -21,13 +22,9 @@ namespace MBI.Logic.DNAAssemblance._Impl
 						if (contig.Contains(pet.End))
 						{
 							totalLength += GetPetEndLengthInContig(contig, pet.End);
+							endFound = true;
 
-							if (totalLength <= pet.Length)
-							{
-								result += pet.Beginning.Length + pet.End.Length;
-							}
-
-							continue;
+							break;
 						}
 						else
 						{
@@ -39,6 +36,19 @@ namespace MBI.Logic.DNAAssemblance._Impl
 						beginningFound = true;
 						totalLength += GetPetBeginningLengthInContig(contig, pet.Beginning);
 					}
+				}
+
+				if (endFound && totalLength <= pet.Length)
+				{
+					result += pet.Beginning.Length + pet.End.Length;
+				}
+				else if (contigs.First().Contains(pet.End))
+				{
+					result += pet.End.Length;
+				}
+				else if (contigs.Last().Contains(pet.Beginning))
+				{
+					result += pet.Beginning.Length;
 				}
 			}
 
