@@ -7,8 +7,10 @@ namespace MBI.Logic.AssemblyParsing._Impl
 	{
 		public string[] Read(Stream stream)
 		{
+			stream.Seek(0, SeekOrigin.Begin);
+
 			var result = new List<string>();
-			var streamReader = new System.IO.StreamReader(Stream.Null);
+			var streamReader = new System.IO.StreamReader(stream);
 
 			while (!streamReader.EndOfStream)
 			{
