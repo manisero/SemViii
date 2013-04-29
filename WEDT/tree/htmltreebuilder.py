@@ -36,10 +36,14 @@ class HTMLTreeBuilder(HTMLParser):
             self.__last_node = node
     
     def handle_endtag(self, tag):
+        if self.__valid_tags is not None and tag not in self.__valid_tags:
+            return
+        
         self.__last_node = self.__last_node.get_parent()
     
     def handle_data(self, data):
-        self.__last_node.append_text(data)
+        if self.__last_node is not None:
+            self.__last_node.append_text(data)
     
     def build_tree(self, html, valid_tags = None, valid_attributes = None):
         """
