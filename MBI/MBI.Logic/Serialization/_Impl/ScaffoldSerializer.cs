@@ -6,6 +6,7 @@ namespace MBI.Logic.Serialization._Impl
 	{
 		public void Serialize(Scaffold scaffold, Stream outputStream)
 		{
+
 			throw new System.NotImplementedException();
 		}
 	}

@@ -2,8 +2,10 @@
 
 namespace MBI.Logic.Serialization
 {
-	public interface IStreamReader
+	public interface IStreamHandler
 	{
 		string[] Read(Stream stream);
+
+		void Write(string text, Stream stream);
 	}
 }

@@ -10,7 +10,7 @@ namespace MBI.UI.Bootstrap.Ninject
 	{
 		public override void Load()
 		{
-			Bind<IStreamReader>().To<StreamReader>();
+			Bind<IStreamHandler>().To<StreamHandler>();
 			Bind<IAssemblyParser>().To<AssemblyParser>();
 
 			Bind<IDNAAssembler>().To<DNAAssembler>();

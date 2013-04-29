@@ -7,9 +7,9 @@ namespace MBI.Logic.Serialization._Impl
 {
 	public class AssemblyParser : IAssemblyParser
 	{
-		private readonly IStreamReader _streamReader;
+		private readonly IStreamHandler _streamReader;
 
-		public AssemblyParser(IStreamReader streamReader)
+		public AssemblyParser(IStreamHandler streamReader)
 		{
 			_streamReader = streamReader;
 		}

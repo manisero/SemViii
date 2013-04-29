@@ -10,13 +10,13 @@ namespace MBI.Logic.Tests.SerializationTests
 	[TestFixture]
 	public class AssemblyParserTests
 	{
-		private IStreamReader _streamReaderMock;
+		private IStreamHandler _streamReaderMock;
 		private AssemblyParser _assemblyParser;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_streamReaderMock = MockRepository.GenerateMock<IStreamReader>();
+			_streamReaderMock = MockRepository.GenerateMock<IStreamHandler>();
 			_assemblyParser = new AssemblyParser(_streamReaderMock);
 		}
 

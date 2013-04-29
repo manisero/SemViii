@@ -3,14 +3,14 @@ using System.IO;
 
 namespace MBI.Logic.Serialization._Impl
 {
-	public class StreamReader : IStreamReader
+	public class StreamHandler : IStreamHandler
 	{
 		public string[] Read(Stream stream)
 		{
-			stream.Seek(0, SeekOrigin.Begin);
-
 			var result = new List<string>();
-			var streamReader = new System.IO.StreamReader(stream);
+
+			stream.Seek(0, SeekOrigin.Begin);
+			var streamReader = new StreamReader(stream);
 
 			while (!streamReader.EndOfStream)
 			{
@@ -18,6 +18,14 @@ namespace MBI.Logic.Serialization._Impl
 			}
 
 			return result.ToArray();
+		}
+
+		public void Write(string text, Stream stream)
+		{
+			var writer = new StreamWriter(stream);
+
+			writer.Write(text);
+			writer.Flush();
 		}
 	}
 }

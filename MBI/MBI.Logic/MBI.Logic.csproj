@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Serialization\IStreamReader.cs" />
-    <Compile Include="Serialization\_Impl\StreamReader.cs" />
+    <Compile Include="Serialization\IScaffoldSerializer.cs" />
+    <Compile Include="Serialization\IStreamHandler.cs" />
+    <Compile Include="Serialization\_Impl\ScaffoldSerializer.cs" />
+    <Compile Include="Serialization\_Impl\StreamHandler.cs" />
     <Compile Include="DNAAssembly.cs" />
     <Compile Include="Serialization\_Impl\AssemblyParser.cs" />
     <Compile Include="Serialization\IAssemblyParser.cs" />
