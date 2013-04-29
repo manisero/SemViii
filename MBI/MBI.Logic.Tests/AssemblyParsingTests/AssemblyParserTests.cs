@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using MBI.Logic.AssemblyParsing;
 using MBI.Logic.AssemblyParsing._Impl;
 using NUnit.Framework;
@@ -56,6 +57,79 @@ namespace MBI.Logic.Tests
 			Assert.AreEqual("pet2Beginning", result.PairedEndTags[1].Beginning);
 			Assert.AreEqual("pet2End", result.PairedEndTags[1].End);
 			Assert.AreEqual(20, result.PairedEndTags[1].Length);
+		}
+
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException))]
+		public void rejects_input_without_contigs()
+		{
+			// Arrange
+			var inputStream = Stream.Null;
+			var inputText = new[]
+			                	{
+									"",
+			                		"petBeginning,petEnd,10"
+			                	};
+
+			_streamReaderMock.Expect(x => x.Read(inputStream)).Return(inputText);
+
+			// Act
+			_assemblyParser.Parse(inputStream);
+		}
+
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException))]
+		public void rejects_input_without_pets()
+		{
+			// Arrange
+			var inputStream = Stream.Null;
+			var inputText = new[]
+			                	{
+			                		"contig"
+			                	};
+
+			_streamReaderMock.Expect(x => x.Read(inputStream)).Return(inputText);
+
+			// Act
+			_assemblyParser.Parse(inputStream);
+		}
+
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException))]
+		public void rejects_invalid_pet_format()
+		{
+			// Arrange
+			var inputStream = Stream.Null;
+			var inputText = new[]
+			                	{
+			                		"contig",
+			                		"",
+			                		"invalid_pet"
+			                	};
+
+			_streamReaderMock.Expect(x => x.Read(inputStream)).Return(inputText);
+
+			// Act
+			_assemblyParser.Parse(inputStream);
+		}
+
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException))]
+		public void rejects_invalid_pet_length()
+		{
+			// Arrange
+			var inputStream = Stream.Null;
+			var inputText = new[]
+			                	{
+			                		"contig",
+			                		"",
+			                		"petBeginning,petEnd,invalidLength"
+			                	};
+
+			_streamReaderMock.Expect(x => x.Read(inputStream)).Return(inputText);
+
+			// Act
+			_assemblyParser.Parse(inputStream);
 		}
 	}
 }

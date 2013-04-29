@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace MBI.Logic.AssemblyParsing._Impl
 {
@@ -16,8 +17,10 @@ namespace MBI.Logic.AssemblyParsing._Impl
 		public DNAAssembly Parse(Stream inputStream)
 		{
 			var inputText = _streamReader.Read(inputStream);
-			int index;
 
+			ValiateInputText(inputText);
+
+			int index;
 			var contigs = new List<string>();
 
 			for (index = 0; !string.IsNullOrEmpty(inputText[index]); index++)
@@ -35,13 +38,26 @@ namespace MBI.Logic.AssemblyParsing._Impl
 			return new DNAAssembly { Contigs = contigs.ToArray(), PairedEndTags = pets.ToArray() };
 		}
 
+		private void ValiateInputText(string[] inputText)
+		{
+			if (inputText[0] == string.Empty)
+			{
+				throw new InvalidOperationException("Invalid input syntax. Contigs section not found");
+			}
+
+			if (!inputText.Contains(string.Empty))
+			{
+				throw new InvalidOperationException("Invalid input syntax. PET section is missing");
+			}
+		}
+
 		private PairedEndTag ParsePET(string pet)
 		{
 			var petProperties = pet.Split(',');
 
 			if (petProperties.Length != 3)
 			{
-				throw new InvalidOperationException(string.Format("Invalid PET syntax. Corrupted line: {0}", pet));
+				throw new InvalidOperationException(string.Format("Invalid PET syntax. Corrupted line: '{0}'", pet));
 			}
 
 			var result = new PairedEndTag();
@@ -50,7 +66,7 @@ namespace MBI.Logic.AssemblyParsing._Impl
 
 			if (!int.TryParse(petProperties[2], out petLength))
 			{
-				throw new InvalidOperationException(string.Format("Invalid PET length. Corrupted line: {0}", pet));
+				throw new InvalidOperationException(string.Format("Invalid PET length. Corrupted line: '{0}'", pet));
 			}
 
 			result.Beginning = petProperties[0];
