@@ -87,7 +87,7 @@ class BuildTreeWithExclusionHTMLTreeBuilderTest(BaseHTMLTreeBuilderTest):
                      "It's just <b>very important</b> blog entry with <i>linked image</i>: "
                      "<a href=\"image_link.jpg\">"
                      "located on the right "
-                     "<img class=\"BlogIconImage\" style=\"width: 150px; height: 150px\" src=\"image_link.jpg\" alt=\"Link to the image!\">"
+                     "<img class=\"BlogIconImage\" style=\"width: 150px; height: 150px\" src=\"image_link.jpg\" alt=\"Link to the image!\" />"
                      "</a>"
                      "</p>"
                      "<div class=\"SubEntry\" dir=\"rtl\">"
@@ -165,6 +165,44 @@ class BuildTreeWithExclusionHTMLTreeBuilderTest(BaseHTMLTreeBuilderTest):
         
         self.assertIsNone(div_sub_entry_text_node.next())   
 
-class HTMLTreeBuilderTestSuite(unittest.TestSuite):
-    def __init__(self):
-        self.addTests([BuildTreeHTMLTreeBuilderTest(), BuildTreeWithExclusionHTMLTreeBuilderTest()])
+class BuildTreeWithNestedTextTreeBuilderTest(BaseHTMLTreeBuilderTest):
+    def setUp(self):
+        BaseHTMLTreeBuilderTest.setUp(self)
+        
+        self.html = ("<div class=\"BlogEntry\">"
+                     "This is the "
+                     "<a href=\"blog_entry.html\">"
+                     "blog entry"
+                     "</a>"
+                     "text" 
+                     "</div>")
+        
+        self.valid_tags = ['div', 'a']
+        self.valid_attributes = ['href', 'class']
+        
+    def runTest(self):
+        html_tree = self.tree_builder.build_tree(self.html, self.valid_tags, self.valid_attributes)
+        
+        self.assertIsNotNone(html_tree)
+        
+        div_blog_entry = html_tree
+        
+        self.assertEquals(div_blog_entry.get_tag(), "div")
+        self.assertEquals(div_blog_entry.get_text(), "This is the text")
+        self.assertEquals(div_blog_entry.get_parent(), div_blog_entry)
+        self.assertEquals(len(div_blog_entry.get_attributes()), 1)
+        self.assertIn('class', div_blog_entry.get_attributes())
+        self.assertEquals(div_blog_entry.get_attributes()['class'], "BlogEntry")
+        self.assertEquals(len(div_blog_entry.get_nodes()), 1)
+        
+        a_blog_entry = div_blog_entry.next()
+        
+        self.assertEquals(a_blog_entry.get_tag(), "a")
+        self.assertEquals(a_blog_entry.get_text(), "blog entry")
+        self.assertEquals(a_blog_entry.get_parent(), div_blog_entry)
+        self.assertEquals(len(a_blog_entry.get_attributes()), 1)
+        self.assertIn('href', a_blog_entry.get_attributes())
+        self.assertEquals(a_blog_entry.get_attributes()['href'], "blog_entry.html")
+        self.assertEquals(len(a_blog_entry.get_nodes()), 0)
+        
+        self.assertIsNone(a_blog_entry.next())

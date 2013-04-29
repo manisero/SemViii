@@ -9,8 +9,10 @@ if __name__ == "__main__":
 		try:
 			content = WebPageContentDownloader().download(sys.argv[1])
 			
-		except:
+		except Exception as ex:
+			
 			print >> sys.stderr, 'Failed to open URL: ' + sys.argv[1]
+			print >> sys.stderr, str(ex)
 			sys.exit(-1)
 			
 		html_tree = HTMLTreeBuilder().build_tree(content, ['div'], ['class'])

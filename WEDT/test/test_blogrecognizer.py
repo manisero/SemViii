@@ -76,3 +76,21 @@ class HasMutualParentMethodNegativeTest(BaseBlogRecognizerTest):
         
     def runTest(self):
         self.assertFalse(self.blog_recognizer.has_mutual_parent(self.pattern))
+
+class HasTextLongerThanMethodPositiveTest(BaseBlogRecognizerTest):
+    def setUp(self):
+        BaseBlogRecognizerTest.setUp(self)
+        
+        self.parent = HTMLTreeNode("div", "", {"class": "BlogContent"})
+        self.firstEntry = HTMLTreeNode("div", "First Entry", {"class": "BlogEntry"})
+        self.secondEntry = HTMLTreeNode("div", "Second Entry", {"class": "BlogEntry"})
+        
+        self.parent.add_nodes([self.firstEntry, self.secondEntry])
+        
+        self.pattern = {"BlogEntry": [self.firstEntry, self.secondEntry]}
+        
+    def test_positive(self):
+        self.assertTrue(self.blog_recognizer.has_text_longer_than(self.pattern, 10))
+
+    def test_negative(self):
+        self.assertFalse(self.blog_recognizer.has_text_longer_than(self.pattern, 20))
