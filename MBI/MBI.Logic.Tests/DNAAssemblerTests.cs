@@ -77,7 +77,7 @@ namespace MBI.Logic.Tests
 			_scaffoldValidatorMock.Expect(x => x.Validate(assembly1, pairedEndTags)).Return(3);
 			_scaffoldValidatorMock.Expect(x => x.Validate(assembly2, pairedEndTags)).Return(2);
 			_scaffoldValidatorMock.Expect(x => x.Validate(assembly3, pairedEndTags)).Return(1);
-			_scaffoldValidatorMock.Expect(x => x.Validate(Arg<IEnumerable<string>>.Is.Anything, Arg<PairedEndTag[]>.Is.Equal(pairedEndTags))).Return(0);
+			_scaffoldValidatorMock.Expect(x => x.Validate(Arg<string[]>.Is.Anything, Arg<PairedEndTag[]>.Is.Equal(pairedEndTags))).Return(0);
 			
 			// Act
 			var result = _dnaAssembler.Assemble(new[] { contig1, contig2, contig3 }, pairedEndTags);

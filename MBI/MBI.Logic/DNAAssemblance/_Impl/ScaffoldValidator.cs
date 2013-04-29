@@ -1,32 +1,68 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class ScaffoldValidator : IScaffoldValidator
 	{
-		public int Validate(IEnumerable<string> contigs, IEnumerable<PairedEndTag> pairedEndTags)
+		public int Validate(string[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = 0;
-			var flags = pairedEndTags.ToDictionary(x => x, x => false);
 
-			foreach (var contig in contigs)
+			foreach (var pet in pairedEndTags)
 			{
-				foreach (var tag in pairedEndTags)
-				{
-					if (contig.Contains(tag.Beginning))
-					{
-						flags[tag] = true;
-					}
+				var beginningFound = false;
+				var endFound = false;
+				var totalLength = 0;
 
-					if (flags[tag] && contig.Contains(tag.End))
+				foreach (var contig in contigs)
+				{
+					if (beginningFound)
 					{
-						result += tag.Beginning.Length + tag.End.Length;
+						if (contig.Contains(pet.End))
+						{
+							totalLength += GetPetEndLengthInContig(contig, pet.End);
+							endFound = true;
+
+							break;
+						}
+						else
+						{
+							totalLength += contig.Length;
+						}
 					}
+					else if (contig.Contains(pet.Beginning))
+					{
+						beginningFound = true;
+						totalLength += GetPetBeginningLengthInContig(contig, pet.Beginning);
+					}
+				}
+
+				if (endFound && totalLength <= pet.Length)
+				{
+					result += pet.Beginning.Length + pet.End.Length;
+				}
+				else if (contigs.First().Contains(pet.End))
+				{
+					result += pet.End.Length;
+				}
+				else if (contigs.Last().Contains(pet.Beginning))
+				{
+					result += pet.Beginning.Length;
 				}
 			}
 
 			return result;
+		}
+
+		private int GetPetBeginningLengthInContig(string contig, string petBeginning)
+		{
+			return contig.Split(new[] { petBeginning }, StringSplitOptions.None).Last().Length + petBeginning.Length;
+		}
+
+		private int GetPetEndLengthInContig(string contig, string petEnd)
+		{
+			return contig.Split(new[] { petEnd }, StringSplitOptions.None).First().Length + petEnd.Length;
 		}
 	}
 }

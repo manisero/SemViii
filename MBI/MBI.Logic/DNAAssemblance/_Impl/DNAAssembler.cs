@@ -17,7 +17,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 		{
 			var result = new List<Scaffold>();
 
-			foreach (var permutation in contigs.GetPermutations())
+			foreach (var permutation in contigs.GetPermutations().Select(x => x.ToArray()))
 			{
 				var rank = _assemblyValidator.Validate(permutation, pairedEndTags);
 
