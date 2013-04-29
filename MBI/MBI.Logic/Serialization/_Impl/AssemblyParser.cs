@@ -7,16 +7,16 @@ namespace MBI.Logic.Serialization._Impl
 {
 	public class AssemblyParser : IAssemblyParser
 	{
-		private readonly IStreamHandler _streamReader;
+		private readonly IStreamHandler _streamHandler;
 
-		public AssemblyParser(IStreamHandler streamReader)
+		public AssemblyParser(IStreamHandler streamHandler)
 		{
-			_streamReader = streamReader;
+			_streamHandler = streamHandler;
 		}
 
 		public DNAAssembly Parse(Stream inputStream)
 		{
-			var inputText = _streamReader.Read(inputStream);
+			var inputText = _streamHandler.Read(inputStream);
 
 			ValiateInputText(inputText);
 

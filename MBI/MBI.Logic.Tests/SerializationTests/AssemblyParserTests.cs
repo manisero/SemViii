@@ -10,14 +10,14 @@ namespace MBI.Logic.Tests.SerializationTests
 	[TestFixture]
 	public class AssemblyParserTests
 	{
-		private IStreamHandler _streamReaderMock;
+		private IStreamHandler _streamHandlerMock;
 		private AssemblyParser _assemblyParser;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_streamReaderMock = MockRepository.GenerateMock<IStreamHandler>();
-			_assemblyParser = new AssemblyParser(_streamReaderMock);
+			_streamHandlerMock = MockRepository.GenerateMock<IStreamHandler>();
+			_assemblyParser = new AssemblyParser(_streamHandlerMock);
 		}
 
 		[Test]
@@ -34,7 +34,7 @@ namespace MBI.Logic.Tests.SerializationTests
 			                		"pet2Beginning,pet2End,20"
 			                	};
 
-			_streamReaderMock.Expect(x => x.Read(inputStream)).Return(inputText);
+			_streamHandlerMock.Expect(x => x.Read(inputStream)).Return(inputText);
 
 			// Act
 			var result = _assemblyParser.Parse(inputStream);
@@ -57,6 +57,8 @@ namespace MBI.Logic.Tests.SerializationTests
 			Assert.AreEqual("pet2Beginning", result.PairedEndTags[1].Beginning);
 			Assert.AreEqual("pet2End", result.PairedEndTags[1].End);
 			Assert.AreEqual(20, result.PairedEndTags[1].Length);
+
+			_streamHandlerMock.VerifyAllExpectations();
 		}
 
 		[Test]
@@ -71,7 +73,7 @@ namespace MBI.Logic.Tests.SerializationTests
 			                		"petBeginning,petEnd,10"
 			                	};
 
-			_streamReaderMock.Expect(x => x.Read(inputStream)).Return(inputText);
+			_streamHandlerMock.Expect(x => x.Read(inputStream)).Return(inputText);
 
 			// Act
 			_assemblyParser.Parse(inputStream);
@@ -88,7 +90,7 @@ namespace MBI.Logic.Tests.SerializationTests
 			                		"contig"
 			                	};
 
-			_streamReaderMock.Expect(x => x.Read(inputStream)).Return(inputText);
+			_streamHandlerMock.Expect(x => x.Read(inputStream)).Return(inputText);
 
 			// Act
 			_assemblyParser.Parse(inputStream);
@@ -107,7 +109,7 @@ namespace MBI.Logic.Tests.SerializationTests
 			                		"invalid_pet"
 			                	};
 
-			_streamReaderMock.Expect(x => x.Read(inputStream)).Return(inputText);
+			_streamHandlerMock.Expect(x => x.Read(inputStream)).Return(inputText);
 
 			// Act
 			_assemblyParser.Parse(inputStream);
@@ -126,7 +128,7 @@ namespace MBI.Logic.Tests.SerializationTests
 			                		"petBeginning,petEnd,invalidLength"
 			                	};
 
-			_streamReaderMock.Expect(x => x.Read(inputStream)).Return(inputText);
+			_streamHandlerMock.Expect(x => x.Read(inputStream)).Return(inputText);
 
 			// Act
 			_assemblyParser.Parse(inputStream);
