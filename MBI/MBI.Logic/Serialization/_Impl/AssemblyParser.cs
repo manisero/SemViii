@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace MBI.Logic.AssemblyParsing._Impl
+namespace MBI.Logic.Serialization._Impl
 {
 	public class AssemblyParser : IAssemblyParser
 	{

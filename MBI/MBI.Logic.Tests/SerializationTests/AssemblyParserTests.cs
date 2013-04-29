@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using MBI.Logic.AssemblyParsing;
-using MBI.Logic.AssemblyParsing._Impl;
+using MBI.Logic.Serialization;
+using MBI.Logic.Serialization._Impl;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace MBI.Logic.Tests
+namespace MBI.Logic.Tests.SerializationTests
 {
 	[TestFixture]
 	public class AssemblyParserTests

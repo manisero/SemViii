@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace MBI.Logic.AssemblyParsing._Impl
+namespace MBI.Logic.Serialization._Impl
 {
 	public class StreamReader : IStreamReader
 	{

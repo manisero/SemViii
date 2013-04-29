@@ -1,9 +1,8 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using NUnit.Framework;
 
-namespace MBI.Logic.Tests.AssemblyParsingTests
+namespace MBI.Logic.Tests.SerializationTests
 {
 	[TestFixture]
 	public class StreamReaderTests
@@ -22,7 +21,7 @@ namespace MBI.Logic.Tests.AssemblyParsingTests
 			var stream = new MemoryStream(ASCIIEncoding.Default.GetBytes(string.Join("\n", text)));
 			
 			// Act
-			var result = new AssemblyParsing._Impl.StreamReader().Read(stream);
+			var result = new Serialization._Impl.StreamReader().Read(stream);
 
 			// Assert
 			CollectionAssert.AreEqual(text, result);
