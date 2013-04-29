@@ -40,15 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DNAAssemblance\Scaffold.cs" />
+    <Compile Include="DNAAssembly.cs" />
+    <Compile Include="AssemblyParser\_Impl\AssemblyParser.cs" />
+    <Compile Include="AssemblyParser\IAssemblyParser.cs" />
+    <Compile Include="Scaffold.cs" />
     <Compile Include="DNAAssemblance\IScaffoldValidator.cs" />
     <Compile Include="DNAAssemblance\IDNAAssembler.cs" />
-    <Compile Include="DNAAssemblance\PairedEndTag.cs" />
+    <Compile Include="PairedEndTag.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DNAAssemblance\_Impl\ScaffoldValidator.cs" />
     <Compile Include="DNAAssemblance\_Impl\DNAAssembler.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

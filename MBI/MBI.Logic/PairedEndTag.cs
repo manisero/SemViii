@@ -1,4 +1,4 @@
-﻿namespace MBI.Logic.DNAAssemblance
+﻿namespace MBI.Logic
 {
 	public class PairedEndTag
 	{
