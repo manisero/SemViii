@@ -2,16 +2,26 @@
 using MBI.Logic.DNAAssemblance;
 using MBI.Logic.DNAAssemblance._Impl;
 using MBI.Logic.Tests.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using Moq;
+using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace MBI.Logic.Tests
 {
-	[TestClass]
-	public class DNAAssemblerTests : TestsBase
+	[TestFixture]
+	public class DNAAssemblerTests
 	{
-		[TestMethod]
+		private IScaffoldValidator _scaffoldValidatorMock;
+		private DNAAssembler _dnaAssembler;
+
+		[SetUp]
+		public void SetUp()
+		{
+			_scaffoldValidatorMock = MockRepository.GenerateStrictMock<IScaffoldValidator>();
+			_dnaAssembler = new DNAAssembler(_scaffoldValidatorMock);
+		}
+
+		[Test]
 		public void assigns_ranks_to_assemblies()
 		{
 			// Arrange
@@ -19,39 +29,39 @@ namespace MBI.Logic.Tests
 			var pairedEndTags = new[] { new PairedEndTag() };
 			var rank = 3;
 
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(contigs, pairedEndTags)).Returns(rank);
+			_scaffoldValidatorMock.Expect(x => x.Validate(contigs, pairedEndTags)).Return(rank);
 
 			// Act
-			var result = AutoMoqer.Resolve<DNAAssembler>().Assemble(contigs, pairedEndTags).ToList();
+			var result = _dnaAssembler.Assemble(contigs, pairedEndTags).ToList();
 
 			// Assert
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.Count);
 			Assert.AreEqual(rank, result[0].Rank);
 
-			AutoMoqer.GetMock<IAssemblyValidator>().VerifyAll();
+			_scaffoldValidatorMock.VerifyAllExpectations();
 		}
 
-		[TestMethod]
+		[Test]
 		public void rejects_assemblies_of_rank_0()
 		{
 			// Arrange
 			var contigs = new[] { "aaa" };
 			var pairedEndTags = new[] { new PairedEndTag() };
 
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(contigs, pairedEndTags)).Returns(0);
+			_scaffoldValidatorMock.Expect(x => x.Validate(contigs, pairedEndTags)).Return(0);
 
 			// Act
-			var result = AutoMoqer.Resolve<DNAAssembler>().Assemble(contigs, pairedEndTags).ToList();
+			var result = _dnaAssembler.Assemble(contigs, pairedEndTags).ToList();
 
 			// Assert
 			Assert.IsNotNull(result);
 			Assert.AreEqual(0, result.Count);
 
-			AutoMoqer.GetMock<IAssemblyValidator>().VerifyAll();
+			_scaffoldValidatorMock.VerifyAllExpectations();
 		}
 
-		[TestMethod]
+		[Test]
 		public void sorts_assemblies_by_rank()
 		{
 			// Arrange
@@ -64,13 +74,13 @@ namespace MBI.Logic.Tests
 			var assembly2 = new[] { contig1, contig3, contig2 };
 			var assembly3 = new[] { contig3, contig2, contig1 };
 
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(It.IsAny<IEnumerable<string>>(), pairedEndTags)).Returns(0);
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(assembly1, pairedEndTags)).Returns(3);
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(assembly2, pairedEndTags)).Returns(2);
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(assembly3, pairedEndTags)).Returns(1);
-
+			_scaffoldValidatorMock.Expect(x => x.Validate(assembly1, pairedEndTags)).Return(3);
+			_scaffoldValidatorMock.Expect(x => x.Validate(assembly2, pairedEndTags)).Return(2);
+			_scaffoldValidatorMock.Expect(x => x.Validate(assembly3, pairedEndTags)).Return(1);
+			_scaffoldValidatorMock.Expect(x => x.Validate(Arg<IEnumerable<string>>.Is.Anything, Arg<PairedEndTag[]>.Is.Equal(pairedEndTags))).Return(0);
+			
 			// Act
-			var result = AutoMoqer.Resolve<DNAAssembler>().Assemble(new[] { contig1, contig2, contig3 }, pairedEndTags);
+			var result = _dnaAssembler.Assemble(new[] { contig1, contig2, contig3 }, pairedEndTags);
 
 			// Assert
 			Assert.IsNotNull(result);
@@ -78,11 +88,11 @@ namespace MBI.Logic.Tests
 			AssertExtensions.AreEqual(assembly1, result[0].Contigs);
 			AssertExtensions.AreEqual(assembly2, result[1].Contigs);
 			AssertExtensions.AreEqual(assembly3, result[2].Contigs);
-			
-			AutoMoqer.GetMock<IAssemblyValidator>().VerifyAll();
+
+			_scaffoldValidatorMock.VerifyAllExpectations();
 		}
 
-		[TestMethod]
+		[Test]
 		public void validates_all_contigs_combinations()
 		{
 			// Arrange
@@ -91,18 +101,18 @@ namespace MBI.Logic.Tests
 			var contig3 = "ccc";
 			var pairedEndTags = new[] { new PairedEndTag() };
 
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(new[] { contig1, contig2, contig3 }, pairedEndTags)).Returns(0);
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(new[] { contig1, contig3, contig2 }, pairedEndTags)).Returns(0);
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(new[] { contig2, contig1, contig3 }, pairedEndTags)).Returns(0);
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(new[] { contig2, contig3, contig1 }, pairedEndTags)).Returns(0);
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(new[] { contig3, contig1, contig2 }, pairedEndTags)).Returns(0);
-			AutoMoqer.GetMock<IAssemblyValidator>().Setup(x => x.Validate(new[] { contig3, contig2, contig1 }, pairedEndTags)).Returns(0);
+			_scaffoldValidatorMock.Expect(x => x.Validate(new[] { contig1, contig2, contig3 }, pairedEndTags)).Return(0);
+			_scaffoldValidatorMock.Expect(x => x.Validate(new[] { contig1, contig3, contig2 }, pairedEndTags)).Return(0);
+			_scaffoldValidatorMock.Expect(x => x.Validate(new[] { contig2, contig1, contig3 }, pairedEndTags)).Return(0);
+			_scaffoldValidatorMock.Expect(x => x.Validate(new[] { contig2, contig3, contig1 }, pairedEndTags)).Return(0);
+			_scaffoldValidatorMock.Expect(x => x.Validate(new[] { contig3, contig1, contig2 }, pairedEndTags)).Return(0);
+			_scaffoldValidatorMock.Expect(x => x.Validate(new[] { contig3, contig2, contig1 }, pairedEndTags)).Return(0);
 
 			// Act
-			AutoMoqer.Resolve<DNAAssembler>().Assemble(new[] { contig1, contig2, contig3 }, pairedEndTags);
+			_dnaAssembler.Assemble(new[] { contig1, contig2, contig3 }, pairedEndTags);
 
 			// Assert
-			AutoMoqer.GetMock<IAssemblyValidator>().VerifyAll();
+			_scaffoldValidatorMock.VerifyAllExpectations();
 		}
 	}
 }
