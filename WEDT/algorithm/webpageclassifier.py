@@ -8,6 +8,7 @@
 """
 import inspect
 from algorithm.blogrecognizer import BlogRecognizer
+from algorithm.imagebasedwebsiterecognizer import ImageBasedWebsiteRecognizer
 from config.configurationprovider import ConfigurationProvider
 from tree.htmltreebrowser import HTMLTreeBrowser
 from tree.htmltreebuilder import HTMLTreeBuilder
@@ -20,7 +21,7 @@ class WebPageClassifier:
     __configuration_provider = None
 
     def __init__(self, config_file):
-        self.__classifiers = {None: 0, BlogRecognizer(): 1}
+        self.__classifiers = {None: 0, BlogRecognizer(): 1, ImageBasedWebsiteRecognizer(): 2}
         self.__tree_builder = HTMLTreeBuilder()
         self.__tree_browser = HTMLTreeBrowser()
         self.__configuration_provider = ConfigurationProvider(config_file)
