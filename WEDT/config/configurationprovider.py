@@ -10,7 +10,10 @@ import ConfigParser
 
 
 class ConfigurationProvider:
-    __config_file = 'config.ini'
+    __config_file = ''
+
+    def __init__(self, config_file):
+        self.__config_file = config_file
 
     def get_configuration(self, object):
         config = ConfigParser.ConfigParser()

@@ -1,17 +1,13 @@
 import sys
-from config.configurationprovider import ConfigurationProvider
-from tree.htmltreebrowser import HTMLTreeBrowser
+from algorithm.webpageclassifier import WebPageClassifier
 from web.webpagecontentdownloader import WebPageContentDownloader
-from tree.htmltreebuilder import HTMLTreeBuilder
-from algorithm.blogrecognizer import BlogRecognizer
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         try:
             content = WebPageContentDownloader().download(sys.argv[1])
 
-            print 'Is this a blog? ' + str(BlogRecognizer().is_blog(content, HTMLTreeBuilder(),
-                                                                    HTMLTreeBrowser(), ConfigurationProvider()))
+            print 'Classification: ' + str(WebPageClassifier('config.ini').classify(content))
 
         except Exception as ex:
 
