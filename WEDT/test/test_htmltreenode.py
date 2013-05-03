@@ -7,7 +7,7 @@
         
     @author: Jakub Turek
     @contact: jkbturek(at)gmail(dot)com
-    @date: 28-04-2013
+    @date: 03-05-2013
     @version: 1.0
 """
 

@@ -1,9 +1,14 @@
-'''
-Created on 29-04-2013
+"""
+    Allows to download given web page content as HTML using C{download(url)} method.
 
-@author: turekj
-'''
+    @author: Jakub Turek
+    @contact: jkbturek(at)gmail(dot)com
+    @date: 03-05-2013
+    @note: The class forces content's ASCII encoding.
+    @version: 1.0
+"""
 import urllib2
+
 
 class WebPageContentDownloader:
     __default_charset = 'utf8'

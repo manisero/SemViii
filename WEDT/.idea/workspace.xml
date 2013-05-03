@@ -6,9 +6,13 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/htmltreenode.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367594994627" ignored="false" />
     <file path="/test_main.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367592718465" ignored="false" />
-    <file path="/htmltreebrowser.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367598370871" ignored="false" />
+    <file path="/htmltreebrowser.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367600831986" ignored="false" />
     <file path="/test_htmltreenode.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367595849069" ignored="false" />
-    <file path="/test_htmltreebrowser.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367598035054" ignored="false" />
+    <file path="/test_htmltreebrowser.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367600760917" ignored="false" />
+    <file path="/blogrecognizer.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367607914801" ignored="false" />
+    <file path="/htmltreebuilder.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367603150756" ignored="false" />
+    <file path="/main.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367605473209" ignored="false" />
+    <file path="/webpagecontentdownloader.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367608156311" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,67 +32,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="blogrecognizer.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/algorithm/blogrecognizer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="4" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="htmltreebrowser.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tree/htmltreebrowser.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="0" selection-start="1397" selection-end="1397" vertical-scroll-proportion="0.77922076">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="test_htmltreebrowser.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/test_htmltreebrowser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="43" selection-start="1352" selection-end="1352" vertical-scroll-proportion="0.0">
+            <state line="17" column="20" selection-start="504" selection-end="504" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#258#273#0" expanded="true" />
+                <element signature="e#374#389#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="htmltreebuilder.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tree/htmltreebuilder.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="22" selection-start="657" selection-end="657" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="htmltreenode.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tree/htmltreenode.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="28" selection-start="2750" selection-end="2770" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_main.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_htmltreebuilder.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/test_htmltreebuilder.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="239" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -96,8 +46,28 @@
       <file leaf-file-name="test_htmltreenode.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/test_htmltreenode.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="144" column="42" selection-start="6509" selection-end="6509" vertical-scroll-proportion="0.0">
+            <state line="15" column="0" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="webpagecontentdownloader.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/webpagecontentdownloader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="17" selection-start="248" selection-end="248" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="0" selection-start="740" selection-end="740" vertical-scroll-proportion="0.77272725">
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -112,14 +82,17 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/algorithm/blogrecognizer.py" />
-        <option value="$PROJECT_DIR$/tree/htmltreebuilder.py" />
         <option value="$PROJECT_DIR$/test/test_htmltreebuilder.py" />
-        <option value="$PROJECT_DIR$/test_main.py" />
         <option value="$PROJECT_DIR$/tree/htmltreenode.py" />
         <option value="$PROJECT_DIR$/test/test_htmltreenode.py" />
         <option value="$PROJECT_DIR$/test/test_htmltreebrowser.py" />
+        <option value="$PROJECT_DIR$/tree/htmltreebuilder.py" />
+        <option value="$PROJECT_DIR$/test_main.py" />
+        <option value="$PROJECT_DIR$/algorithm/imagebasedwebsiterecognizer.py" />
         <option value="$PROJECT_DIR$/tree/htmltreebrowser.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/algorithm/blogrecognizer.py" />
+        <option value="$PROJECT_DIR$/web/webpagecontentdownloader.py" />
       </list>
     </option>
   </component>
@@ -184,6 +157,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEDT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEDT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="tree" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -221,10 +208,15 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
     <property name="recentsLimit" value="5" />
+    <property name="restartRequiresConfirmation" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -234,8 +226,8 @@
       <PyConsoleSettings />
     </option>
   </component>
-  <component name="RunManager" selected="Python.test_main">
-    <configuration default="false" name="test_main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.Application">
+    <configuration default="false" name="Tests" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -250,6 +242,25 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_main.py" />
       <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Application" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="WEDT" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="http://onet.pl" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
@@ -313,12 +324,14 @@
       <option name="USE_PATTERN" value="false" />
       <method />
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Python.test_main" />
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Python.Tests" />
+      <item index="1" class="java.lang.String" itemvalue="Python.Application" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Python.test_main" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="Python.Application" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Tests" />
       </list>
     </recent_temporary>
   </component>
@@ -374,6 +387,7 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952926" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24903475" sideWeight="0.6787205" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24710424" sideWeight="0.6787205" order="0" side_tool="false" content_ui="combo" />
@@ -385,7 +399,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -459,61 +472,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algorithm/blogrecognizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="4" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_htmltreenode.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="144" column="42" selection-start="6509" selection-end="6509" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_htmltreebuilder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="239" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tree/htmltreenode.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="28" selection-start="2750" selection-end="2770" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="0.0">
+        <state line="7" column="3" selection-start="159" selection-end="159" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tree/htmltreebuilder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="22" selection-start="657" selection-end="657" vertical-scroll-proportion="0.0">
+        <state line="52" column="17" selection-start="1632" selection-end="1632" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algorithm/imagebasedwebsiterecognizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="36" selection-start="397" selection-end="397" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#47#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algorithm/blogrecognizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="24" selection-start="1272" selection-end="1272" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_htmltreebuilder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="307" selection-end="307" vertical-scroll-proportion="0.5011338">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/test_htmltreebrowser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="43" selection-start="1352" selection-end="1352" vertical-scroll-proportion="0.0">
+        <state line="17" column="20" selection-start="504" selection-end="504" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#258#273#0" expanded="true" />
+            <element signature="e#374#389#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_htmltreenode.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/webpagecontentdownloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="17" selection-start="248" selection-end="248" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tree/htmltreebrowser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="0" selection-start="1397" selection-end="1397" vertical-scroll-proportion="0.77922076">
+        <state line="60" column="50" selection-start="1978" selection-end="1978" vertical-scroll-proportion="2.2077923">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tree/htmltreenode.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="99" column="28" selection-start="2750" selection-end="2770" vertical-scroll-proportion="0.33766234">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="0" selection-start="740" selection-end="740" vertical-scroll-proportion="0.77272725">
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

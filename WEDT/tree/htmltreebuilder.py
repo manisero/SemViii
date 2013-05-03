@@ -11,20 +11,22 @@
 from HTMLParser import HTMLParser
 from tree.htmltreenode import HTMLTreeNode
 
+
 class HTMLTreeBuilder(HTMLParser):
     __root = None
     __valid_tags = None
     __valid_attributes = None
     __last_node = None
     
-    def handle_starttag(self, tag, attrs):
+    def handle_starttag(self, tag, attributes):
         if self.__valid_tags is not None and tag not in self.__valid_tags:
             return
         
-        attributes = { attribute: value for attribute, value in reversed(attrs)}
+        attributes = {attribute: value for attribute, value in reversed(attributes)}
         
         if self.__valid_attributes is not None:
-            attributes = { attribute: attributes[attribute] for attribute in filter(lambda x: x in attributes, self.__valid_attributes)}
+            attributes = {attribute: attributes[attribute] for attribute in
+                          filter(lambda x: x in attributes, self.__valid_attributes)}
         
         node = HTMLTreeNode(tag, "", attributes)
         
@@ -35,7 +37,7 @@ class HTMLTreeBuilder(HTMLParser):
             self.__last_node.add_node(node)
             self.__last_node = node
             
-        if (tag == 'img'):
+        if tag == 'img':
             self.handle_endtag(tag)
     
     def handle_endtag(self, tag):
@@ -48,13 +50,13 @@ class HTMLTreeBuilder(HTMLParser):
         if self.__last_node is not None:
             self.__last_node.append_text(data)
     
-    def build_tree(self, html, valid_tags = None, valid_attributes = None):
+    def build_tree(self, html, valid_tags=None, valid_attributes=None):
         """
             Builds C{HTMLTreeNode} out of C{html}.
             
             @param html: HTML source code to process
             @param valid_tags: List of HTML tags converted to tree nodes. If C{None} constructs tree of all tags.
-            @param valid_attributes: List of HTML tag attributes stored in tree nodes. If C{None} stores all the attributes.
+            @param valid_attributes: List of HTML attributes stored in tree nodes. If C{None} stores all the attributes.
             
             @rtype: HTMLTreeNode
         """

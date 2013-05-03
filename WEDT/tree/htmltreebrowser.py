@@ -15,6 +15,7 @@ class HTMLTreeBrowser:
 
         while current_node is not None:
             if valid_tags is not None and current_node.get_tag() not in valid_tags:
+                current_node = current_node.next()
                 continue
 
             repeated_nodes_entry = self.__get_nodes_dictionary_entry(current_node, repeated_nodes, valid_attributes)
@@ -58,6 +59,7 @@ class HTMLTreeBrowser:
 
         while current_node is not None:
             if group_tags is not None and current_node.get_tag() not in group_tags:
+                current_node = current_node.next()
                 continue
 
             grouped_length_entry = self.__get_nodes_dictionary_entry(current_node, grouped_text_length, group_attributes)
