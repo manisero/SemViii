@@ -112,9 +112,4 @@ class PreviousHTMLTreeNodeTest(BaseTreeNodeTest):
         
         current_node = current_node.previous()
         self.assertEquals(current_node, None)
-
-class HTMLTreeNodeTestSuite(unittest.TestSuite):
-    def __init__(self):
-        self.addTests([AddNodesHTMLTreeNodeTest(), NextHTMLTreeNodeTest(), PreviousHTMLTreeNodeTest()])
-
         
