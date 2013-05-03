@@ -1,4 +1,5 @@
 import sys
+from config.configurationprovider import ConfigurationProvider
 from tree.htmltreebrowser import HTMLTreeBrowser
 from web.webpagecontentdownloader import WebPageContentDownloader
 from tree.htmltreebuilder import HTMLTreeBuilder
@@ -9,7 +10,8 @@ if __name__ == "__main__":
         try:
             content = WebPageContentDownloader().download(sys.argv[1])
 
-            print 'Is this a blog? ' + str(BlogRecognizer().is_blog(content, HTMLTreeBuilder(), HTMLTreeBrowser(), 200))
+            print 'Is this a blog? ' + str(BlogRecognizer().is_blog(content, HTMLTreeBuilder(),
+                                                                    HTMLTreeBrowser(), ConfigurationProvider()))
 
         except Exception as ex:
 

@@ -9,10 +9,12 @@
     <file path="/htmltreebrowser.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367600831986" ignored="false" />
     <file path="/test_htmltreenode.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367595849069" ignored="false" />
     <file path="/test_htmltreebrowser.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367600760917" ignored="false" />
-    <file path="/blogrecognizer.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367607914801" ignored="false" />
+    <file path="/blogrecognizer.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367609707363" ignored="false" />
     <file path="/htmltreebuilder.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367603150756" ignored="false" />
-    <file path="/main.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367605473209" ignored="false" />
+    <file path="/main.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367608640944" ignored="false" />
     <file path="/webpagecontentdownloader.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367608156311" ignored="false" />
+    <file path="/configurationprovider.py" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367609815907" ignored="false" />
+    <file path="/config.ini" changelist="1848d79b-2988-458a-b7f8-f9325998b614" time="1367609645510" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +34,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="blogrecognizer.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/algorithm/blogrecognizer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="0" selection-start="26" selection-end="130" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.ini" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config.ini">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="24" selection-start="143" selection-end="167" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="configurationprovider.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/configurationprovider.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="4" selection-start="55" selection-end="55" vertical-scroll-proportion="0.11038961">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="test_htmltreebrowser.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/test_htmltreebrowser.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -61,10 +90,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="0" selection-start="740" selection-end="740" vertical-scroll-proportion="0.77272725">
+            <state line="13" column="110" selection-start="635" selection-end="635" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -90,9 +119,11 @@
         <option value="$PROJECT_DIR$/test_main.py" />
         <option value="$PROJECT_DIR$/algorithm/imagebasedwebsiterecognizer.py" />
         <option value="$PROJECT_DIR$/tree/htmltreebrowser.py" />
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/algorithm/blogrecognizer.py" />
         <option value="$PROJECT_DIR$/web/webpagecontentdownloader.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/config.ini" />
+        <option value="$PROJECT_DIR$/algorithm/blogrecognizer.py" />
+        <option value="$PROJECT_DIR$/config/configurationprovider.py" />
       </list>
     </option>
   </component>
@@ -199,6 +230,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEDT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEDT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="algorithm" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -285,6 +330,24 @@
       <option name="USE_PATTERN" value="false" />
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="docs" factoryName="Docutils task">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="WEDT" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="docutils_input_file" value="" />
+      <option name="docutils_output_file" value="" />
+      <option name="docutils_params" value="" />
+      <option name="docutils_task" value="" />
+      <option name="docutils_open_in_browser" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -495,32 +558,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algorithm/blogrecognizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="24" selection-start="1272" selection-end="1272" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/test_htmltreebuilder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="0" selection-start="307" selection-end="307" vertical-scroll-proportion="0.5011338">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_htmltreebrowser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="20" selection-start="504" selection-end="504" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#374#389#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_htmltreenode.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -546,12 +586,49 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_htmltreebrowser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="20" selection-start="504" selection-end="504" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#374#389#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_htmltreenode.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="740" selection-end="740" vertical-scroll-proportion="0.77272725">
+        <state line="13" column="110" selection-start="635" selection-end="635" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="24" selection-start="143" selection-end="167" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algorithm/blogrecognizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="26" selection-end="130" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/configurationprovider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="4" selection-start="55" selection-end="55" vertical-scroll-proportion="0.11038961">
+          <folding />
         </state>
       </provider>
     </entry>
