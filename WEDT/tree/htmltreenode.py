@@ -12,6 +12,8 @@
     @date: 28-04-2013
     @version: 1.0
 """
+import re
+
 
 class HTMLTreeNode:
     __tag = ""
@@ -46,7 +48,8 @@ class HTMLTreeNode:
         self.__parent = parent
         
     def append_text(self, text):
-        self.__text += str(text).strip()
+        self.__text += str(text)
+        self.__text = re.sub('\s+', ' ', self.__text)
         
     def add_node(self, node):
         self.__nodes.append(node)
