@@ -1,26 +1,23 @@
 import sys
+from config.configurationprovider import ConfigurationProvider
+from tree.htmltreebrowser import HTMLTreeBrowser
 from web.webpagecontentdownloader import WebPageContentDownloader
 from tree.htmltreebuilder import HTMLTreeBuilder
 from algorithm.blogrecognizer import BlogRecognizer
-from algorithm.imagebasedwebsiterecognizer import ImageBasedWebsiteRecognizer
 
 if __name__ == "__main__":
-	
-	if len(sys.argv) > 1:
-		try:
-			content = WebPageContentDownloader().download(sys.argv[1])
-			
-		except Exception as ex:
-			
-			print >> sys.stderr, 'Failed to open URL: ' + sys.argv[1]
-			print >> sys.stderr, str(ex)
-			sys.exit(-1)
-			
-		html_tree = HTMLTreeBuilder().build_tree(content, ['div', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'img', 'script'], ['class', 'src'])
+    if len(sys.argv) > 1:
+        try:
+            content = WebPageContentDownloader().download(sys.argv[1])
 
-		print 'Is this a blog? ' + str(BlogRecognizer().is_blog(html_tree))
-		print 'Is this an image-based social media webpage? ' + str(ImageBasedWebsiteRecognizer().is_image_based_website(html_tree))
-			
+            print 'Is this a blog? ' + str(BlogRecognizer().is_blog(content, HTMLTreeBuilder(),
+                                                                    HTMLTreeBrowser(), ConfigurationProvider()))
 
-	else:
-		print >> sys.stderr, 'Bad syntax. Use: ' + sys.argv[0] + ' url'
+        except Exception as ex:
+
+            print >> sys.stderr, 'Failed to open URL: ' + sys.argv[1]
+            print >> sys.stderr, str(ex)
+            sys.exit(-1)
+
+    else:
+        print >> sys.stderr, 'Bad syntax. Use: ' + sys.argv[0] + ' url'

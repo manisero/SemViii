@@ -1,81 +1,61 @@
-'''
-Created on 29-04-2013
+"""
+    Blog recognizer.
 
-@author: turekj
-'''
+    @author: Jakub Turek
+    @contact: jkbturek(at)gmail(dot)com
+    @date: 03-05-2013
+    @version: 1.0
+"""
+
+
 class BlogRecognizer:
-    def is_blog(self, html_tree):
-        pattern = self.get_repeating_pattern(html_tree, ['div'], 'class', 5)
-        
-        filtered_pattern = self.has_mutual_parent(pattern)
-        
-        if filtered_pattern.keys() > 0:
-            return self.has_text_longer_than(pattern, 'div', 'class', 5, 150)
-        
-        return False
-    
-    def get_repeating_pattern(self, html_tree, tags, attribute, minimum_repeats):
-        current_node = html_tree
-        
-        attribute_sorted_nodes = {}
-        
-        while current_node is not None:
-            if current_node.get_tag() in tags and attribute in current_node.get_attributes():
-                attribute_value = current_node.get_attributes()[attribute]
-                
-                if attribute_value not in attribute_sorted_nodes:
-                    attribute_sorted_nodes[attribute_value] = []
-                    
-                attribute_sorted_nodes[attribute_value].append(current_node) 
-                
-            current_node = current_node.next()
-            
-        repeated_nodes = { attribute: attribute_sorted_nodes[attribute] for attribute in attribute_sorted_nodes.keys() if len(attribute_sorted_nodes[attribute]) >= minimum_repeats }
-        
-        return repeated_nodes
+    def is_blog(self, html, tree_builder, tree_browser, configuration_provider):
+        """
+        @type tree_builder: HTMLTreeBuilder
+        @type tree_browser: HTMLTreeBrowser
+        @type configuration_provider: ConfigurationProvider
+        """
+        configuration = configuration_provider.get_configuration(self)
 
-    def has_mutual_parent(self, pattern):
-        mutual_parent_pattern = {}
-        
-        for attribute_value in pattern:
-            parent = None
-            mutual_parent = True
-            
-            for node in pattern[attribute_value]:
-                if parent is None:
-                    parent = node.get_parent()
-                elif node.get_parent() != parent:
-                    mutual_parent = False
-                    break
-                
-            if mutual_parent:
-                mutual_parent_pattern[attribute_value] = pattern[attribute_value]
-                
-        return mutual_parent_pattern
-    
-    def has_text_longer_than(self, pattern, group_tag, group_attribute, minimum_repeats, min_length):
-        text_length_dictionary = {}
-        
-        for attribute_value in pattern:
-            for node in pattern[attribute_value]:
-                nodes = [node]
-            
-                while len(nodes) > 0:
-                    for node in nodes:
-                        if node.get_tag() == group_tag:
-                            if group_attribute in node.get_attributes():
-                                group_attribute_value = node.get_attributes()[group_attribute]
-    
-                                if group_attribute_value not in text_length_dictionary:
-                                    text_length_dictionary[group_attribute_value] = 0
-                                    
-                                if len(node.get_text()) > min_length:
-                                    text_length_dictionary[group_attribute_value] = text_length_dictionary[group_attribute_value] + 1
-                
-                    nodes = node.get_nodes()
-                    
-        for group_attribute_value in text_length_dictionary:
-            if text_length_dictionary[group_attribute_value] >= minimum_repeats:
-                return True
-        
+        html_tree = tree_builder.build_tree(html, configuration['parsed_tree_attributes'].split(';'))
+
+        repeating_patterns = tree_browser.get_repeated_nodes(html_tree,
+                                                             int(configuration['min_notes']),
+                                                             configuration['repeated_patterns_tags'].split(';'),
+                                                             configuration['repeated_patterns_attributes'].split(';'))
+
+        for pattern in repeating_patterns:
+            if tree_browser.has_mutual_parent(repeating_patterns[pattern]):
+                mutual_text_lengths = None
+
+                for node in repeating_patterns[pattern]:
+                    node.set_parent(node)
+                    text_lengths = \
+                        tree_browser.get_grouped_text_length(node, configuration['grouped_texts_tags'].split(';'),
+                                                             configuration['grouped_texts_attributes'].split(';'))
+
+                    if mutual_text_lengths is None:
+                        mutual_text_lengths = text_lengths
+                    else:
+                        mutual_text_lengths = \
+                            self.__get_grouped_text_lengths_mean_intersection(text_lengths, mutual_text_lengths,
+                                                                              configuration['grouped_texts_attributes']
+                                                                              .split(';'))
+
+                mutual_text_lengths = {key: mutual_text_lengths[key] for key in mutual_text_lengths
+                                       if mutual_text_lengths[key] >= int(configuration['min_average_text_length'])}
+
+                if len(mutual_text_lengths) > 0:
+                    return True
+
         return False
+
+    def __get_grouped_text_lengths_mean_intersection(self, first, second, group_attributes):
+        intersection = {}
+
+        for first_key in first:
+            for second_key in second:
+                if first_key.tag_attribute_equals(second_key, group_attributes):
+                    intersection[first_key] = (first[first_key] + second[second_key]) / 2
+
+        return intersection

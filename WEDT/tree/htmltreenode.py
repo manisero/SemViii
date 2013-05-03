@@ -12,6 +12,8 @@
     @date: 28-04-2013
     @version: 1.0
 """
+import re
+
 
 class HTMLTreeNode:
     __tag = ""
@@ -46,7 +48,8 @@ class HTMLTreeNode:
         self.__parent = parent
         
     def append_text(self, text):
-        self.__text += str(text).strip()
+        self.__text += str(text)
+        self.__text = re.sub('\s+', ' ', self.__text)
         
     def add_node(self, node):
         self.__nodes.append(node)
@@ -93,4 +96,16 @@ class HTMLTreeNode:
             previous_node = previous_node.get_nodes()[-1]
         
         return previous_node
-    
+
+    def tag_attribute_equals(self, other_node, compared_attributes=None):
+
+        stripped_self_attributes = self.get_attributes()
+        stripped_other_attributes = other_node.get_attributes()
+
+        if compared_attributes is not None:
+            stripped_self_attributes = {attribute: self.get_attributes()[attribute]
+                                        for attribute in compared_attributes if attribute in self.get_attributes()}
+            stripped_other_attributes = {attribute: other_node.get_attributes()[attribute] for attribute
+                                         in compared_attributes if attribute in other_node.get_attributes()}
+
+        return self.get_tag() == other_node.get_tag() and stripped_self_attributes == stripped_other_attributes

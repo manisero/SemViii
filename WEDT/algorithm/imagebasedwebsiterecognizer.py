@@ -1,11 +1,12 @@
-'''
+"""
 Created on 29-04-2013
 
 @author: turekj
-'''
+"""
 from PIL import Image
 import urllib2
 from StringIO import StringIO
+
 
 class ImageBasedWebsiteRecognizer:
     def is_image_based_website(self, html_tree):
