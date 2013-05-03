@@ -2,6 +2,8 @@
     C{HTMLTreeBrowser} unit tests. Function covered:
 
         - C{get_repeated_nodes(html_tree, minimum_repeats, valid_tags, valid_attributes)}
+        - C{has_mutual_parent(nodes)}
+        - C{get_grouped_text_length(html_tree, group_tags, group_attributes)}
 
     @author: Jakub Turek
     @contact: jkbturek(at)gmail(dot)com
@@ -22,7 +24,7 @@ class BaseHTMLTreeBrowserTest(unittest.TestCase):
         self.first_entry = HTMLTreeNode('p', 'FirstEntry', {'class': 'BlogEntry'})
         self.second_entry = HTMLTreeNode('p', 'SecondEntry', {'class': 'BlogEntry'})
         self.third_entry = HTMLTreeNode('p', 'ThirdEntry', {'class': 'BlogEntry'})
-        self.footer = HTMLTreeNode('div', 'Footer', {'class': 'Footer'})
+        self.footer = HTMLTreeNode('div', 'This is Footer!', {'class': 'Footer'})
 
         self.root.add_nodes([self.first_entry, self.second_entry, self.third_entry, self.footer])
 
@@ -61,3 +63,22 @@ class HasMutualParentHTMLTreeBrowserTest(BaseHTMLTreeBrowserTest):
 
     def test_negative(self):
         self.assertFalse(self.tree_browser.has_mutual_parent([self.first_date, self.second_date]))
+
+
+class GetGroupedTextLengthHTMLTreeBrowserTest(BaseHTMLTreeBrowserTest):
+    def runTest(self):
+        grouped_text_length = self.tree_browser.get_grouped_text_length(self.root)
+
+        self.assertEquals(len(grouped_text_length), 5)
+
+        self.assertIn(self.root, grouped_text_length)
+        self.assertIn(self.first_entry, grouped_text_length)
+        self.assertIn(self.first_date, grouped_text_length)
+        self.assertIn(self.footer, grouped_text_length)
+        self.assertIn(self.first_comments, grouped_text_length)
+
+        self.assertEquals(grouped_text_length[self.root], 6)
+        self.assertEquals(grouped_text_length[self.first_entry], 31)
+        self.assertEquals(grouped_text_length[self.first_date], 19)
+        self.assertEquals(grouped_text_length[self.footer], 15)
+        self.assertEquals(grouped_text_length[self.first_comments], 12)
