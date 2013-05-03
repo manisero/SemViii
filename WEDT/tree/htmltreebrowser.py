@@ -38,3 +38,15 @@ class HTMLTreeBrowser:
                 return key
 
         return None
+
+    def has_mutual_parent(self, nodes):
+        if len(nodes) < 1:
+            return False
+
+        first_parent = nodes[0].get_parent()
+
+        for node in nodes:
+            if node.get_parent() is not first_parent:
+                return False
+
+        return True

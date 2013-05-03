@@ -13,7 +13,7 @@ from tree.htmltreebrowser import HTMLTreeBrowser
 from tree.htmltreenode import HTMLTreeNode
 
 
-class GetRepeatedNodesHTMLTreeBrowserTest(unittest.TestCase):
+class BaseHTMLTreeBrowserTest(unittest.TestCase):
     def setUp(self):
         self.tree_browser = HTMLTreeBrowser()
 
@@ -34,6 +34,8 @@ class GetRepeatedNodesHTMLTreeBrowserTest(unittest.TestCase):
         self.second_entry.add_node(self.first_comments)
         self.third_entry.add_node(self.second_date)
 
+
+class GetRepeatedNodesHTMLTreeBrowserTest(BaseHTMLTreeBrowserTest):
     def runTest(self):
         repeated_nodes = self.tree_browser.get_repeated_nodes(self.root, 2)
 
@@ -51,3 +53,11 @@ class GetRepeatedNodesHTMLTreeBrowserTest(unittest.TestCase):
 
         self.assertIn(self.first_date, repeated_nodes[self.first_date])
         self.assertIn(self.second_date, repeated_nodes[self.first_date])
+
+
+class HasMutualParentHTMLTreeBrowserTest(BaseHTMLTreeBrowserTest):
+    def test_positive(self):
+        self.assertTrue(self.tree_browser.has_mutual_parent([self.first_entry, self.second_entry, self.third_entry]))
+
+    def test_negative(self):
+        self.assertFalse(self.tree_browser.has_mutual_parent([self.first_date, self.second_date]))
