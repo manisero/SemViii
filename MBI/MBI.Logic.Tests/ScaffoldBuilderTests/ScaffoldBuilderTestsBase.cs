@@ -29,6 +29,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			// Assert
 			Assert.IsNotNull(result);
 			Assert.AreEqual(expectedScaffold.Rank, result.Rank);
+			AssertExtensions.AreEqual(expectedScaffold.Pieces, result.Pieces, (x, y) => y.Content == x.Content);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MBI.Logic.Entities;
+using MBI.Logic.Extensions;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
@@ -9,6 +10,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 		public Scaffold Build(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = new Scaffold();
+			contigs.ForEach(result.Pieces.Add);
 
 			foreach (var pet in pairedEndTags)
 			{
