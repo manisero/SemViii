@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using MBI.Logic.Entities;
 using MBI.Logic.Serialization;
 using MBI.Logic.Serialization._Impl;
 using NUnit.Framework;

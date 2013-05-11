@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MBI.Logic.Entities;
 using MBI.Logic.Extensions;
 using System.Linq;
 

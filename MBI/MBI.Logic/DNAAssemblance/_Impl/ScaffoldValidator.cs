@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MBI.Logic.Entities;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {

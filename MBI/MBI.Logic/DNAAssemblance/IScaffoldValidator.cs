@@ -1,4 +1,6 @@
-﻿namespace MBI.Logic.DNAAssemblance
+﻿using MBI.Logic.Entities;
+
+namespace MBI.Logic.DNAAssemblance
 {
 	public interface IScaffoldValidator
 	{

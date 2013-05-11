@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using MBI.Logic.Entities;
+using NUnit.Framework;
 
 namespace MBI.Logic.Tests.ScaffoldValidatorTests
 {

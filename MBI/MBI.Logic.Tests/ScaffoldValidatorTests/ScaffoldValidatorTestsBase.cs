@@ -1,5 +1,5 @@
-﻿using MBI.Logic.DNAAssemblance;
-using MBI.Logic.DNAAssemblance._Impl;
+﻿using MBI.Logic.DNAAssemblance._Impl;
+using MBI.Logic.Entities;
 using NUnit.Framework;
 
 namespace MBI.Logic.Tests.ScaffoldValidatorTests

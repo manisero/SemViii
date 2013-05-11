@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using MBI.Logic.DNAAssemblance;
+﻿using MBI.Logic.DNAAssemblance;
 using MBI.Logic.DNAAssemblance._Impl;
+using MBI.Logic.Entities;
 using MBI.Logic.Tests.Extensions;
 using System.Linq;
 using NUnit.Framework;
