@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace MBI.Logic.Tests.ScaffoldBuilderTests
 {
 	[TestFixture]
-	public class NoMatchTests : ScaffoldBuilderTestsBase
+	public class NoMatchRankingTests : ScaffoldBuilderTestsBase
 	{
 		[Test]
 		public void accepts_not_paired_beginning_in_last_contig()
@@ -14,7 +14,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			var pet = new PairedEndTag { Beginning = "ee", End = "zz", Length = 10 };
 
 			// Act * Assert
-			TestBuild(contigs, pet, 2);
+			TestRank(contigs, pet, 2);
 		}
 
 		[Test]
@@ -25,7 +25,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			var pet = new PairedEndTag { Beginning = "zz", End = "bb", Length = 10 };
 
 			// Act * Assert
-			TestBuild(contigs, pet, 2);
+			TestRank(contigs, pet, 2);
 		}
 
 		[Test]
@@ -38,7 +38,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			var pet = new PairedEndTag { Beginning = "bb", End = "yy", Length = 1000 };
 
 			// Act * Assert
-			TestBuild(contigs, pet, 0);
+			TestRank(contigs, pet, 0);
 		}
 
 		[Test]
@@ -51,7 +51,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			var pet = new PairedEndTag { Beginning = "bb", End = "yy", Length = 1000 };
 
 			// Act * Assert
-			TestBuild(contigs, pet, 0);
+			TestRank(contigs, pet, 0);
 		}
 	}
 }

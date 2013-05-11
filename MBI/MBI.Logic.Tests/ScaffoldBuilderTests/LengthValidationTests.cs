@@ -13,11 +13,11 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			[Values(4, 0)] int expectedResult)
 		{
 			// Arrange
-			var contigs = new[] { "aabbcc", "ddeeff" };
+			var contigs = new[] {"aabbcc", "ddeeff" };
 			var pet = new PairedEndTag { Beginning = "bb", End = "ee", Length = petLength };
 
 			// Act & Assert
-			TestBuild(contigs, pet, expectedResult);
+			TestRank(contigs, pet, expectedResult);
 		}
 
 		[Test]
@@ -33,7 +33,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			var pet2 = new PairedEndTag { Beginning = "bb", End = "dd", Length = pet2Length };
 
 			// Act & Assert
-			TestBuild(contigs, new[] { pet1, pet2 }, expectedResult);
+			TestRank(contigs, new[] { pet1, pet2 }, expectedResult);
 		}
 	}
 }

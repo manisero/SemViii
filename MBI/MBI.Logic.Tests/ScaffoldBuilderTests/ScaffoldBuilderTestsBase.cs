@@ -1,4 +1,5 @@
-﻿using MBI.Logic.DNAAssemblance._Impl;
+﻿using System.Collections.Generic;
+using MBI.Logic.DNAAssemblance._Impl;
 using MBI.Logic.Entities;
 using MBI.Logic.Tests.Extensions;
 using NUnit.Framework;
@@ -8,23 +9,25 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 {
 	public class ScaffoldBuilderTestsBase
 	{
-		protected void TestBuild(string[] contigs, PairedEndTag pet, int expectedRank)
+		protected void TestRank(IEnumerable<string> contigs, PairedEndTag pet, int expectedRank)
 		{
-			TestBuild(contigs, new[] { pet }, expectedRank);
+			TestRank(contigs, new[] { pet }, expectedRank);
 		}
 
-		protected void TestBuild(string[] contigs, PairedEndTag[] pets, int expectedRank)
-		{
-			var expectedScaffold = new Scaffold { Rank = expectedRank };
-			expectedScaffold.Pieces = contigs.Select(x => new Contig(x)).Cast<ScaffoldPiece>().ToArray();
-
-			TestBuild(contigs, pets, expectedScaffold);
-		}
-
-		protected void TestBuild(string[] contigs, PairedEndTag[] pets, Scaffold expectedScaffold)
+		protected void TestRank(IEnumerable<string> contigs, PairedEndTag[] pets, int expectedRank)
 		{
 			// Act
 			var result = new ScaffoldBuilder().Build(contigs.Select(x => new Contig(x)).ToArray(), pets);
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.AreEqual(expectedRank, result.Rank);
+		}
+
+		protected void TestBuild(Scaffold expectedScaffold, params PairedEndTag[] pets)
+		{
+			// Act
+			var result = new ScaffoldBuilder().Build(expectedScaffold.Pieces.OfType<Contig>().ToArray(), pets);
 
 			// Assert
 			Assert.IsNotNull(result);
