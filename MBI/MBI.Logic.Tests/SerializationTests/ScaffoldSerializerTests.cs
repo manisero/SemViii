@@ -4,6 +4,7 @@ using MBI.Logic.Serialization;
 using MBI.Logic.Serialization._Impl;
 using NUnit.Framework;
 using Rhino.Mocks;
+using System.Linq;
 
 namespace MBI.Logic.Tests.SerializationTests
 {
@@ -24,10 +25,10 @@ namespace MBI.Logic.Tests.SerializationTests
 		public void serializes_sample_scaffold()
 		{
 			// Arrange
-			var scaffold = new Scaffold { Contigs = new[] { "contig1", "contig2" }};
+			var scaffold = new Scaffold { Pieces = new[] { new Contig("contig1"), new Contig("contig1") } };
 			var stream = new MemoryStream();
 
-			_streamHandlerMock.Expect(x => x.Write(string.Join("\n", scaffold.Contigs), stream));
+			_streamHandlerMock.Expect(x => x.Write(string.Join("", scaffold.Pieces.Select(piece => piece.Content)), stream));
 
 			// Act
 			_scaffoldSerializer.Serialize(scaffold, stream);

@@ -2,7 +2,7 @@
 {
 	public class Scaffold
 	{
-		public string[] Contigs { get; set; }
+		public ScaffoldPiece[] Pieces { get; set; }
 
 		public int Rank { get; set; }
 	}

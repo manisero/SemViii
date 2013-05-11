@@ -40,17 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Contig.cs" />
+    <Compile Include="Entities\Gap.cs" />
+    <Compile Include="Entities\ScaffoldPiece.cs" />
     <Compile Include="Serialization\IScaffoldSerializer.cs" />
     <Compile Include="Serialization\IStreamHandler.cs" />
     <Compile Include="Serialization\_Impl\ScaffoldSerializer.cs" />
     <Compile Include="Serialization\_Impl\StreamHandler.cs" />
-    <Compile Include="DNAAssembly.cs" />
+    <Compile Include="Entities\DNAAssembly.cs" />
     <Compile Include="Serialization\_Impl\AssemblyParser.cs" />
     <Compile Include="Serialization\IAssemblyParser.cs" />
-    <Compile Include="Scaffold.cs" />
+    <Compile Include="Entities\Scaffold.cs" />
     <Compile Include="DNAAssemblance\IScaffoldValidator.cs" />
     <Compile Include="DNAAssemblance\IDNAAssembler.cs" />
-    <Compile Include="PairedEndTag.cs" />
+    <Compile Include="Entities\PairedEndTag.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DNAAssemblance\_Impl\ScaffoldValidator.cs" />

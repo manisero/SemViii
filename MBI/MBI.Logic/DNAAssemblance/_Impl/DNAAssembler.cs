@@ -24,7 +24,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 				if (rank > 0)
 				{
-					result.Add(new Scaffold { Contigs = permutation.ToArray(), Rank = rank });
+					result.Add(new Scaffold { Pieces = permutation.Select(x => new Contig(x)).Cast<ScaffoldPiece>().ToArray(), Rank = rank });
 				}
 			}
 

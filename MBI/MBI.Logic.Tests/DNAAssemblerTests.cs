@@ -85,9 +85,9 @@ namespace MBI.Logic.Tests
 			// Assert
 			Assert.IsNotNull(result);
 			Assert.AreEqual(3, result.Count);
-			AssertExtensions.AreEqual(assembly1, result[0].Contigs);
-			AssertExtensions.AreEqual(assembly2, result[1].Contigs);
-			AssertExtensions.AreEqual(assembly3, result[2].Contigs);
+			AssertExtensions.AreEqual(assembly1, result[0].Pieces.Select(x => x.Content));
+			AssertExtensions.AreEqual(assembly2, result[1].Pieces.Select(x => x.Content));
+			AssertExtensions.AreEqual(assembly3, result[2].Pieces.Select(x => x.Content));
 
 			_scaffoldValidatorMock.VerifyAllExpectations();
 		}
