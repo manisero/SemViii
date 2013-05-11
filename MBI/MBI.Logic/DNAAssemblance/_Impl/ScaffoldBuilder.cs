@@ -10,44 +10,48 @@ namespace MBI.Logic.DNAAssemblance._Impl
 		public Scaffold Build(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = new Scaffold();
+			contigs.ForEach(result.Pieces.Add);
 
 			foreach (var pet in pairedEndTags)
 			{
 				var beginningFound = false;
 				var endFound = false;
 				var totalLength = 0;
+				var lengthFixed = false;
 
-				foreach (var contig in contigs)
+				for (int i = 0; i < result.Pieces.Count; i++)
 				{
+					var piece = result.Pieces[i];
+
 					if (beginningFound)
 					{
-						if (contig.Content.Contains(pet.End))
+						if (piece.Content.Contains(pet.End))
 						{
-							totalLength += GetPetEndLengthInContig(contig, pet.End);
 							endFound = true;
+							totalLength += GetPetEndLengthInContig(piece, pet.End);
 
-							if (totalLength <= pet.Length)
+							if (lengthFixed ? totalLength == pet.Length : totalLength <= pet.Length)
 							{
-								result.Pieces.Add(new Gap(pet.Length - totalLength));
+								result.Pieces.Insert(i, new Gap(pet.Length - totalLength));
 								result.Rank += pet.Beginning.Length + pet.End.Length;
 							}
+
+							break;
 						}
 						else
 						{
-							totalLength += contig.Content.Length;
+							totalLength += piece.Length;
+
+							if (piece is Gap)
+							{
+								lengthFixed = true;
+							}
 						}
 					}
-					else if (contig.Content.Contains(pet.Beginning))
+					else if (piece.Content.Contains(pet.Beginning))
 					{
 						beginningFound = true;
-						totalLength += GetPetBeginningLengthInContig(contig, pet.Beginning);
-					}
-
-					result.Pieces.Add(contig);
-
-					if (endFound)
-					{
-						break;
+						totalLength += GetPetBeginningLengthInContig(piece, pet.Beginning);
 					}
 				}
 
@@ -64,14 +68,14 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			return result;
 		}
 
-		private int GetPetBeginningLengthInContig(Contig contig, string petBeginning)
+		private int GetPetBeginningLengthInContig(ScaffoldPiece piece, string petBeginning)
 		{
-			return contig.Content.Split(new[] { petBeginning }, StringSplitOptions.None).Last().Length + petBeginning.Length;
+			return piece.Content.Split(new[] { petBeginning }, StringSplitOptions.None).Last().Length + petBeginning.Length;
 		}
 
-		private int GetPetEndLengthInContig(Contig contig, string petEnd)
+		private int GetPetEndLengthInContig(ScaffoldPiece piece, string petEnd)
 		{
-			return contig.Content.Split(new[] { petEnd }, StringSplitOptions.None).First().Length + petEnd.Length;
+			return piece.Content.Split(new[] { petEnd }, StringSplitOptions.None).First().Length + petEnd.Length;
 		}
 	}
 }
