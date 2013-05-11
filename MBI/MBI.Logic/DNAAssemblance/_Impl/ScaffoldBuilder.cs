@@ -4,9 +4,9 @@ using MBI.Logic.Entities;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
-	public class ScaffoldValidator : IScaffoldValidator
+	public class ScaffoldBuilder : IScaffoldBuilder
 	{
-		public int Validate(Contig[] contigs, PairedEndTag[] pairedEndTags)
+		public int Build(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = 0;
 

@@ -7,11 +7,11 @@ namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class DNAAssembler : IDNAAssembler
 	{
-		private readonly IScaffoldValidator _assemblyValidator;
+		private readonly IScaffoldBuilder _assemblyBuilder;
 
-		public DNAAssembler(IScaffoldValidator assemblyValidator)
+		public DNAAssembler(IScaffoldBuilder assemblyBuilder)
 		{
-			_assemblyValidator = assemblyValidator;
+			_assemblyBuilder = assemblyBuilder;
 		}
 
 		public IList<Scaffold> Assemble(Contig[] contigs, PairedEndTag[] pairedEndTags)
@@ -20,7 +20,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 			foreach (var permutation in contigs.GetPermutations().Select(x => x.ToArray()))
 			{
-				var rank = _assemblyValidator.Validate(permutation, pairedEndTags);
+				var rank = _assemblyBuilder.Build(permutation, pairedEndTags);
 
 				if (rank > 0)
 				{

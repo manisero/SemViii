@@ -1,10 +1,10 @@
 ﻿using MBI.Logic.Entities;
 using NUnit.Framework;
 
-namespace MBI.Logic.Tests.ScaffoldValidatorTests
+namespace MBI.Logic.Tests.ScaffoldBuilderTests
 {
 	[TestFixture]
-	public class LengthValidationTests : ScaffoldValidatorTestsBase
+	public class LengthValidationTests : ScaffoldBuilderTestsBase
 	{
 		[Test]
 		[Sequential]
@@ -17,7 +17,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet = new PairedEndTag { Beginning = "bb", End = "ee", Length = petLength };
 
 			// Act & Assert
-			TestValidate(contigs, pet, expectedResult);
+			TestBuild(contigs, pet, expectedResult);
 		}
 
 		[Test]
@@ -33,7 +33,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet2 = new PairedEndTag { Beginning = "bb", End = "dd", Length = pet2Length };
 
 			// Act & Assert
-			TestValidate(contigs, new[] { pet1, pet2 }, expectedResult);
+			TestBuild(contigs, new[] { pet1, pet2 }, expectedResult);
 		}
 	}
 }
