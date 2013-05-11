@@ -1,9 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MBI.Logic.Extensions
 {
 	public static class ListExtensions
 	{
+		public static void ForEach<T>(this IList<T> list, Action<T> action)
+		{
+			foreach (var item in list)
+			{
+				action(item);
+			}
+		}
+
 		public static IEnumerable<IList<T>> GetPermutations<T>(this IList<T> list)
 		{
 			if (list.Count == 1)

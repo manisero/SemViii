@@ -1,4 +1,4 @@
-﻿namespace MBI.Logic
+﻿namespace MBI.Logic.Entities
 {
 	public class PairedEndTag
 	{

@@ -1,10 +1,10 @@
-﻿using MBI.Logic.DNAAssemblance;
+﻿using MBI.Logic.Entities;
 using NUnit.Framework;
 
-namespace MBI.Logic.Tests.ScaffoldValidatorTests
+namespace MBI.Logic.Tests.ScaffoldBuilderTests
 {
 	[TestFixture]
-	public class FullMatchTests : ScaffoldValidatorTestsBase
+	public class FullMatchRankingTests : ScaffoldBuilderTestsBase
 	{
 		[Test]
 		[Sequential]
@@ -19,7 +19,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet = new PairedEndTag { Beginning = petBeginning, End = petEnd, Length = 100 };
 
 			// Act & Assert
-			TestValidate(contigs, pet, 4);
+			TestRank(contigs, pet, 4);
 		}
 
 		[Test]
@@ -39,21 +39,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet2 = new PairedEndTag { Beginning = secondPetBeginning, End = secondPetEnd, Length = 100 };
 
 			// Act & Assert
-			TestValidate(contigs, new[] { pet1, pet2 }, 8);
-		}
-
-		[Test]
-		[Sequential]
-		public void validates_pet_length(
-			[Values(10, 5)] int petLength,
-			[Values(4, 0)] int expectedResult)
-		{
-			// Arrange
-			var contigs = new[] { "aabbcc", "ddeeff" };
-			var pet = new PairedEndTag { Beginning = "bb", End = "ee", Length = petLength };
-
-			// Act & Assert
-			TestValidate(contigs, pet, expectedResult);
+			TestRank(contigs, new[] { pet1, pet2 }, 8);
 		}
 
 		[Test]
@@ -67,7 +53,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet = new PairedEndTag { Beginning = "bb", End = "ff", Length = petLength };
 
 			// Act & Assert
-			TestValidate(contigs, pet, expectedResult);
+			TestRank(contigs, pet, expectedResult);
 		}
 
 		[Test]
@@ -81,12 +67,12 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet = new PairedEndTag { Beginning = "bb", End = "ee", Length = petLength };
 
 			// Act & Assert
-			TestValidate(contigs, pet, expectedResult);
+			TestRank(contigs, pet, expectedResult);
 		}
 
 		[Test]
 		[Sequential]
-		public void handles_pet_longer_than_one_conting(
+		public void handles_pet_longer_than_one_contig(
 			[Values(20, 14, 12)] int petLength,
 			[Values(4, 4, 0)] int expectedResult)
 		{
@@ -95,7 +81,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet = new PairedEndTag { Beginning = "bb", End = "hh", Length = petLength };
 
 			// Act & Assert
-			TestValidate(contigs, pet, expectedResult);
+			TestRank(contigs, pet, expectedResult);
 		}
 	}
 }
