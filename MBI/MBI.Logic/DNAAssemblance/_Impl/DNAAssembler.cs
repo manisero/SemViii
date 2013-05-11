@@ -20,11 +20,11 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 			foreach (var permutation in contigs.GetPermutations().Select(x => x.ToArray()))
 			{
-				var rank = _assemblyBuilder.Build(permutation, pairedEndTags);
+				var scaffold = _assemblyBuilder.Build(permutation, pairedEndTags);
 
-				if (rank > 0)
+				if (scaffold.Rank > 0)
 				{
-					result.Add(new Scaffold { Pieces = permutation.Cast<ScaffoldPiece>().ToArray(), Rank = rank });
+					result.Add(scaffold);
 				}
 			}
 

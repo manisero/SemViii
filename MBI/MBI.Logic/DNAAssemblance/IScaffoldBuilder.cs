@@ -4,6 +4,6 @@ namespace MBI.Logic.DNAAssemblance
 {
 	public interface IScaffoldBuilder
 	{
-		int Build(Contig[] contigs, PairedEndTag[] pairedEndTags);
+		Scaffold Build(Contig[] contigs, PairedEndTag[] pairedEndTags);
 	}
 }
