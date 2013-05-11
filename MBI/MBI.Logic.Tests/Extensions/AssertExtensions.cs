@@ -19,7 +19,7 @@ namespace MBI.Logic.Tests.Extensions
 			}
 		}
 
-		public static void AreEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual, Func<T, T, bool> comparer)
+		public static void AreEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual, Action<T, T> itemAssertion)
 		{
 			var expectedCount = expected.Count();
 
@@ -30,10 +30,7 @@ namespace MBI.Logic.Tests.Extensions
 				var expectedItem = expected.ElementAt(i);
 				var actualItem = actual.ElementAt(i);
 
-				if (!comparer(expectedItem, actualItem))
-				{
-					Assert.Fail("Expected: {0}\nBut was:{1}", expectedItem, actualItem);
-				}
+				itemAssertion(expectedItem, actualItem);
 			}
 		}
 	}

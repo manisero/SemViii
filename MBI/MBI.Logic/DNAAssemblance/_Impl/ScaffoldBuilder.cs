@@ -10,7 +10,6 @@ namespace MBI.Logic.DNAAssemblance._Impl
 		public Scaffold Build(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = new Scaffold();
-			contigs.ForEach(result.Pieces.Add);
 
 			foreach (var pet in pairedEndTags)
 			{
@@ -27,7 +26,11 @@ namespace MBI.Logic.DNAAssemblance._Impl
 							totalLength += GetPetEndLengthInContig(contig, pet.End);
 							endFound = true;
 
-							break;
+							if (totalLength <= pet.Length)
+							{
+								result.Pieces.Add(new Gap(pet.Length - totalLength));
+								result.Rank += pet.Beginning.Length + pet.End.Length;
+							}
 						}
 						else
 						{
@@ -39,17 +42,20 @@ namespace MBI.Logic.DNAAssemblance._Impl
 						beginningFound = true;
 						totalLength += GetPetBeginningLengthInContig(contig, pet.Beginning);
 					}
+
+					result.Pieces.Add(contig);
+
+					if (endFound)
+					{
+						break;
+					}
 				}
 
-				if (endFound && totalLength <= pet.Length)
-				{
-					result.Rank += pet.Beginning.Length + pet.End.Length;
-				}
-				else if (contigs.First().Content.Contains(pet.End))
+				if (!beginningFound && contigs.First().Content.Contains(pet.End))
 				{
 					result.Rank += pet.End.Length;
 				}
-				else if (contigs.Last().Content.Contains(pet.Beginning))
+				else if (!endFound && contigs.Last().Content.Contains(pet.Beginning))
 				{
 					result.Rank += pet.Beginning.Length;
 				}

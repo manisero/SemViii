@@ -72,7 +72,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 
 		[Test]
 		[Sequential]
-		public void handles_pet_longer_than_one_conting(
+		public void handles_pet_longer_than_one_contig(
 			[Values(20, 14, 12)] int petLength,
 			[Values(4, 4, 0)] int expectedResult)
 		{
