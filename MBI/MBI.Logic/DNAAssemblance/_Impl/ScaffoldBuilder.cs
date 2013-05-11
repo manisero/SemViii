@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Linq;
 using MBI.Logic.Entities;
+using MBI.Logic.Extensions;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
-	public class ScaffoldValidator : IScaffoldValidator
+	public class ScaffoldBuilder : IScaffoldBuilder
 	{
-		public int Validate(Contig[] contigs, PairedEndTag[] pairedEndTags)
+		public Scaffold Build(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
-			var result = 0;
+			var result = new Scaffold();
+			contigs.ForEach(result.Pieces.Add);
 
 			foreach (var pet in pairedEndTags)
 			{
@@ -41,15 +43,15 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 				if (endFound && totalLength <= pet.Length)
 				{
-					result += pet.Beginning.Length + pet.End.Length;
+					result.Rank += pet.Beginning.Length + pet.End.Length;
 				}
 				else if (contigs.First().Content.Contains(pet.End))
 				{
-					result += pet.End.Length;
+					result.Rank += pet.End.Length;
 				}
 				else if (contigs.Last().Content.Contains(pet.Beginning))
 				{
-					result += pet.Beginning.Length;
+					result.Rank += pet.Beginning.Length;
 				}
 			}
 

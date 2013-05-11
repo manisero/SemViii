@@ -1,10 +1,10 @@
 ﻿using MBI.Logic.Entities;
 using NUnit.Framework;
 
-namespace MBI.Logic.Tests.ScaffoldValidatorTests
+namespace MBI.Logic.Tests.ScaffoldBuilderTests
 {
 	[TestFixture]
-	public class FullMatchTests : ScaffoldValidatorTestsBase
+	public class FullMatchTests : ScaffoldBuilderTestsBase
 	{
 		[Test]
 		[Sequential]
@@ -19,7 +19,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet = new PairedEndTag { Beginning = petBeginning, End = petEnd, Length = 100 };
 
 			// Act & Assert
-			TestValidate(contigs, pet, 4);
+			TestBuild(contigs, pet, 4);
 		}
 
 		[Test]
@@ -39,7 +39,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet2 = new PairedEndTag { Beginning = secondPetBeginning, End = secondPetEnd, Length = 100 };
 
 			// Act & Assert
-			TestValidate(contigs, new[] { pet1, pet2 }, 8);
+			TestBuild(contigs, new[] { pet1, pet2 }, 8);
 		}
 
 		[Test]
@@ -53,7 +53,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet = new PairedEndTag { Beginning = "bb", End = "ff", Length = petLength };
 
 			// Act & Assert
-			TestValidate(contigs, pet, expectedResult);
+			TestBuild(contigs, pet, expectedResult);
 		}
 
 		[Test]
@@ -67,7 +67,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet = new PairedEndTag { Beginning = "bb", End = "ee", Length = petLength };
 
 			// Act & Assert
-			TestValidate(contigs, pet, expectedResult);
+			TestBuild(contigs, pet, expectedResult);
 		}
 
 		[Test]
@@ -81,7 +81,7 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 			var pet = new PairedEndTag { Beginning = "bb", End = "hh", Length = petLength };
 
 			// Act & Assert
-			TestValidate(contigs, pet, expectedResult);
+			TestBuild(contigs, pet, expectedResult);
 		}
 	}
 }
