@@ -1,5 +1,4 @@
-﻿using MBI.Logic.DNAAssemblance;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace MBI.Logic.Tests.ScaffoldValidatorTests
 {
@@ -40,20 +39,6 @@ namespace MBI.Logic.Tests.ScaffoldValidatorTests
 
 			// Act & Assert
 			TestValidate(contigs, new[] { pet1, pet2 }, 8);
-		}
-
-		[Test]
-		[Sequential]
-		public void validates_pet_length(
-			[Values(10, 5)] int petLength,
-			[Values(4, 0)] int expectedResult)
-		{
-			// Arrange
-			var contigs = new[] { "aabbcc", "ddeeff" };
-			var pet = new PairedEndTag { Beginning = "bb", End = "ee", Length = petLength };
-
-			// Act & Assert
-			TestValidate(contigs, pet, expectedResult);
 		}
 
 		[Test]
