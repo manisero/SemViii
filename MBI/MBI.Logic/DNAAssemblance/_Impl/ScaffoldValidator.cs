@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
+using MBI.Logic.Entities;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class ScaffoldValidator : IScaffoldValidator
 	{
-		public int Validate(string[] contigs, PairedEndTag[] pairedEndTags)
+		public int Validate(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = 0;
 
@@ -19,7 +20,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 				{
 					if (beginningFound)
 					{
-						if (contig.Contains(pet.End))
+						if (contig.Content.Contains(pet.End))
 						{
 							totalLength += GetPetEndLengthInContig(contig, pet.End);
 							endFound = true;
@@ -28,10 +29,10 @@ namespace MBI.Logic.DNAAssemblance._Impl
 						}
 						else
 						{
-							totalLength += contig.Length;
+							totalLength += contig.Content.Length;
 						}
 					}
-					else if (contig.Contains(pet.Beginning))
+					else if (contig.Content.Contains(pet.Beginning))
 					{
 						beginningFound = true;
 						totalLength += GetPetBeginningLengthInContig(contig, pet.Beginning);
@@ -42,11 +43,11 @@ namespace MBI.Logic.DNAAssemblance._Impl
 				{
 					result += pet.Beginning.Length + pet.End.Length;
 				}
-				else if (contigs.First().Contains(pet.End))
+				else if (contigs.First().Content.Contains(pet.End))
 				{
 					result += pet.End.Length;
 				}
-				else if (contigs.Last().Contains(pet.Beginning))
+				else if (contigs.Last().Content.Contains(pet.Beginning))
 				{
 					result += pet.Beginning.Length;
 				}
@@ -55,14 +56,14 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			return result;
 		}
 
-		private int GetPetBeginningLengthInContig(string contig, string petBeginning)
+		private int GetPetBeginningLengthInContig(Contig contig, string petBeginning)
 		{
-			return contig.Split(new[] { petBeginning }, StringSplitOptions.None).Last().Length + petBeginning.Length;
+			return contig.Content.Split(new[] { petBeginning }, StringSplitOptions.None).Last().Length + petBeginning.Length;
 		}
 
-		private int GetPetEndLengthInContig(string contig, string petEnd)
+		private int GetPetEndLengthInContig(Contig contig, string petEnd)
 		{
-			return contig.Split(new[] { petEnd }, StringSplitOptions.None).First().Length + petEnd.Length;
+			return contig.Content.Split(new[] { petEnd }, StringSplitOptions.None).First().Length + petEnd.Length;
 		}
 	}
 }

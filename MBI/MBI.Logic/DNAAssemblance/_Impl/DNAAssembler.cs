@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MBI.Logic.Entities;
 using MBI.Logic.Extensions;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			_assemblyValidator = assemblyValidator;
 		}
 
-		public IList<Scaffold> Assemble(string[] contigs, PairedEndTag[] pairedEndTags)
+		public IList<Scaffold> Assemble(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = new List<Scaffold>();
 
@@ -23,7 +24,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 				if (rank > 0)
 				{
-					result.Add(new Scaffold { Contigs = permutation.ToArray(), Rank = rank });
+					result.Add(new Scaffold { Pieces = permutation.Cast<ScaffoldPiece>().ToArray(), Rank = rank });
 				}
 			}
 

@@ -45,8 +45,8 @@ namespace MBI.Logic.Tests.SerializationTests
 			Assert.IsNotNull(result.PairedEndTags);
 
 			Assert.AreEqual(2, result.Contigs.Length);
-			Assert.AreEqual("contig1", result.Contigs[0]);
-			Assert.AreEqual("contig2", result.Contigs[1]);
+			Assert.AreEqual("contig1", result.Contigs[0].Content);
+			Assert.AreEqual("contig2", result.Contigs[1].Content);
 
 			Assert.AreEqual(2, result.PairedEndTags.Length);
 

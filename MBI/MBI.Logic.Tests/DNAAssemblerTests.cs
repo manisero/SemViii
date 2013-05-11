@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using MBI.Logic.DNAAssemblance;
+﻿using MBI.Logic.DNAAssemblance;
 using MBI.Logic.DNAAssemblance._Impl;
+using MBI.Logic.Entities;
 using MBI.Logic.Tests.Extensions;
 using System.Linq;
 using NUnit.Framework;
@@ -25,7 +25,7 @@ namespace MBI.Logic.Tests
 		public void assigns_ranks_to_assemblies()
 		{
 			// Arrange
-			var contigs = new[] { "aaa" };
+			var contigs = new[] { new Contig("aaa") };
 			var pairedEndTags = new[] { new PairedEndTag() };
 			var rank = 3;
 
@@ -46,7 +46,7 @@ namespace MBI.Logic.Tests
 		public void rejects_assemblies_of_rank_0()
 		{
 			// Arrange
-			var contigs = new[] { "aaa" };
+			var contigs = new[] { new Contig("aaa") };
 			var pairedEndTags = new[] { new PairedEndTag() };
 
 			_scaffoldValidatorMock.Expect(x => x.Validate(contigs, pairedEndTags)).Return(0);
@@ -65,9 +65,9 @@ namespace MBI.Logic.Tests
 		public void sorts_assemblies_by_rank()
 		{
 			// Arrange
-			var contig1 = "aaa";
-			var contig2 = "bbb";
-			var contig3 = "ccc";
+			var contig1 = new Contig("aaa");
+			var contig2 = new Contig("bbb");
+			var contig3 = new Contig("ccc");
 			var pairedEndTags = new[] { new PairedEndTag() };
 
 			var assembly1 = new[] { contig2, contig1, contig3 };
@@ -77,7 +77,7 @@ namespace MBI.Logic.Tests
 			_scaffoldValidatorMock.Expect(x => x.Validate(assembly1, pairedEndTags)).Return(3);
 			_scaffoldValidatorMock.Expect(x => x.Validate(assembly2, pairedEndTags)).Return(2);
 			_scaffoldValidatorMock.Expect(x => x.Validate(assembly3, pairedEndTags)).Return(1);
-			_scaffoldValidatorMock.Expect(x => x.Validate(Arg<string[]>.Is.Anything, Arg<PairedEndTag[]>.Is.Equal(pairedEndTags))).Return(0);
+			_scaffoldValidatorMock.Expect(x => x.Validate(Arg<Contig[]>.Is.Anything, Arg<PairedEndTag[]>.Is.Equal(pairedEndTags))).Return(0);
 			
 			// Act
 			var result = _dnaAssembler.Assemble(new[] { contig1, contig2, contig3 }, pairedEndTags);
@@ -85,9 +85,9 @@ namespace MBI.Logic.Tests
 			// Assert
 			Assert.IsNotNull(result);
 			Assert.AreEqual(3, result.Count);
-			AssertExtensions.AreEqual(assembly1, result[0].Contigs);
-			AssertExtensions.AreEqual(assembly2, result[1].Contigs);
-			AssertExtensions.AreEqual(assembly3, result[2].Contigs);
+			AssertExtensions.AreEqual(assembly1, result[0].Pieces);
+			AssertExtensions.AreEqual(assembly2, result[1].Pieces);
+			AssertExtensions.AreEqual(assembly3, result[2].Pieces);
 
 			_scaffoldValidatorMock.VerifyAllExpectations();
 		}
@@ -96,9 +96,9 @@ namespace MBI.Logic.Tests
 		public void validates_all_contigs_combinations()
 		{
 			// Arrange
-			var contig1 = "aaa";
-			var contig2 = "bbb";
-			var contig3 = "ccc";
+			var contig1 = new Contig("aaa");
+			var contig2 = new Contig("bbb");
+			var contig3 = new Contig("ccc");
 			var pairedEndTags = new[] { new PairedEndTag() };
 
 			_scaffoldValidatorMock.Expect(x => x.Validate(new[] { contig1, contig2, contig3 }, pairedEndTags)).Return(0);

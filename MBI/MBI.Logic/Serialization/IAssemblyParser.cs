@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using MBI.Logic.Entities;
 
 namespace MBI.Logic.Serialization
 {
