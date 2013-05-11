@@ -2,9 +2,8 @@
 {
 	public class Gap : ScaffoldPiece
 	{
-		public Gap(int length)
+		public Gap(int length) : base(new string(' ', length))
 		{
-			Content = new string(' ', length);
 		}
 	}
 }

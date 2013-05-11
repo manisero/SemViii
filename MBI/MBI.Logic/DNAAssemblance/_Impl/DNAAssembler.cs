@@ -14,7 +14,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			_assemblyValidator = assemblyValidator;
 		}
 
-		public IList<Scaffold> Assemble(string[] contigs, PairedEndTag[] pairedEndTags)
+		public IList<Scaffold> Assemble(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = new List<Scaffold>();
 
@@ -24,7 +24,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 				if (rank > 0)
 				{
-					result.Add(new Scaffold { Pieces = permutation.Select(x => new Contig(x)).Cast<ScaffoldPiece>().ToArray(), Rank = rank });
+					result.Add(new Scaffold { Pieces = permutation.Cast<ScaffoldPiece>().ToArray(), Rank = rank });
 				}
 			}
 

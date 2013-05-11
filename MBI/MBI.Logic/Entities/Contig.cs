@@ -2,9 +2,8 @@
 {
 	public class Contig : ScaffoldPiece
 	{
-		public Contig(string content)
+		public Contig(string content) : base(content)
 		{
-			Content = content;
 		}
 	}
 }
