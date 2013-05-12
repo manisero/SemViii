@@ -4,11 +4,24 @@ using MBI.Logic.Entities;
 using MBI.Logic.Tests.Extensions;
 using NUnit.Framework;
 using System.Linq;
+using Rhino.Mocks;
 
 namespace MBI.Logic.Tests.ScaffoldBuilderTests
 {
 	public class ScaffoldBuilderTestsBase
 	{
+		protected ISettingsProvider SettingsProviderMock;
+		private ScaffoldBuilder _scaffoldBuilder;
+
+		[SetUp]
+		public virtual void SetUp()
+		{
+			SettingsProviderMock = MockRepository.GenerateStrictMock<ISettingsProvider>();
+			_scaffoldBuilder = new ScaffoldBuilder(SettingsProviderMock);
+
+			SettingsProviderMock.Expect(x => x.PartialMatchMinPercentage).Return(0.0).Repeat.Any();
+		}
+
 		protected void TestRank(IEnumerable<string> contigs, PairedEndTag pet, int expectedRank)
 		{
 			TestRank(contigs, new[] { pet }, expectedRank);
@@ -17,7 +30,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 		protected void TestRank(IEnumerable<string> contigs, PairedEndTag[] pets, int expectedRank)
 		{
 			// Act
-			var result = new ScaffoldBuilder().Build(contigs.Select(x => new Contig(x)).ToArray(), pets);
+			var result = _scaffoldBuilder.Build(contigs.Select(x => new Contig(x)).ToArray(), pets);
 
 			// Assert
 			Assert.IsNotNull(result);
@@ -27,7 +40,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 		protected void TestBuild(Scaffold expectedScaffold, params PairedEndTag[] pets)
 		{
 			// Act
-			var result = new ScaffoldBuilder().Build(expectedScaffold.Pieces.OfType<Contig>().ToArray(), pets);
+			var result = _scaffoldBuilder.Build(expectedScaffold.Pieces.OfType<Contig>().ToArray(), pets);
 
 			// Assert
 			Assert.IsNotNull(result);
