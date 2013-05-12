@@ -19,7 +19,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			SettingsProviderMock = MockRepository.GenerateStrictMock<ISettingsProvider>();
 			_scaffoldBuilder = new ScaffoldBuilder(SettingsProviderMock);
 
-			SettingsProviderMock.Expect(x => x.PartialMatchMinPercentage).Return(0.0).Repeat.Any();
+			SettingsProviderMock.Stub(x => x.PartialMatchMinPercentage).Return(0.0);
 		}
 
 		protected void TestRank(IEnumerable<string> contigs, PairedEndTag pet, int expectedRank)
