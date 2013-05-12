@@ -29,7 +29,6 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 		}
 
 		[Test]
-		[Sequential]
 		public void rejects_not_paired_beginning(
 			[Values("aaccdd", "aabBcc", "aaBbcc", "aabcbc")] string contig)
 		{
@@ -42,7 +41,6 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 		}
 
 		[Test]
-		[Sequential]
 		public void rejects_not_paired_end(
 			[Values("wwxxzz", "xxyYzz", "xxYyzz", "xyxyzz")] string contig)
 		{
