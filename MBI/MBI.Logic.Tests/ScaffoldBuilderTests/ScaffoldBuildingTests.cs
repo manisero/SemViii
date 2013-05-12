@@ -30,13 +30,37 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 
 		[Test]
 		[Sequential]
-		public void inserts_gaps_properly_for_partially_matched_pets(
+		public void inserts_gaps_properly_for_partially_matched_pet(
 			[Values("XXbbcc", "aabbXX", "XXbbcc", "aabbXX")] string firstContig, 
 			[Values("YYeeff", "ddeeYY", "ddeeYY", "YYeeff")] string secondContig,
 			[Values(11, 11, 6, 16)] int expectedGapLength)
 		{
 			var pieces = new ScaffoldPiece[] { new Contig(firstContig), new Gap(expectedGapLength), new Contig(secondContig) };
 			var pet = new PairedEndTag { Beginning = "XXX", End = "YYY", Length = 20 };
+
+			TestBuild(new Scaffold { Pieces = pieces, Rank = 4 }, pet);
+		}
+
+		[Test]
+		[Sequential]
+		public void inserts_gaps_properly_for_partially_matched_beginning(
+			[Values("XXbbcc", "aabbXX")] string firstContig,
+			[Values(9, 14)] int expectedGapLength)
+		{
+			var pieces = new ScaffoldPiece[] { new Contig(firstContig), new Gap(expectedGapLength), new Contig("ddeeff") };
+			var pet = new PairedEndTag { Beginning = "XXX", End = "ee", Length = 20 };
+
+			TestBuild(new Scaffold { Pieces = pieces, Rank = 4 }, pet);
+		}
+
+		[Test]
+		[Sequential]
+		public void inserts_gaps_properly_for_partially_matched_end(
+			[Values("XXeeff", "ddeeXX")] string secondContig,
+			[Values(14, 9)] int expectedGapLength)
+		{
+			var pieces = new ScaffoldPiece[] { new Contig("aabbcc"), new Gap(expectedGapLength), new Contig(secondContig) };
+			var pet = new PairedEndTag { Beginning = "bb", End = "XXX", Length = 20 };
 
 			TestBuild(new Scaffold { Pieces = pieces, Rank = 4 }, pet);
 		}

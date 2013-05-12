@@ -39,19 +39,40 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 		}
 
 		[Test]
-		[Sequential]
-		public void prefers_full_matches_rather_than_partial_matches(
-			[Values("aabbaaacc")] string firstContig,
-			[Values("ddeeeffee")] string secondConfig,
-			[Values("aaa")] string petBeginning,
-			[Values("eee")] string petEnd)
+		public void prefers_full_matches_rather_than_partial_matches()
 		{
 			// Arrange
-			var contigs = new[] { firstContig, secondConfig };
-			var pet = new PairedEndTag { Beginning = petBeginning, End = petEnd, Length = 100 };
+			var contigs = new[] { "aabbaaacc", "ddeeeffee" };
+			var pet = new PairedEndTag { Beginning = "aaa", End = "eee", Length = 100 };
 
 			// Act & Assert
 			TestRank(contigs, pet, 6);
+		}
+
+		[Test]
+		[Sequential]
+		public void matches_partial_beginnings_with_full_ends(
+			[Values("XXbbcc", "aabbXX")] string firstContig)
+		{
+			// Arrange
+			var contigs = new[] { firstContig, "ddeeff" };
+			var pet = new PairedEndTag { Beginning = "XXX", End = "ee", Length = 100 };
+
+			// Act & Assert
+			TestRank(contigs, pet, 5);
+		}
+
+		[Test]
+		[Sequential]
+		public void matches_full_beginnings_with_partial_ends(
+			[Values("XXeeff", "ddeeXX")] string secondContig)
+		{
+			// Arrange
+			var contigs = new[] { "aabbcc", secondContig };
+			var pet = new PairedEndTag { Beginning = "bb", End = "XXX", Length = 100 };
+
+			// Act & Assert
+			TestRank(contigs, pet, 5);
 		}
 	}
 }
