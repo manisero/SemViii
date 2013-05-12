@@ -14,48 +14,35 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 			foreach (var pet in pairedEndTags)
 			{
-				var beginningFound = false;
-				var endFound = false;
-				var totalLength = 0;
-				var lengthFixed = false;
+				int beginningIndex;
+				int beginningRank;
+				int petLengthInBeginning;
 
-				for (int i = 0; i < result.Pieces.Count; i++)
+				if (TryMatchPetBeginning(pet.Beginning, result, out beginningIndex, out beginningRank, out petLengthInBeginning))
 				{
-					var piece = result.Pieces[i];
+					int endRank;
+					int petLengthTillEnd;
+					var lengthFixed = false;
 
-					if (beginningFound)
+					if (TryMatchPetEnd(pet.End, result, beginningIndex + 1, out endRank, out petLengthTillEnd, ref lengthFixed))
 					{
-						if (piece.Content.Contains(pet.End))
+						var totalLength = petLengthInBeginning + petLengthTillEnd;
+
+						if (lengthFixed ? totalLength == pet.Length : totalLength <= pet.Length)
 						{
-							endFound = true;
-							totalLength += GetFullPetEndLengthInContig(piece, pet.End);
-
-							if (lengthFixed ? totalLength == pet.Length : totalLength <= pet.Length)
-							{
-								result.Pieces.Insert(i, new Gap(pet.Length - totalLength));
-								result.Rank += pet.Beginning.Length + pet.End.Length;
-							}
-
-							break;
-						}
-						else
-						{
-							totalLength += piece.Length;
-
-							if (piece is Gap)
-							{
-								lengthFixed = true;
-							}
+							result.Pieces.Insert(beginningIndex + 1, new Gap(pet.Length - totalLength));
+							result.Rank += beginningRank + endRank;
 						}
 					}
-					else if (piece.Content.Contains(pet.Beginning))
+					else
 					{
-						beginningFound = true;
-						totalLength += GetFullPetBeginningLengthInContig(piece, pet.Beginning);
+						result.Rank += RankNotPairedPetPart(contigs, pet);
 					}
 				}
-
-				result.Rank += RankNotPairedPetPart(contigs, pet, beginningFound, endFound);
+				else
+				{
+					result.Rank += RankNotPairedPetPart(contigs, pet);
+				}
 			}
 
 			return result;
@@ -92,8 +79,8 @@ namespace MBI.Logic.DNAAssemblance._Impl
 					continue;
 				}
 
-				if (TryPartiallyMatchPetPartIntoContigBeginning(contig, beginning, out rank, out length) ||
-					TryPartiallyMatchPetPartIntoContigEnd(contig, beginning, out rank, out length))
+				if (TryPartiallyMatchPetPartIntoContigBeginning(contig, beginning, true, out rank, out length) ||
+					TryPartiallyMatchPetPartIntoContigEnd(contig, beginning, true, out rank, out length))
 				{
 					index = i;
 					return true;
@@ -106,7 +93,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			return false;
 		}
 
-		private bool TryMatchPetEnd(string end, Scaffold scaffold, int startIndex, out int rank, out int length)
+		private bool TryMatchPetEnd(string end, Scaffold scaffold, int startIndex, out int rank, out int length, ref bool gapOccured)
 		{
 			// Try to find full match
 			var totalLength = 0;
@@ -124,6 +111,11 @@ namespace MBI.Logic.DNAAssemblance._Impl
 				else
 				{
 					totalLength += piece.Length;
+
+					if (piece is Gap)
+					{
+						gapOccured = true;
+					}
 				}
 			}
 
@@ -135,8 +127,8 @@ namespace MBI.Logic.DNAAssemblance._Impl
 				var piece = scaffold.Pieces[i];
 				int lengthInPiece;
 
-				if (piece is Contig && (TryPartiallyMatchPetPartIntoContigBeginning(piece as Contig, end, out rank, out lengthInPiece) ||
-										TryPartiallyMatchPetPartIntoContigEnd(piece as Contig, end, out rank, out lengthInPiece)))
+				if (piece is Contig && (TryPartiallyMatchPetPartIntoContigBeginning(piece as Contig, end, false, out rank, out lengthInPiece) ||
+										TryPartiallyMatchPetPartIntoContigEnd(piece as Contig, end, false, out rank, out lengthInPiece)))
 				{
 					length = totalLength + lengthInPiece;
 					return true;
@@ -144,6 +136,11 @@ namespace MBI.Logic.DNAAssemblance._Impl
 				else
 				{
 					totalLength += piece.Length;
+
+					if (piece is Gap)
+					{
+						gapOccured = true;
+					}
 				}
 			}
 
@@ -152,29 +149,29 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			return false;
 		}
 
-		private int RankNotPairedPetPart(Contig[] contigs, PairedEndTag pet, bool beginningFound, bool endFound)
+		private int RankNotPairedPetPart(Contig[] contigs, PairedEndTag pet)
 		{
-			int rank;
-			int length;
-
-			if (!beginningFound && contigs.First().Content.Contains(pet.End))
+			if (contigs.First().Content.Contains(pet.End))
 			{
 				return pet.End.Length;
 			}
 			
-			if (!endFound && contigs.Last().Content.Contains(pet.Beginning))
+			if (contigs.Last().Content.Contains(pet.Beginning))
 			{
 				return pet.Beginning.Length;
 			}
+
+			int rank;
+			int length;
 			
-			if (!beginningFound && (TryPartiallyMatchPetPartIntoContigBeginning(contigs.First(), pet.End, out rank, out length) ||
-									TryPartiallyMatchPetPartIntoContigEnd(contigs.First(), pet.End, out rank, out length)))
+			if (TryPartiallyMatchPetPartIntoContigBeginning(contigs.First(), pet.End, false, out rank, out length) ||
+				TryPartiallyMatchPetPartIntoContigEnd(contigs.First(), pet.End, false, out rank, out length))
 			{
 				return rank;
 			}
 			
-			if (!endFound && (TryPartiallyMatchPetPartIntoContigBeginning(contigs.Last(), pet.Beginning, out rank, out length) ||
-							  TryPartiallyMatchPetPartIntoContigEnd(contigs.Last(), pet.Beginning, out rank, out length)))
+			if (TryPartiallyMatchPetPartIntoContigBeginning(contigs.Last(), pet.Beginning, true, out rank, out length) ||
+				TryPartiallyMatchPetPartIntoContigEnd(contigs.Last(), pet.Beginning, true, out rank, out length))
 			{
 				return rank;
 			}
@@ -182,36 +179,17 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			return 0;
 		}
 
-		private int GetFullPetBeginningLengthInContig(ScaffoldPiece piece, string petBeginning)
+		private int GetFullPetBeginningLengthInContig(Contig piece, string petBeginning)
 		{
 			return piece.Content.Split(new[] { petBeginning }, StringSplitOptions.None).Last().Length + petBeginning.Length;
 		}
 
-		private int GetFullPetEndLengthInContig(ScaffoldPiece piece, string petEnd)
+		private int GetFullPetEndLengthInContig(Contig piece, string petEnd)
 		{
 			return piece.Content.Split(new[] { petEnd }, StringSplitOptions.None).First().Length + petEnd.Length;
 		}
 
-		private bool TryPartiallyMatchPetPartIntoContigEnd(Contig piece, string petPart, out int rank, out int length)
-		{
-			for (int subPartLength = petPart.Length - 1; subPartLength != 0; subPartLength--)
-			{
-				var subPart = petPart.Substring(0, subPartLength);
-
-				if (piece.Content.EndsWith(subPart))
-				{
-					rank = subPartLength;
-					length = subPartLength;
-					return true;
-				}
-			}
-
-			rank = 0;
-			length = 0;
-			return false;
-		}
-
-		private bool TryPartiallyMatchPetPartIntoContigBeginning(Contig piece, string petPart, out int rank, out int length)
+		private bool TryPartiallyMatchPetPartIntoContigBeginning(Contig piece, string petPart, bool isPetBeginning, out int rank, out int length)
 		{
 			for (int subPartLength = petPart.Length - 1; subPartLength != 0; subPartLength--)
 			{
@@ -220,7 +198,26 @@ namespace MBI.Logic.DNAAssemblance._Impl
 				if (piece.Content.StartsWith(subPart))
 				{
 					rank = subPartLength;
-					length = piece.Content.Length;
+					length = isPetBeginning ? piece.Content.Length + (petPart.Length - subPartLength) : subPartLength;
+					return true;
+				}
+			}
+
+			rank = 0;
+			length = 0;
+			return false;
+		}
+
+		private bool TryPartiallyMatchPetPartIntoContigEnd(Contig piece, string petPart, bool isPetBeginning, out int rank, out int length)
+		{
+			for (int subPartLength = petPart.Length - 1; subPartLength != 0; subPartLength--)
+			{
+				var subPart = petPart.Substring(0, subPartLength);
+
+				if (piece.Content.EndsWith(subPart))
+				{
+					rank = subPartLength;
+					length = isPetBeginning ? subPartLength : piece.Content.Length + (petPart.Length - subPartLength);
 					return true;
 				}
 			}

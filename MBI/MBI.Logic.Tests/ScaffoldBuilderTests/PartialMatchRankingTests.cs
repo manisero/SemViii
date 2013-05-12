@@ -28,7 +28,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			[Values("aabbcc", "aabbCC")] string firstContig,
 			[Values("ddeeff", "ddeeFF")] string secondConfig,
 			[Values("ccc", "CCC")] string petBeginning,
-			[Values("fff", "DDD")] string petEnd)
+			[Values("fff", "FFF")] string petEnd)
 		{
 			// Arrange
 			var contigs = new[] { firstContig, secondConfig };
@@ -59,7 +59,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			var pet = new PairedEndTag { Beginning = "XXX", End = "ee", Length = 100 };
 
 			// Act & Assert
-			TestRank(contigs, pet, 5);
+			TestRank(contigs, pet, 4);
 		}
 
 		[Test]
@@ -72,7 +72,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 			var pet = new PairedEndTag { Beginning = "bb", End = "XXX", Length = 100 };
 
 			// Act & Assert
-			TestRank(contigs, pet, 5);
+			TestRank(contigs, pet, 4);
 		}
 	}
 }
