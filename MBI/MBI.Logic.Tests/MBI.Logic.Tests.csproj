@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ScaffoldBuilderTests\LengthValidationTests.cs" />
+    <Compile Include="ScaffoldBuilderTests\PartialMatchRankingTests.cs" />
     <Compile Include="ScaffoldBuilderTests\ScaffoldBuildingTests.cs" />
     <Compile Include="SerializationTests\AssemblyParserTests.cs" />
     <Compile Include="SerializationTests\ScaffoldSerializerTests.cs" />
