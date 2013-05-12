@@ -28,7 +28,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 						if (piece.Content.Contains(pet.End))
 						{
 							endFound = true;
-							totalLength += GetFullPetEndLengthInPiece(piece, pet.End);
+							totalLength += GetFullPetEndLengthInContig(piece, pet.End);
 
 							if (lengthFixed ? totalLength == pet.Length : totalLength <= pet.Length)
 							{
@@ -51,42 +51,143 @@ namespace MBI.Logic.DNAAssemblance._Impl
 					else if (piece.Content.Contains(pet.Beginning))
 					{
 						beginningFound = true;
-						totalLength += GetFullPetBeginningLengthInPiece(piece, pet.Beginning);
+						totalLength += GetFullPetBeginningLengthInContig(piece, pet.Beginning);
 					}
 				}
 
-				int rank;
-				int length;
-
-				if (!beginningFound && contigs.First().Content.Contains(pet.End))
-				{
-					result.Rank += pet.End.Length;
-				}
-				else if (!endFound && contigs.Last().Content.Contains(pet.Beginning))
-				{
-					result.Rank += pet.Beginning.Length;
-				}
-				else if (!beginningFound && (TryPartiallyMatchPetPartIntoContigBeginning(contigs.First(), pet.End, out rank, out length) || 
-											 TryPartiallyMatchPetPartIntoContigEnd(contigs.First(), pet.End, out rank, out length)))
-				{
-					result.Rank += rank;
-				}
-				else if (!endFound && (TryPartiallyMatchPetPartIntoContigBeginning(contigs.Last(), pet.Beginning, out rank, out length) ||
-									   TryPartiallyMatchPetPartIntoContigEnd(contigs.Last(), pet.Beginning, out rank, out length)))
-				{
-					result.Rank += rank;
-				}
+				result.Rank += RankNotPairedPetPart(contigs, pet, beginningFound, endFound);
 			}
 
 			return result;
 		}
 
-		private int GetFullPetBeginningLengthInPiece(ScaffoldPiece piece, string petBeginning)
+		private bool TryMatchPetBeginning(string beginning, Scaffold scaffold, out int index, out int rank, out int length)
+		{
+			// Try to find full match
+			for (int i = 0; i < scaffold.Pieces.Count; i++)
+			{
+				var contig = scaffold.Pieces[i] as Contig;
+
+				if (contig == null)
+				{
+					continue;
+				}
+
+				if (contig.Content.Contains(beginning))
+				{
+					index = i;
+					rank = beginning.Length;
+					length = GetFullPetBeginningLengthInContig(contig, beginning);
+					return true;
+				}
+			}
+
+			// Try to find partial match
+			for (int i = 0; i < scaffold.Pieces.Count; i++)
+			{
+				var contig = scaffold.Pieces[i] as Contig;
+
+				if (contig == null)
+				{
+					continue;
+				}
+
+				if (TryPartiallyMatchPetPartIntoContigBeginning(contig, beginning, out rank, out length) ||
+					TryPartiallyMatchPetPartIntoContigEnd(contig, beginning, out rank, out length))
+				{
+					index = i;
+					return true;
+				}
+			}
+
+			index = 0;
+			rank = 0;
+			length = 0;
+			return false;
+		}
+
+		private bool TryMatchPetEnd(string end, Scaffold scaffold, int startIndex, out int rank, out int length)
+		{
+			// Try to find full match
+			var totalLength = 0;
+
+			for (int i = startIndex; i < scaffold.Pieces.Count; i++)
+			{
+				var piece = scaffold.Pieces[i];
+
+				if (piece is Contig && piece.Content.Contains(end))
+				{
+					rank = end.Length;
+					length = totalLength + GetFullPetEndLengthInContig(piece as Contig, end);
+					return true;
+				}
+				else
+				{
+					totalLength += piece.Length;
+				}
+			}
+
+			totalLength = 0;
+
+			// Try to find partial match
+			for (int i = startIndex; i < scaffold.Pieces.Count; i++)
+			{
+				var piece = scaffold.Pieces[i];
+				int lengthInPiece;
+
+				if (piece is Contig && (TryPartiallyMatchPetPartIntoContigBeginning(piece as Contig, end, out rank, out lengthInPiece) ||
+										TryPartiallyMatchPetPartIntoContigEnd(piece as Contig, end, out rank, out lengthInPiece)))
+				{
+					length = totalLength + lengthInPiece;
+					return true;
+				}
+				else
+				{
+					totalLength += piece.Length;
+				}
+			}
+
+			rank = 0;
+			length = 0;
+			return false;
+		}
+
+		private int RankNotPairedPetPart(Contig[] contigs, PairedEndTag pet, bool beginningFound, bool endFound)
+		{
+			int rank;
+			int length;
+
+			if (!beginningFound && contigs.First().Content.Contains(pet.End))
+			{
+				return pet.End.Length;
+			}
+			
+			if (!endFound && contigs.Last().Content.Contains(pet.Beginning))
+			{
+				return pet.Beginning.Length;
+			}
+			
+			if (!beginningFound && (TryPartiallyMatchPetPartIntoContigBeginning(contigs.First(), pet.End, out rank, out length) ||
+									TryPartiallyMatchPetPartIntoContigEnd(contigs.First(), pet.End, out rank, out length)))
+			{
+				return rank;
+			}
+			
+			if (!endFound && (TryPartiallyMatchPetPartIntoContigBeginning(contigs.Last(), pet.Beginning, out rank, out length) ||
+							  TryPartiallyMatchPetPartIntoContigEnd(contigs.Last(), pet.Beginning, out rank, out length)))
+			{
+				return rank;
+			}
+
+			return 0;
+		}
+
+		private int GetFullPetBeginningLengthInContig(ScaffoldPiece piece, string petBeginning)
 		{
 			return piece.Content.Split(new[] { petBeginning }, StringSplitOptions.None).Last().Length + petBeginning.Length;
 		}
 
-		private int GetFullPetEndLengthInPiece(ScaffoldPiece piece, string petEnd)
+		private int GetFullPetEndLengthInContig(ScaffoldPiece piece, string petEnd)
 		{
 			return piece.Content.Split(new[] { petEnd }, StringSplitOptions.None).First().Length + petEnd.Length;
 		}
