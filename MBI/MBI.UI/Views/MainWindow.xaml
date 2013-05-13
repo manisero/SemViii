@@ -1,0 +1,21 @@
+﻿<Window x:Class="MBI.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow"
+		Height="180"
+		Width="325"
+		DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}">
+	<StackPanel Margin="10">
+		<Button Content="Choose file..." Command="{Binding ChooseFile}" Width="100" HorizontalAlignment="Left" />
+		<DockPanel>
+			<Label Content="Input file:" />
+			<Label Content="{Binding InputFileName}" />
+		</DockPanel>
+		<Button Content="Assemble" Command="{Binding Assemble}" Width="100" HorizontalAlignment="Left" />
+		<DockPanel>
+			<Label Content="Output file:" />
+			<Label Content="{Binding OutputFileName}" />
+		</DockPanel>
+		<Label Content="{Binding ErrorMessage}" Foreground="Red" />
+	</StackPanel>
+</Window>
