@@ -1,5 +1,6 @@
 ﻿using MBI.Logic.Entities;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace MBI.Logic.Tests.ScaffoldBuilderTests
 {
@@ -73,6 +74,40 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 
 			// Act & Assert
 			TestRank(contigs, pet, 4);
+		}
+
+		[Test]
+		public void accepts_matchings_above_minimum_percentage(
+			[Values("XXbbcc", "aabbXX")] string firstContig,
+			[Values("YYeeff", "ddeeYY")] string secondContig)
+		{
+			// Arrange
+			var contigs = new[] { firstContig, secondContig };
+			var pet = new PairedEndTag { Beginning = "XXXX", End = "YYYY", Length = 100 };
+
+			SettingsProviderMock.Expect(x => x.PartialMatchMinPercentage).Return(0.25).Repeat.Any();
+
+			// Act & Assert
+			TestRank(contigs, pet, 4);
+
+			SettingsProviderMock.VerifyAllExpectations();
+		}
+
+		[Test]
+		public void rejects_matchings_below_minimum_percentage(
+			[Values("XXbbcc", "aabbXX")] string firstContig,
+			[Values("YYeeff", "ddeeYY")] string secondContig)
+		{
+			// Arrange
+			var contigs = new[] { firstContig, secondContig };
+			var pet = new PairedEndTag { Beginning = "XXXX", End = "YYYY", Length = 100 };
+
+			SettingsProviderMock.Expect(x => x.PartialMatchMinPercentage).Return(0.75).Repeat.Any();
+
+			// Act & Assert
+			TestRank(contigs, pet, 0);
+
+			SettingsProviderMock.VerifyAllExpectations();
 		}
 	}
 }

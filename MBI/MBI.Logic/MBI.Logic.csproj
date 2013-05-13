@@ -43,6 +43,7 @@
     <Compile Include="Entities\Contig.cs" />
     <Compile Include="Entities\Gap.cs" />
     <Compile Include="Entities\ScaffoldPiece.cs" />
+    <Compile Include="Infrastructure\ISettingsProvider.cs" />
     <Compile Include="Serialization\IScaffoldSerializer.cs" />
     <Compile Include="Serialization\IStreamHandler.cs" />
     <Compile Include="Serialization\_Impl\ScaffoldSerializer.cs" />

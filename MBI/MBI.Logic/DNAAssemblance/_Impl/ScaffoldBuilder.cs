@@ -2,11 +2,19 @@
 using System.Linq;
 using MBI.Logic.Entities;
 using MBI.Logic.Extensions;
+using MBI.Logic.Infrastructure;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class ScaffoldBuilder : IScaffoldBuilder
 	{
+		private readonly ISettingsProvider _settingsProvider;
+
+		public ScaffoldBuilder(ISettingsProvider settingsProvider)
+		{
+			_settingsProvider = settingsProvider;
+		}
+
 		public Scaffold Build(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = new Scaffold();
@@ -191,7 +199,14 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 		private bool TryPartiallyMatchPetPartIntoContigBeginning(Contig piece, string petPart, bool isPetBeginning, out int rank, out int length)
 		{
-			for (int subPartLength = petPart.Length - 1; subPartLength != 0; subPartLength--)
+			var minLength = (int)(_settingsProvider.PartialMatchMinPercentage * petPart.Length) - 1;
+
+			if (minLength < 0)
+			{
+				minLength = 0;
+			}
+
+			for (int subPartLength = petPart.Length - 1; subPartLength != minLength; subPartLength--)
 			{
 				var subPart = petPart.Substring(petPart.Length - subPartLength);
 
@@ -210,7 +225,14 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 		private bool TryPartiallyMatchPetPartIntoContigEnd(Contig piece, string petPart, bool isPetBeginning, out int rank, out int length)
 		{
-			for (int subPartLength = petPart.Length - 1; subPartLength != 0; subPartLength--)
+			var minLength = (int)(_settingsProvider.PartialMatchMinPercentage * petPart.Length) - 1;
+
+			if (minLength < 0)
+			{
+				minLength = 0;
+			}
+
+			for (int subPartLength = petPart.Length - 1; subPartLength != minLength; subPartLength--)
 			{
 				var subPart = petPart.Substring(0, subPartLength);
 

@@ -40,6 +40,7 @@
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,8 +59,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Bootstrap\Ninject\InfrastructureModule.cs" />
     <Compile Include="Bootstrap\Ninject\LogicModule.cs" />
+    <Compile Include="Bootstrap\Ninject\MBIKernel.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Infrastructure\SettingsProvider.cs" />
     <Compile Include="ViewModelLocation\IViewModelFactory.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="ViewModelLocation\ViewModelLocator.cs" />
@@ -96,6 +100,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
