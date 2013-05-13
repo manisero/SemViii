@@ -2,6 +2,7 @@
 using System.Linq;
 using MBI.Logic.Entities;
 using MBI.Logic.Extensions;
+using MBI.Logic.Infrastructure;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {

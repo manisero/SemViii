@@ -2,7 +2,6 @@
 using MBI.UI.Bootstrap.Ninject;
 using MBI.UI.ViewModelLocation;
 using MBI.UI.ViewModelLocation._Impl;
-using Ninject;
 
 namespace MBI.UI
 {
@@ -15,7 +14,7 @@ namespace MBI.UI
 		{
 			base.OnStartup(e);
 
-			var viewModelFactory = new NinjectViewModelFactory(new StandardKernel(new LogicModule()));
+			var viewModelFactory = new NinjectViewModelFactory(new MBIKernel());
 			((ViewModelLocator)Resources["Locator"]).ViewModelFactory = viewModelFactory;
 		}
 	}
