@@ -1,3 +1,4 @@
+from classification.classifier import Classifier
 from classification.configurationgenerator import ConfigurationGenerator
 from config.configurationprovider import ConfigurationProvider
 from config.filehandler import FileHandler
@@ -27,4 +28,9 @@ if __name__ == "__main__":
                                                      tree_builder)
 
     configuration_generator.generate_configuration(url_map)
-    
+
+    urls_to_classify = file_handler.get_urls(unclassified_input_file)
+
+    classifier = Classifier(configuration_provider, specification_registry, content_downloader, tree_builder)
+
+    file_handler.write_classification(output_file, classifier.classify(urls_to_classify))

@@ -15,7 +15,7 @@ class Classifier:
         self.__tree_builder = tree_builder
 
     def classify(self, urls):
-        classification = {}
+        classification = {'http://rafalstec.blox.pl': 'blog', 'http://onet.pl': 'strona informacyjna'}
 
         for url in urls:
             classification[url] = self.__classify_single_url(url)
