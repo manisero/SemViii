@@ -36,9 +36,6 @@ class HTMLTreeBuilder(HTMLParser):
         else:
             self.__last_node.add_node(node)
             self.__last_node = node
-            
-        if tag == 'img':
-            self.handle_endtag(tag)
     
     def handle_endtag(self, tag):
         if self.__valid_tags is not None and tag not in self.__valid_tags:
