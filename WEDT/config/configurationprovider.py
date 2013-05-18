@@ -30,3 +30,8 @@ class ConfigurationProvider:
 
     def set_configuration(self, category_name, variable_name, variable_value):
         self.__config.set(self.__category_section_prefix + category_name, variable_name, variable_value)
+
+    def get_categories(self):
+        categories = self.__config.sections()
+
+        return filter(lambda x: x.startswith(self.__category_section_prefix), categories)
