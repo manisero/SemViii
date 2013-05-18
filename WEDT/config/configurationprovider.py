@@ -10,15 +10,23 @@ import ConfigParser
 
 
 class ConfigurationProvider:
-    __config_file = ''
+    __config = ConfigParser.ConfigParser()
+    __main_section = 'Main'
+    __category_section_prefix = 'Specification'
+    __valid_tags_variable = 'valid_tags'
+    __valid_attributes_variable = 'valid_attributes'
 
     def __init__(self, config_file):
-        self.__config_file = config_file
+        self.__config.read(config_file)
 
-    def get_configuration(self, object):
-        config = ConfigParser.ConfigParser()
-        config.read(self.__config_file)
+    def get_valid_tags(self):
+        self.__config.get(self.__main_section, self.__valid_tags_variable).split(';')
 
-        config_dictionary = {key: value for key, value in config.items(object.__class__.__name__)}
+    def get_valid_attributes(self):
+        self.__config.get(self.__main_section, self.__valid_attributes_variable).split(';')
 
-        return config_dictionary
+    def get_configuration(self, category_name, variable_name):
+        self.__config.get(self.__category_section_prefix + category_name, variable_name)
+
+    def set_configuration(self, category_name, variable_name, variable_value):
+        self.__config.set(self.__category_section_prefix + category_name, variable_name, variable_value)

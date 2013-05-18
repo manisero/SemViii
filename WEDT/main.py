@@ -1,19 +1,21 @@
-import sys
-from algorithm.webpageclassifier import WebPageClassifier
+from classification.configurationgenerator import ConfigurationGenerator
+from config.configurationprovider import ConfigurationProvider
+from specification.specificationregistry import SpecificationRegistry
+from tree.htmltreebuilder import HTMLTreeBuilder
 from web.webpagecontentdownloader import WebPageContentDownloader
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        try:
-            content = WebPageContentDownloader().download(sys.argv[1])
 
-            print 'Classification: ' + str(WebPageClassifier('config.ini').classify(content))
+    url_map = {'http://kwejk.pl': 'Kwejk'}
 
-        except Exception as ex:
+    configuration_provider = ConfigurationProvider('config.ini')
+    specification_registry = SpecificationRegistry(configuration_provider)
+    content_downloader = WebPageContentDownloader()
+    tree_builder = HTMLTreeBuilder()
 
-            print >> sys.stderr, 'Failed to open URL: ' + sys.argv[1]
-            print >> sys.stderr, str(ex)
-            sys.exit(-1)
+    configuration_generator = ConfigurationGenerator(configuration_provider,
+                                                     specification_registry,
+                                                     content_downloader,
+                                                     tree_builder)
 
-    else:
-        print >> sys.stderr, 'Bad syntax. Use: ' + sys.argv[0] + ' url'
+    configuration_generator.generate_configuration(url_map)
