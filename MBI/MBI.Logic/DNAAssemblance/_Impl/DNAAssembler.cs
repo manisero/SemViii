@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MBI.Logic.Entities;
 using MBI.Logic.Extensions;
 using System.Linq;
 
@@ -6,24 +7,24 @@ namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class DNAAssembler : IDNAAssembler
 	{
-		private readonly IScaffoldValidator _assemblyValidator;
+		private readonly IScaffoldBuilder _assemblyBuilder;
 
-		public DNAAssembler(IScaffoldValidator assemblyValidator)
+		public DNAAssembler(IScaffoldBuilder assemblyBuilder)
 		{
-			_assemblyValidator = assemblyValidator;
+			_assemblyBuilder = assemblyBuilder;
 		}
 
-		public IList<Scaffold> Assemble(string[] contigs, PairedEndTag[] pairedEndTags)
+		public IList<Scaffold> Assemble(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = new List<Scaffold>();
 
 			foreach (var permutation in contigs.GetPermutations().Select(x => x.ToArray()))
 			{
-				var rank = _assemblyValidator.Validate(permutation, pairedEndTags);
+				var scaffold = _assemblyBuilder.Build(permutation, pairedEndTags);
 
-				if (rank > 0)
+				if (scaffold.Rank > 0)
 				{
-					result.Add(new Scaffold { Contigs = permutation.ToArray(), Rank = rank });
+					result.Add(scaffold);
 				}
 			}
 

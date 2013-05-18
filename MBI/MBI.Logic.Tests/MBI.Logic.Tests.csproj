@@ -50,15 +50,18 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ScaffoldBuilderTests\LengthValidationTests.cs" />
+    <Compile Include="ScaffoldBuilderTests\PartialMatchRankingTests.cs" />
+    <Compile Include="ScaffoldBuilderTests\ScaffoldBuildingTests.cs" />
     <Compile Include="SerializationTests\AssemblyParserTests.cs" />
     <Compile Include="SerializationTests\ScaffoldSerializerTests.cs" />
     <Compile Include="SerializationTests\StreamHandlerTests.cs" />
-    <Compile Include="ScaffoldValidatorTests\NoMatchTests.cs" />
-    <Compile Include="ScaffoldValidatorTests\ScaffoldValidatorTestsBase.cs" />
+    <Compile Include="ScaffoldBuilderTests\NoMatchRankingTests.cs" />
+    <Compile Include="ScaffoldBuilderTests\ScaffoldBuilderTestsBase.cs" />
     <Compile Include="DNAAssemblerTests.cs" />
     <Compile Include="Extensions\AssertExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScaffoldValidatorTests\FullMatchTests.cs" />
+    <Compile Include="ScaffoldBuilderTests\FullMatchRankingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MBI.Logic\MBI.Logic.csproj">

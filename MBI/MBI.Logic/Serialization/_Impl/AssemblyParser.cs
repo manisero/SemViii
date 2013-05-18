@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MBI.Logic.Entities;
 
 namespace MBI.Logic.Serialization._Impl
 {
@@ -35,7 +36,7 @@ namespace MBI.Logic.Serialization._Impl
 				pets.Add(ParsePET(inputText[index]));
 			}
 
-			return new DNAAssembly { Contigs = contigs.ToArray(), PairedEndTags = pets.ToArray() };
+			return new DNAAssembly { Contigs = contigs.Select(x => new Contig(x)).ToArray(), PairedEndTags = pets.ToArray() };
 		}
 
 		private void ValiateInputText(string[] inputText)

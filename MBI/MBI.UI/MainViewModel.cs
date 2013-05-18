@@ -1,7 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using MBI.Logic;
+﻿using System.Windows.Input;
 using MBI.Logic.DNAAssemblance;
+using MBI.Logic.Entities;
 using MBI.Logic.Serialization;
 using MBI.UI.Commands;
 using Microsoft.Win32;
