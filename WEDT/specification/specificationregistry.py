@@ -1,4 +1,4 @@
-from specification.imagenumber import ImageNumberSpecification
+from specification.imageamountspec import ImageAmountSpecification
 
 
 class SpecificationRegistry:
@@ -8,7 +8,7 @@ class SpecificationRegistry:
         self.__register_specifications(configuration_provider)
 
     def __register_specifications(self, configuration_provider):
-        self.__specifications.append(ImageNumberSpecification(configuration_provider))
+        self.__specifications.append(ImageAmountSpecification(configuration_provider))
 
     def get_specifications(self):
         return self.__specifications
