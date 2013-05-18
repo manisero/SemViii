@@ -12,7 +12,6 @@ import ConfigParser
 class ConfigurationProvider:
     __config = ConfigParser.ConfigParser()
     __main_section = 'Main'
-    __category_section_prefix = 'Specification'
     __valid_tags_variable = 'valid_tags'
     __valid_attributes_variable = 'valid_attributes'
 
@@ -26,38 +25,25 @@ class ConfigurationProvider:
         self.__config.get(self.__main_section, self.__valid_attributes_variable).split(';')
 
     def get_configuration(self, category_name, variable_name=None):
-        section_name = self.__get_section_for_category(category_name)
-
         if variable_name is None:
-            if not self.__config.has_section(section_name):
+            if not self.__config.has_section(category_name):
                 return {}
 
-            return self.__config.items(section_name)
+            return self.__config.items(category_name)
         else:
-            if not self.__config.has_section(section_name) or not self.__config.has_option(section_name, variable_name):
+            if not self.__config.has_section(category_name) \
+                    or not self.__config.has_option(category_name, variable_name):
                 return None
 
-            return self.__config.get(section_name, variable_name)
+            return self.__config.get(category_name, variable_name)
 
     def set_configuration(self, category_name, variable_name, variable_value):
-        section_name = self.__get_section_for_category(category_name)
+        if not self.__config.has_section(category_name):
+            self.__config.add_section(category_name)
 
-        if not self.__config.has_section(section_name):
-            self.__config.add_section(section_name)
-
-        self.__config.set(self.__get_section_for_category(category_name), variable_name, str(variable_value))
+        self.__config.set(category_name, variable_name, str(variable_value))
 
     def get_categories(self):
         categories = self.__config.sections()
 
-        return filter(lambda x: x.startswith(self.__category_section_prefix), categories)
-
-    def __get_section_for_category(self, category_name):
-        section_name = self.__category_section_prefix
-
-        split_category_name = category_name.split(' ')
-
-        for partial_category_name in split_category_name:
-            section_name += partial_category_name[:1].upper() + partial_category_name[1:]
-
-        return section_name
+        return filter(lambda x: x != self.__main_section, categories)

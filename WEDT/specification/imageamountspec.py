@@ -19,9 +19,6 @@ class ImageAmountSpecification:
         if maximum_images is None or total_images > int(maximum_images):
             self.__configuration_provider.set_configuration(category_name, self.__maximum_amount_variable, total_images)
 
-        print "[ImageNumberSpecification] Generating configuration for: " + category_name
-        print "[ImageNumberSpecification] Generated: " + str(self.__configuration_provider.get_configuration(category_name))
-
     def is_specified_by(self, html_tree, category_name):
         total_images = self.__count_images(html_tree)
 
@@ -30,10 +27,8 @@ class ImageAmountSpecification:
 
         if minimum_images is None or maximum_images is None or \
                 total_images < int(minimum_images) or total_images > int(maximum_images):
-            print "[ImageNumberSpecification] Is not specified by: " + category_name
             return False
 
-        print "[ImageNumberSpecification] Is specified by: " + category_name
         return True
 
     def __count_images(self, html_tree):
