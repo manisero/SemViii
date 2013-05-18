@@ -14,7 +14,15 @@ class Classifier:
         self.__content_downloader = content_downloader
         self.__tree_builder = tree_builder
 
-    def classify(self, url):
+    def classify(self, urls):
+        classification = {}
+
+        for url in urls:
+            classification[url] = self.__classify_single_url(url)
+
+        return classification
+
+    def __classify_single_url(self, url):
         try:
             content = self.__content_downloader.download(url)
             html_tree = self.__tree_builder.build_tree(content,
