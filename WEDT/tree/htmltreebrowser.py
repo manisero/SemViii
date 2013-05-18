@@ -73,3 +73,51 @@ class HTMLTreeBrowser:
             current_node = current_node.next()
 
         return grouped_text_length
+
+    def get_mutual_children(self, repeated_nodes, group_tags=None, group_attributes=None):
+        grouped_mutual_children = self.__get_grouped_children(repeated_nodes[0], group_tags, group_attributes)
+
+        for node in repeated_nodes:
+            node_grouped_mutual_children = self.__get_grouped_children(node, group_tags, group_attributes)
+
+            common_grouped_mutual_children = {}
+
+            for mutual_children in grouped_mutual_children:
+                for node_mutual_children in node_grouped_mutual_children:
+                    if mutual_children.tag_attribute_equals(node_mutual_children, group_attributes):
+                        common_grouped_mutual_children[mutual_children] = grouped_mutual_children[mutual_children]
+                        common_grouped_mutual_children[mutual_children].append(
+                            node_grouped_mutual_children[node_mutual_children])
+
+            grouped_mutual_children = common_grouped_mutual_children
+
+    def __get_grouped_children(self, html_tree, group_tags=None, group_attributes=None, grouped_children={}):
+        """
+        @type html_tree: HTMLTreeNode
+        """
+        if html_tree in group_tags:
+            grouped_children_entry = self.__get_nodes_dictionary_entry(html_tree, grouped_children, group_attributes)
+
+            if grouped_children_entry is None:
+                grouped_children[html_tree] = [html_tree]
+            else:
+                grouped_children[grouped_children_entry].append(html_tree)
+
+        for children in html_tree.get_nodes():
+            self.__get_grouped_children(children, group_tags, group_attributes, grouped_children)
+
+        return grouped_children
+
+    def has_direct_children(self, nodes, children_tag):
+        for node in nodes:
+            has_direct_children = False
+
+            for children in node.get_nodes():
+                if children.get_tag() == children_tag:
+                    has_direct_children = True
+                    break
+
+            if not has_direct_children:
+                return False
+
+        return True
