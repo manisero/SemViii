@@ -21,9 +21,10 @@ class ConfigurationGenerator:
         for url in url_map:
             try:
                 content = self.__content_downloader.download(url)
-                html_tree = self.__tree_builder.build_tree(content,
+                html_tree = self.__tree_builder.build_tree(url, content,
                                                            self.__configuration_provider.get_valid_tags(),
-                                                           self.__configuration_provider.get_valid_attributes())
+                                                           self.__configuration_provider.get_valid_attributes(),
+                                                           self.__configuration_provider.get_blacklisted_tags())
 
                 print "Generating config for: " + url
 

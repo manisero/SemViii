@@ -17,6 +17,7 @@ class ConfigurationProvider:
     __output_file_variable = 'output_file'
     __valid_tags_variable = 'valid_tags'
     __valid_attributes_variable = 'valid_attributes'
+    __blacklisted_tags_variable = 'blacklisted_tags'
     __group_valid_tags_variable = 'group_valid_tags'
     __group_valid_attributes_variable = 'group_valid_attributes'
     __minimal_hit_ration_variable = 'minimal_hit_ratio'
@@ -38,6 +39,9 @@ class ConfigurationProvider:
 
     def get_valid_attributes(self):
         return self.__config.get(self.__main_section, self.__valid_attributes_variable).split(';')
+
+    def get_blacklisted_tags(self):
+        return self.__config.get(self.__main_section, self.__blacklisted_tags_variable).split(';')
 
     def get_group_valid_tags(self):
         return self.__config.get(self.__main_section, self.__group_valid_tags_variable).split(';')
