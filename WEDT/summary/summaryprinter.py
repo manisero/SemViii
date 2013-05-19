@@ -48,11 +48,26 @@ class SummaryPrinter:
             else:
                 true_negatives += 1
 
-        accuracy = (true_positives + true_negatives) / \
-                   (true_positives + true_negatives + false_positives + false_negatives)
-        specificity = true_positives / (true_positives + false_negatives)
-        fallout = false_positives / (false_positives + true_negatives)
-        precision = true_positives / (true_positives + false_positives)
+        accuracy = 0
+
+        if true_positives + true_negatives + false_positives + false_negatives > 0:
+            accuracy = (true_positives + true_negatives) / \
+                       (true_positives + true_negatives + false_positives + false_negatives)
+
+        specificity = 0
+
+        if true_positives + false_negatives > 0:
+            specificity = true_positives / (true_positives + false_negatives)
+
+        fallout = 0
+
+        if false_positives + true_negatives > 0:
+            fallout = false_positives / (false_positives + true_negatives)
+
+        precision = 0
+
+        if true_positives + false_positives > 0:
+            precision = true_positives / (true_positives + false_positives)
 
         return accuracy, specificity, fallout, precision
 

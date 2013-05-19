@@ -2,9 +2,11 @@ class ImageAmountSpecification:
     __minimum_amount_variable = 'min_images'
     __maximum_amount_variable = 'max_images'
     __configuration_provider = None
+    __tree_browser = None
 
-    def __init__(self, configuration_provider):
+    def __init__(self, configuration_provider, tree_browser):
         self.__configuration_provider = configuration_provider
+        self.__tree_browser = tree_browser
 
     def generate_configuration(self, html_tree, category_name):
         total_images = self.__count_images(html_tree)

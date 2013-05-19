@@ -9,6 +9,59 @@
 
 
 class HTMLTreeBrowser:
+    def get_grouped_nodes(self, html_tree, valid_tags=None, valid_attributes=None):
+        grouped_nodes = {}
+        current_node = html_tree
+
+        while current_node is not None:
+            if valid_tags is not None and current_node.get_tag() not in valid_tags:
+                current_node = current_node.next()
+                continue
+
+            group_entry = self.__get_grouped_nodes_dictionary_entry(current_node, grouped_nodes, valid_attributes)
+
+            if group_entry is None:
+                group_entry = current_node
+                grouped_nodes[group_entry] = []
+
+            grouped_nodes[group_entry].append(current_node)
+
+            current_node = current_node.next()
+
+        return grouped_nodes
+
+    def get_grouped_nodes_under_same_parent(self, html_tree, valid_tags=None, valid_attributes=None):
+        grouped_nodes_under_same_parent = {}
+        grouped_nodes = self.get_grouped_nodes(html_tree, valid_tags, valid_attributes)
+
+        for group_entry in grouped_nodes:
+            if len(grouped_nodes[group_entry]) < 1:
+                continue
+
+            mutual_parent = True
+
+            first_parent = group_entry.get_parent()
+
+            for node in grouped_nodes[group_entry]:
+                if node.get_parent() is not first_parent:
+                    mutual_parent = False
+                    break
+
+            if mutual_parent:
+                grouped_nodes_under_same_parent[group_entry] = grouped_nodes[group_entry]
+
+        return grouped_nodes_under_same_parent
+
+    def get_longest_group_under_same_parent(self, html_tree, valid_tags=None, valid_attributes=None):
+        longest_group = []
+        grouped_under_same_parent = self.get_grouped_nodes_under_same_parent(html_tree, valid_tags, valid_attributes)
+
+        for group_entry in grouped_under_same_parent:
+            if len(grouped_under_same_parent[group_entry]) > len(longest_group):
+                longest_group = grouped_under_same_parent[group_entry]
+
+        return longest_group
+
     def get_repeated_nodes(self, html_tree, minimum_repeats, valid_tags=None, valid_attributes=None):
         repeated_nodes = {}
         current_node = html_tree
@@ -18,7 +71,8 @@ class HTMLTreeBrowser:
                 current_node = current_node.next()
                 continue
 
-            repeated_nodes_entry = self.__get_nodes_dictionary_entry(current_node, repeated_nodes, valid_attributes)
+            repeated_nodes_entry = self.__get_grouped_nodes_dictionary_entry(current_node, repeated_nodes,
+                                                                             valid_attributes)
 
             if repeated_nodes_entry is not None:
                 repeated_nodes[repeated_nodes_entry].append(current_node)
@@ -33,7 +87,7 @@ class HTMLTreeBrowser:
 
         return repeated_nodes
 
-    def __get_nodes_dictionary_entry(self, key_node, grouped_nodes, group_attributes):
+    def __get_grouped_nodes_dictionary_entry(self, key_node, grouped_nodes, group_attributes):
         for key in grouped_nodes.keys():
             if key.tag_attribute_equals(key_node, group_attributes):
                 return key
@@ -62,7 +116,8 @@ class HTMLTreeBrowser:
                 current_node = current_node.next()
                 continue
 
-            grouped_length_entry = self.__get_nodes_dictionary_entry(current_node, grouped_text_length, group_attributes)
+            grouped_length_entry = self.__get_grouped_nodes_dictionary_entry(current_node, grouped_text_length,
+                                                                             group_attributes)
 
             if grouped_length_entry is None:
                 grouped_length_entry = current_node
@@ -96,7 +151,7 @@ class HTMLTreeBrowser:
         @type html_tree: HTMLTreeNode
         """
         if html_tree in group_tags:
-            grouped_children_entry = self.__get_nodes_dictionary_entry(html_tree, grouped_children, group_attributes)
+            grouped_children_entry = self.__get_grouped_nodes_dictionary_entry(html_tree, grouped_children, group_attributes)
 
             if grouped_children_entry is None:
                 grouped_children[html_tree] = [html_tree]
