@@ -11,8 +11,6 @@ class StructuralElementRepeatsSpecification:
     def generate_configuration(self, html_tree, category_name):
         total_structure_repeats = self.__get_maximum_structure_repeats(html_tree)
 
-        print "total structure repeats: " + str(total_structure_repeats)
-
         minimum_structure_repeats = \
             self.__configuration_provider.get_configuration(category_name, self.__minimum_structure_repeats_variable)
 
@@ -46,7 +44,8 @@ class StructuralElementRepeatsSpecification:
     def __get_maximum_structure_repeats(self, html_tree):
         valid_group_tags = self.__configuration_provider.get_group_valid_tags()
         valid_group_attributes = self.__configuration_provider.get_group_valid_attributes()
-        longest_group_of_nodes = self.__tree_browser.get_longest_group_under_same_parent(html_tree, valid_group_tags,
-                                                                                         valid_group_attributes)
+        longest_group_of_nodes = self.__tree_browser.get_longest_nested_group_under_same_parent(html_tree,
+                                                                                                valid_group_tags,
+                                                                                                valid_group_attributes)
 
         return len(longest_group_of_nodes)

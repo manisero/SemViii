@@ -62,6 +62,25 @@ class HTMLTreeBrowser:
 
         return longest_group
 
+    def get_longest_nested_group_under_same_parent(self, html_tree, valid_tags=None, valid_attributes=None):
+        longest_group = []
+        grouped_under_same_parent = self.get_grouped_nodes_under_same_parent(html_tree, valid_tags, valid_attributes)
+
+        for group_entry in grouped_under_same_parent:
+            if len(grouped_under_same_parent[group_entry]) > len(longest_group) and \
+                    self.__check_if_nested_structure(grouped_under_same_parent[group_entry]):
+                longest_group = grouped_under_same_parent[group_entry]
+
+        return longest_group
+
+    def __check_if_nested_structure(self, nodes):
+        for node in nodes:
+            if node.get_nodes():
+                if len(node.get_nodes()) > 1 or node.get_nodes()[0].get_nodes():
+                    return True
+
+        return False
+
     def get_repeated_nodes(self, html_tree, minimum_repeats, valid_tags=None, valid_attributes=None):
         repeated_nodes = {}
         current_node = html_tree
