@@ -42,8 +42,24 @@ class HTMLTreeBrowser:
 
             first_parent = group_entry.get_parent()
 
+            while first_parent.get_tag() not in valid_tags:
+                first_parent = first_parent.get_parent()
+
+                if first_parent is first_parent.get_parent():
+                    mutual_parent = False
+                    break
+
             for node in grouped_nodes[group_entry]:
-                if node.get_parent() is not first_parent:
+                parent = node.get_parent()
+
+                while parent.get_tag() not in valid_tags:
+                    parent = parent.get_parent()
+
+                    if parent is parent.get_parent():
+                        mutual_parent = False
+                        break
+
+                if parent is not first_parent:
                     mutual_parent = False
                     break
 

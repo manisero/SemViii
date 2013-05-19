@@ -25,6 +25,8 @@ class ConfigurationGenerator:
                                                            self.__configuration_provider.get_valid_tags(),
                                                            self.__configuration_provider.get_valid_attributes())
 
+                print "url: " + url
+
                 for specification in self.__specification_registry.get_specifications():
                     specification.generate_configuration(html_tree, url_map[url])
 

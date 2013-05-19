@@ -27,7 +27,7 @@ class HTML5TagAmountSpecification:
         maximum_section_tag_repeats = self.__configuration_provider.get_configuration(
             category_name, self.__maximum_section_tag_repeats_variable)
 
-        if maximum_section_tag_repeats is None or section_tag_repeats < int(maximum_section_tag_repeats):
+        if maximum_section_tag_repeats is None or section_tag_repeats > int(maximum_section_tag_repeats):
             self.__configuration_provider.set_configuration(
                 category_name, self.__maximum_section_tag_repeats_variable, section_tag_repeats)
 
@@ -41,10 +41,9 @@ class HTML5TagAmountSpecification:
         maximum_article_tag_repeats = self.__configuration_provider.get_configuration(
             category_name, self.__maximum_article_tag_repeats_variable)
 
-        if maximum_article_tag_repeats is None or article_tag_repeats < int(maximum_article_tag_repeats):
+        if maximum_article_tag_repeats is None or article_tag_repeats > int(maximum_article_tag_repeats):
             self.__configuration_provider.set_configuration(
                 category_name, self.__maximum_article_tag_repeats_variable, article_tag_repeats)
-
 
     def is_specified_by(self, html_tree, category_name):
         section_tag_repeats = self.__get_tag_repeat_amount(html_tree, 'section')
