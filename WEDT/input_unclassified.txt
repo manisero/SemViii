@@ -1,2 +1,3 @@
-http://wp.pl
-http://kwejk.pl
+http://wp.pl strony informacyjne
+http://kwejk.pl kwejk
+http://sport.pl None

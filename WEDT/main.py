@@ -3,6 +3,7 @@ from classification.configurationgenerator import ConfigurationGenerator
 from config.configurationprovider import ConfigurationProvider
 from config.filehandler import FileHandler
 from specification.specificationregistry import SpecificationRegistry
+from summary.summaryprinter import SummaryPrinter
 from tree.htmltreebuilder import HTMLTreeBuilder
 from web.webpagecontentdownloader import WebPageContentDownloader
 
@@ -29,8 +30,12 @@ if __name__ == "__main__":
 
     configuration_generator.generate_configuration(url_map)
 
-    urls_to_classify = file_handler.get_urls(unclassified_input_file)
+    url_map_to_classify = file_handler.get_url_map(unclassified_input_file)
 
     classifier = Classifier(configuration_provider, specification_registry, content_downloader, tree_builder)
 
-    file_handler.write_classification(output_file, classifier.classify(urls_to_classify))
+    classification = classifier.classify(url_map_to_classify.keys())
+
+    file_handler.write_classification(output_file, classification)
+
+    SummaryPrinter().print_summary(classification, url_map_to_classify)
