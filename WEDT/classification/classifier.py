@@ -18,6 +18,7 @@ class Classifier:
         classification = {}
 
         for url in urls:
+            print "Classifying: " + url
             classification[url] = self.__classify_single_url(url)
 
         return classification

@@ -49,4 +49,7 @@ class HyperlinkedTextLengthSpecification:
 
             current_node = current_node.next()
 
-        return hyperlinked_text_length / text_length
+        if text_length > 0.0:
+            return hyperlinked_text_length / text_length
+
+        return 0.0
