@@ -31,9 +31,17 @@ class HyperlinkedTextLengthSpecification:
 
         if minimum_ratio is None or maximum_ratio is None or hyperlinked_text_ratio < float(minimum_ratio) or \
                 hyperlinked_text_ratio > float(maximum_ratio):
-            return False
+            return 0.0
 
-        return True
+        ratio_interval_length = float(maximum_ratio) - float(minimum_ratio)
+        ratio_mean_value = (float(maximum_ratio) + float(minimum_ratio)) / 2.0
+
+        if ratio_interval_length == 0.0:
+            return 1.0
+
+        ratio_mean_difference = 1.0 - abs(hyperlinked_text_ratio - ratio_mean_value) / ratio_interval_length
+
+        return ratio_mean_difference
 
     def __get_hyperlinked_text_ratio(self, html_tree):
         hyperlinked_text_length = 0.0

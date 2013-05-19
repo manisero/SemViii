@@ -31,9 +31,18 @@ class TextLengthMainStructureSpecification:
 
         if min_text_length is None or max_text_length is None or current_text_length < float(min_text_length) or \
                 current_text_length > float(max_text_length):
-            return False
+            return 0.0
 
-        return True
+        text_length_interval_value = float(max_text_length) - float(min_text_length)
+        text_length_mean_value = (float(max_text_length) + float(min_text_length)) / 2.0
+
+        if text_length_interval_value == 0.0:
+            return 1.0
+
+        text_length_mean_difference = 1.0 - abs(current_text_length - text_length_mean_value) / \
+            text_length_interval_value
+
+        return text_length_mean_difference
 
     def __get_max_text_length_in_nodes(self, html_tree):
         valid_group_tags = self.__configuration_provider.get_group_valid_tags()
@@ -67,6 +76,8 @@ class TextLengthMainStructureSpecification:
                 text_length = self.__get_max_text_length_in_node(children)
 
         if text_length < len(node.get_text()):
+            if len(node.get_text()) == 228:
+                print "catch on node: " + node.get_tag() + " with attrs: " + str(node.get_attributes()) + " and text: " + node.get_text()
             return len(node.get_text())
 
         return text_length

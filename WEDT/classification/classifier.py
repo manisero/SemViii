@@ -7,6 +7,7 @@ class Classifier:
     __specification_registry = None
     __content_downloader = None
     __tree_builder = None
+    __debug_urls = ['http://gnioty.pl', 'http://wykresy.pl', 'http://aledemot.pl', 'http://atakklonow.pl', 'http://gifowisko.pl', 'http://komixxy.pl', 'http://mistrzowie.org']
 
     def __init__(self, configuration_provider, specification_registry, content_downloader, tree_builder):
         self.__configuration_provider = configuration_provider
@@ -34,20 +35,22 @@ class Classifier:
 
             for specification in self.__specification_registry.get_specifications():
                 for category in self.__configuration_provider.get_categories():
-                    if specification.is_specified_by(html_tree, category):
-                        if category not in classification:
-                            classification[category] = 0
+                    if category not in classification:
+                        classification[category] = 0.0
 
-                        classification[category] += 1
+                    if url in self.__debug_urls:
+                        print "points for url: " + url + " in category: " + category + " for specification: " + specification.__class__.__name__ + " is: " + str(specification.is_specified_by(html_tree, category))
+
+                    classification[category] += specification.is_specified_by(html_tree, category)
 
             if classification:
                 sorted_classification = sorted(classification, key=classification.get, reverse=True)
 
-                if self.__get_hit_ratio(classification, sorted_classification[0]) >= \
-                        self.__configuration_provider.get_minimal_hit_ratio():
-                    return sorted_classification[0]
+                print "classification: " + str(classification)
 
-                return None
+                """if self.__get_hit_ratio(classification, sorted_classification[0]) >= \
+                        self.__configuration_provider.get_minimal_hit_ratio():"""
+                return sorted_classification[0]
 
         except Exception as ex:
             print >> sys.stderr, 'Failed to open URL: ' + url + ' because of: ' + str(ex)

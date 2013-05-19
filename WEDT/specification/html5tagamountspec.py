@@ -64,9 +64,21 @@ class HTML5TagAmountSpecification:
                 section_tag_repeats > int(maximum_section_tag_repeats) or \
                 article_tag_repeats < int(minimum_article_tag_repeats) or \
                 article_tag_repeats > int(maximum_article_tag_repeats):
-            return False
+            return 0.0
 
-        return True
+        section_interval_length = float(maximum_section_tag_repeats) - float(minimum_section_tag_repeats)
+        article_interval_length = float(maximum_article_tag_repeats) - float(minimum_article_tag_repeats)
+
+        mean_section_interval_value = (float(maximum_section_tag_repeats) + float(minimum_section_tag_repeats)) / 2.0
+        mean_article_interval_value = (float(maximum_article_tag_repeats) + float(minimum_article_tag_repeats)) / 2.0
+
+        if section_interval_length == 0.0 or article_interval_length == 0.0:
+            return 1.0
+
+        section_mean_difference = 1.0 - abs(section_tag_repeats - mean_section_interval_value) / section_interval_length
+        article_mean_difference = 1.0 - abs(article_tag_repeats - mean_article_interval_value) / article_interval_length
+
+        return (section_mean_difference + article_mean_difference) / 2.0
 
     def __get_tag_repeat_amount(self, html_tree, tag):
         total_repeats = 0

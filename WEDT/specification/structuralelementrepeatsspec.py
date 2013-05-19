@@ -28,6 +28,8 @@ class StructuralElementRepeatsSpecification:
     def is_specified_by(self, html_tree, category_name):
         total_structure_repeats = self.__get_maximum_structure_repeats(html_tree)
 
+        print "total structure repeats: " + str(total_structure_repeats)
+
         minimum_structure_repeats = \
             self.__configuration_provider.get_configuration(category_name, self.__minimum_structure_repeats_variable)
 
@@ -37,9 +39,18 @@ class StructuralElementRepeatsSpecification:
         if minimum_structure_repeats is None or maximum_structure_repeats is None or \
                 total_structure_repeats > int(maximum_structure_repeats) or \
                 total_structure_repeats < int(minimum_structure_repeats):
-            return False
+            return 0.0
 
-        return True
+        structure_repeats_interval_length = float(maximum_structure_repeats) - float(minimum_structure_repeats)
+        structure_repeats_mean_value = (float(maximum_structure_repeats) + float(minimum_structure_repeats)) / 2.0
+
+        if structure_repeats_interval_length == 0.0:
+            return 0.0
+
+        structure_repeats_mean_difference = 1.0 - abs(total_structure_repeats - structure_repeats_mean_value) / \
+            structure_repeats_interval_length
+
+        return structure_repeats_mean_difference
 
     def __get_maximum_structure_repeats(self, html_tree):
         valid_group_tags = self.__configuration_provider.get_group_valid_tags()

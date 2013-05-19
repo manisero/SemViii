@@ -37,9 +37,18 @@ class LinkedImageMainStructureSpecification:
         if minimum_mean_amount is None or maximum_mean_amount is None or \
                 mean_linked_images_amount < float(minimum_mean_amount) or \
                 mean_linked_images_amount > float(maximum_mean_amount):
-            return False
+            return 0.0
 
-        return True
+        mean_amount_interval_length = float(maximum_mean_amount) - float(minimum_mean_amount)
+        mean_amount_mean_value = (float(maximum_mean_amount) + float(minimum_mean_amount)) / 2.0
+
+        if mean_amount_interval_length == 0.0:
+            return 0.0
+
+        mean_amount_mean_difference = 1.0 - abs(mean_linked_images_amount - mean_amount_mean_value) / \
+            mean_amount_interval_length
+
+        return mean_amount_mean_difference
 
     def __get_mean_amount_of_linked_images_in_nodes(self, html_tree):
         valid_group_tags = self.__configuration_provider.get_group_valid_tags()
@@ -66,6 +75,6 @@ class LinkedImageMainStructureSpecification:
             images += self.__get_linked_image_amount_in_node(children)
 
         if node.get_tag() == 'img' and node.get_parent().get_tag() == 'a':
-            return 1.0
+            images += 1.0
 
         return images

@@ -17,8 +17,12 @@ class HTMLTreeBuilder(HTMLParser):
     __valid_tags = None
     __valid_attributes = None
     __last_node = None
+    __append_data = True
     
     def handle_starttag(self, tag, attributes):
+        if tag == 'script':
+            self.__append_data = False
+
         if self.__valid_tags is not None and tag not in self.__valid_tags:
             return
         
@@ -38,12 +42,18 @@ class HTMLTreeBuilder(HTMLParser):
             self.__last_node = node
     
     def handle_endtag(self, tag):
+        if tag == 'script':
+            self.__append_data = True
+
         if self.__valid_tags is not None and tag not in self.__valid_tags:
             return
         
         self.__last_node = self.__last_node.get_parent()
     
     def handle_data(self, data):
+        if not self.__append_data:
+            return
+
         if self.__last_node is not None:
             self.__last_node.append_text(data)
     
