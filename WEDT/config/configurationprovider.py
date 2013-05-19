@@ -19,6 +19,7 @@ class ConfigurationProvider:
     __valid_attributes_variable = 'valid_attributes'
     __group_valid_tags_variable = 'group_valid_tags'
     __group_valid_attributes_variable = 'group_valid_attributes'
+    __minimal_hit_ration_variable = 'minimal_hit_ratio'
 
     def __init__(self, config_file):
         self.__config.read(config_file)
@@ -43,6 +44,9 @@ class ConfigurationProvider:
 
     def get_group_valid_attributes(self):
         return self.__config.get(self.__main_section, self.__group_valid_attributes_variable).split(';')
+
+    def get_minimal_hit_ratio(self):
+        return float(self.__config.get(self.__main_section, self.__minimal_hit_ration_variable))
 
     def get_configuration(self, category_name, variable_name=None):
         if variable_name is None:

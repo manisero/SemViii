@@ -40,10 +40,19 @@ class Classifier:
                         classification[category] += 1
 
             if classification:
-                return sorted(classification, key=classification.get, reverse=True)[0]
+                sorted_classification = sorted(classification, key=classification.get, reverse=True)
+
+                if self.__get_hit_ratio(classification, sorted_classification[0]) >= \
+                        self.__configuration_provider.get_minimal_hit_ratio():
+                    return sorted_classification[0]
+
+                return None
 
         except Exception as ex:
             print >> sys.stderr, 'Failed to open URL: ' + url + ' because of: ' + str(ex)
             traceback.print_exc()
 
         return None
+
+    def __get_hit_ratio(self, classification, category):
+        return float(classification[category]) / float(len(self.__specification_registry.get_specifications()))
