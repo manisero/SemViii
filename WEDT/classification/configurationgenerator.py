@@ -31,3 +31,21 @@ class ConfigurationGenerator:
             except Exception as ex:
                 print >> sys.stderr, 'Failed to open URL: ' + url + ' because of: ' + str(ex)
                 traceback.print_exc()
+
+        self.__print_generation_summary()
+
+        print "\n\n\n"
+
+    def __print_generation_summary(self):
+        print "Configuration summary"
+        print "========================================"
+
+        for category in self.__configuration_provider.get_categories():
+            print "For category " + category + ":"
+
+            configuration_dictionary = self.__configuration_provider.get_configuration(category)
+
+            for variable_name, variable_value in configuration_dictionary:
+                print " - " + variable_name + ": " + variable_value
+
+        print "========================================"
