@@ -2,6 +2,7 @@ from specification.hyperlinkedtextlengthratiospec import HyperlinkedTextLengthSp
 from specification.imageamountspec import ImageAmountSpecification
 from specification.html5tagamountspec import HTML5TagAmountSpecification
 from specification.structuralelementrepeatsspec import StructuralElementRepeatsSpecification
+from specification.linkedimagemainstructurespec import LinkedImageMainStructureSpecification
 
 
 class SpecificationRegistry:
@@ -15,6 +16,7 @@ class SpecificationRegistry:
         self.__specifications.append(StructuralElementRepeatsSpecification(configuration_provider, tree_browser))
         self.__specifications.append(HyperlinkedTextLengthSpecification(configuration_provider, tree_browser))
         self.__specifications.append(HTML5TagAmountSpecification(configuration_provider, tree_browser))
+        self.__specifications.append(LinkedImageMainStructureSpecification(configuration_provider, tree_browser))
 
     def get_specifications(self):
         return self.__specifications

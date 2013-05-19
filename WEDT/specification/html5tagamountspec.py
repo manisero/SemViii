@@ -14,9 +14,6 @@ class HTML5TagAmountSpecification:
         section_tag_repeats = self.__get_tag_repeat_amount(html_tree, 'section')
         article_tag_repeats = self.__get_tag_repeat_amount(html_tree, 'article')
 
-        print "section repeats: " + str(section_tag_repeats)
-        print "article repeats: " + str(article_tag_repeats)
-
         minimum_section_tag_repeats = self.__configuration_provider.get_configuration(
             category_name, self.__minimum_section_tag_repeats_variable)
 
