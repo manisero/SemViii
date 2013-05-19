@@ -28,8 +28,6 @@ class StructuralElementRepeatsSpecification:
     def is_specified_by(self, html_tree, category_name):
         total_structure_repeats = self.__get_maximum_structure_repeats(html_tree)
 
-        print "total structure repeats: " + str(total_structure_repeats)
-
         minimum_structure_repeats = \
             self.__configuration_provider.get_configuration(category_name, self.__minimum_structure_repeats_variable)
 

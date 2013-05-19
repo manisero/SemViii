@@ -33,8 +33,6 @@ class MeanImageSizeSpecification:
         if maximum_height is None or mean_size[1] > float(maximum_height):
             self.__configuration_provider.set_configuration(category_name, self.__maximum_height_variable, mean_size[1])
 
-        print "mean_size for category " + category_name + ":" + str(mean_size)
-
     def is_specified_by(self, html_tree, category_name):
         mean_size = self.__get_mean_image_size(html_tree)
 

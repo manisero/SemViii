@@ -1,7 +1,7 @@
 http://karengrepin.com blog
 http://webappers.com blog
-http://kurlandia.blog.onet.pl blog
-http://silverstrike.blogujacy.pl blog
+http://bendyk.blog.polityka.pl blog
+http://kuzynkanetka.bloog.pl blog
 http://wp-community.org blog
 http://aidontheedge.info blog
 http://zrozumiecrzeczywistosc.blog.pl blog
@@ -13,7 +13,7 @@ http://mistrzowie.org kwejk
 http://motokiller.pl kwejk
 http://wykresy.pl kwejk
 http://tenajlepsze.pl kwejk
-http://komixxy.pl kwejk
+http://sportsy.pl kwejk
 http://demotywatory.pl kwejk
 http://chamsko.pl kwejk
 http://wszechpolska.pl kwejk
@@ -21,7 +21,7 @@ http://wyciagamykarteczki.pl kwejk
 http://gazeta.pl serwisy informacyjne
 http://tvn24.pl serwisy informacyjne
 http://dziennik.pl serwisy informacyjne
-http://newsweek.pl serwisy informacyjne
+http://bbc.co.uk/news serwisy informacyjne
 http://dzienniklodzki.pl serwisy informacyjne
 http://money.pl serwisy informacyjne
 http://cnn.com serwisy informacyjne
