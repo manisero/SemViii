@@ -14,7 +14,10 @@ class WebPageContentDownloader:
     __default_charset = 'utf8'
     
     def download(self, url):
-            response = urllib2.urlopen(url)
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko)' +
+                                     ' Chrome/28.0.1468.0 Safari/537.36'}
+            request = urllib2.Request(url, None, headers)
+            response = urllib2.urlopen(request)
             charset = response.headers.getparam('charset')
             
             if charset is None:
