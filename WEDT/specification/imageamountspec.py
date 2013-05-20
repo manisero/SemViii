@@ -35,7 +35,7 @@ class ImageAmountSpecification:
         images_mean_value = (float(maximum_images) + float(minimum_images)) / 2.0
 
         if images_interval_length == 0.0:
-            return 1.0
+            return 0.0
 
         images_mean_difference = 1.0 - abs(total_images - images_mean_value) / images_interval_length
 

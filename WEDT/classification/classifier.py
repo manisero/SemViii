@@ -41,6 +41,9 @@ class Classifier:
                     classification[category] += specification.is_specified_by(html_tree, category)
 
             if classification:
+
+                print "classification: " + str(classification)
+
                 sorted_classification = sorted(classification, key=classification.get, reverse=True)
 
                 return sorted_classification[0]

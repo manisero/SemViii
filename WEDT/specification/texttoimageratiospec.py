@@ -37,7 +37,7 @@ class TextToImageRatioSpecification:
         ratio_mean_value = (float(max_ratio) + float(min_ratio)) / 2.0
 
         if ratio_interval_length == 0.0:
-            return 1.0
+            return 0.0
 
         ratio_mean_difference = 1.0 - abs(current_ratio - ratio_mean_value) / \
             ratio_interval_length

@@ -37,7 +37,7 @@ class HyperlinkedTextLengthSpecification:
         ratio_mean_value = (float(maximum_ratio) + float(minimum_ratio)) / 2.0
 
         if ratio_interval_length == 0.0:
-            return 1.0
+            return 0.0
 
         ratio_mean_difference = 1.0 - abs(hyperlinked_text_ratio - ratio_mean_value) / ratio_interval_length
 

@@ -18,11 +18,15 @@ http://demotywatory.pl kwejk
 http://chamsko.pl kwejk
 http://wszechpolska.pl kwejk
 http://wyciagamykarteczki.pl kwejk
-http://gazeta.pl serwisy informacyjne
-http://tvn24.pl serwisy informacyjne
-http://dziennik.pl serwisy informacyjne
-http://bbc.co.uk/news serwisy informacyjne
-http://dzienniklodzki.pl serwisy informacyjne
-http://money.pl serwisy informacyjne
-http://cnn.com serwisy informacyjne
-http://wirtualnemedia.pl serwisy informacyjne
+http://gazeta.pl serwis informacyjny
+http://tvn24.pl serwis informacyjny
+http://dziennik.pl serwis informacyjny
+http://bbc.co.uk/news serwis informacyjny
+http://dzienniklodzki.pl serwis informacyjny
+http://money.pl serwis informacyjny
+http://cnn.com serwis informacyjny
+http://wirtualnemedia.pl serwis informacyjny
+http://komputronik.pl sklep internetowy
+http://www.alsen.pl sklep internetowy
+http://reactor.pl sklep internetowy
+http://thinkgeek.com sklep internetowy

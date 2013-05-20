@@ -1,4 +1,5 @@
 from specification.hyperlinkedtextlengthratiospec import HyperlinkedTextLengthSpecification
+from specification.hyperlinktoimageratiospec import HyperLinkToImageRatioSpecification
 from specification.imageamountspec import ImageAmountSpecification
 from specification.html5tagamountspec import HTML5TagAmountSpecification
 from specification.meanimagesizespec import MeanImageSizeSpecification
@@ -23,6 +24,7 @@ class SpecificationRegistry:
         self.__specifications.append(TextLengthMainStructureSpecification(configuration_provider, tree_browser))
         self.__specifications.append(TextToImageRatioSpecification(configuration_provider, tree_browser))
         self.__specifications.append(MeanImageSizeSpecification(configuration_provider, tree_browser))
+        self.__specifications.append(HyperLinkToImageRatioSpecification(configuration_provider, tree_browser))
 
     def get_specifications(self):
         return self.__specifications
