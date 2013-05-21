@@ -50,7 +50,7 @@ class MeanImageSizeSpecification:
         height_interval_length = float(maximum_height) - float(minimum_height)
 
         if width_interval_length == 0.0 or height_interval_length == 0.0:
-            return 1.0
+            return 0.0
 
         width_mean_value = (float(maximum_width) + float(minimum_width)) / 2.0
         height_mean_value = (float(maximum_height) + float(minimum_height)) / 2.0

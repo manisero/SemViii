@@ -73,7 +73,7 @@ class HTML5TagAmountSpecification:
         mean_article_interval_value = (float(maximum_article_tag_repeats) + float(minimum_article_tag_repeats)) / 2.0
 
         if section_interval_length == 0.0 or article_interval_length == 0.0:
-            return 1.0
+            return 0.0
 
         section_mean_difference = 1.0 - abs(section_tag_repeats - mean_section_interval_value) / section_interval_length
         article_mean_difference = 1.0 - abs(article_tag_repeats - mean_article_interval_value) / article_interval_length

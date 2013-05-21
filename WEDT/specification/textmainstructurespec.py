@@ -37,7 +37,7 @@ class TextLengthMainStructureSpecification:
         text_length_mean_value = (float(max_text_length) + float(min_text_length)) / 2.0
 
         if text_length_interval_value == 0.0:
-            return 1.0
+            return 0.0
 
         text_length_mean_difference = 1.0 - abs(current_text_length - text_length_mean_value) / \
             text_length_interval_value
@@ -76,8 +76,6 @@ class TextLengthMainStructureSpecification:
                 text_length = self.__get_max_text_length_in_node(children)
 
         if text_length < len(node.get_text()):
-            if len(node.get_text()) == 228:
-                print "catch on node: " + node.get_tag() + " with attrs: " + str(node.get_attributes()) + " and text: " + node.get_text()
             return len(node.get_text())
 
         return text_length
