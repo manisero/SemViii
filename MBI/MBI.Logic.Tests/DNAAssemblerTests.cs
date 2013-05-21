@@ -12,16 +12,16 @@ namespace MBI.Logic.Tests
 	[TestFixture]
 	public class DNAAssemblerTests
 	{
-		private IAssemblyFilter _assemblyFilterMock;
+		private IContigsFilter _contigsFilterMock;
 		private IScaffoldBuilder _scaffoldBuilderMock;
 		private DNAAssembler _dnaAssembler;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_assemblyFilterMock = MockRepository.GenerateStrictMock<IAssemblyFilter>();
+			_contigsFilterMock = MockRepository.GenerateStrictMock<IContigsFilter>();
 			_scaffoldBuilderMock = MockRepository.GenerateStrictMock<IScaffoldBuilder>();
-			_dnaAssembler = new DNAAssembler(_assemblyFilterMock, _scaffoldBuilderMock);
+			_dnaAssembler = new DNAAssembler(_contigsFilterMock, _scaffoldBuilderMock);
 		}
 
 		[Test]
@@ -43,7 +43,7 @@ namespace MBI.Logic.Tests
 			                   		new[] { contig3, contig2, contig1 }.ToList()
 			                   	};
 
-			_assemblyFilterMock.Expect(x => x.Filter(Arg<IList<IList<Contig>>>.Matches(contigs => AssertExtensions.AreEqual(permutations, contigs)), 
+			_contigsFilterMock.Expect(x => x.Filter(Arg<IList<IList<Contig>>>.Matches(contigs => AssertExtensions.AreEqual(permutations, contigs)), 
 													 Arg<PairedEndTag[]>.Is.Equal(pairedEndTags)))
 							   .Return(new IList<Contig>[0]);
 
@@ -67,7 +67,7 @@ namespace MBI.Logic.Tests
 			var scaffold_accepted = new Scaffold { Rank = 10 };
 			var scaffold_rejected = new Scaffold { Rank = 0 };
 
-			_assemblyFilterMock.Expect(x => x.Filter(Arg<IList<IList<Contig>>>.Is.Anything, Arg<PairedEndTag[]>.Is.Equal(pairedEndTags)))
+			_contigsFilterMock.Expect(x => x.Filter(Arg<IList<IList<Contig>>>.Is.Anything, Arg<PairedEndTag[]>.Is.Equal(pairedEndTags)))
 							   .Return(new[] { contigs_accepted, contigs_rejected });
 
 			_scaffoldBuilderMock.Expect(x => x.Build(contigs_accepted, pairedEndTags)).Return(scaffold_accepted);
@@ -100,7 +100,7 @@ namespace MBI.Logic.Tests
 			var scaffold2 = new Scaffold { Rank = 2 };
 			var scaffold3 = new Scaffold { Rank = 1 };
 
-			_assemblyFilterMock.Expect(x => x.Filter(Arg<IList<IList<Contig>>>.Is.Anything, Arg<PairedEndTag[]>.Is.Equal(pairedEndTags)))
+			_contigsFilterMock.Expect(x => x.Filter(Arg<IList<IList<Contig>>>.Is.Anything, Arg<PairedEndTag[]>.Is.Equal(pairedEndTags)))
 							   .Return(new[] { assembly1, assembly2, assembly3 });
 
 			_scaffoldBuilderMock.Expect(x => x.Build(assembly1, pairedEndTags)).Return(scaffold1);

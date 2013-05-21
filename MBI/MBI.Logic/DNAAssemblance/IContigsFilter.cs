@@ -3,7 +3,7 @@ using MBI.Logic.Entities;
 
 namespace MBI.Logic.DNAAssemblance
 {
-	public interface IAssemblyFilter
+	public interface IContigsFilter
 	{
 		IEnumerable<IList<Contig>> Filter(IList<IList<Contig>> contigsCombinations, IEnumerable<PairedEndTag> pairedEndTags);
 	}

@@ -8,7 +8,7 @@ using System.Linq;
 namespace MBI.Logic.Tests
 {
 	[TestFixture]
-	public class AssemblyFilterTests
+	public class ContigsFilterTests
 	{
 		[Test]
 		public void rejects_contigs_in_wrong_order_based_on_single_PET()
@@ -37,7 +37,7 @@ namespace MBI.Logic.Tests
 			allContigs.AddRange(acceptedCombinations);
 
 			// Act
-			var result = new AssemblyFilter().Filter(allContigs.ToArray(), pairedEndTags);
+			var result = new ContigsFilter().Filter(allContigs.ToArray(), pairedEndTags);
 
 			// Assert
 			Assert.IsNotNull(result);
@@ -76,7 +76,7 @@ namespace MBI.Logic.Tests
 			allContigs.AddRange(acceptedCombinations);
 
 			// Act
-			var result = new AssemblyFilter().Filter(allContigs.ToArray(), pairedEndTags);
+			var result = new ContigsFilter().Filter(allContigs.ToArray(), pairedEndTags);
 
 			// Assert
 			Assert.IsNotNull(result);
@@ -102,7 +102,7 @@ namespace MBI.Logic.Tests
 			                         	};
 
 			// Act
-			var result = new AssemblyFilter().Filter(combinations, pairedEndTags);
+			var result = new ContigsFilter().Filter(combinations, pairedEndTags);
 
 			// Assert
 			Assert.IsNotNull(result);

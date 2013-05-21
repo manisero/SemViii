@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
-	public class AssemblyFilter : IAssemblyFilter
+	public class ContigsFilter : IContigsFilter
 	{
 		public IEnumerable<IList<Contig>> Filter(IList<IList<Contig>> contigsCombinations, IEnumerable<PairedEndTag> pairedEndTags)
 		{

@@ -7,12 +7,12 @@ namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class DNAAssembler : IDNAAssembler
 	{
-		private readonly IAssemblyFilter _assemblyFilter;
+		private readonly IContigsFilter _contigsFilter;
 		private readonly IScaffoldBuilder _scaffoldBuilder;
 
-		public DNAAssembler(IAssemblyFilter assemblyFilter, IScaffoldBuilder scaffoldBuilder)
+		public DNAAssembler(IContigsFilter contigsFilter, IScaffoldBuilder scaffoldBuilder)
 		{
-			_assemblyFilter = assemblyFilter;
+			_contigsFilter = contigsFilter;
 			_scaffoldBuilder = scaffoldBuilder;
 		}
 
@@ -22,7 +22,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 			var contigsPermutations = contigs.GetPermutations();
 
-			foreach (var permutation in _assemblyFilter.Filter(contigsPermutations, pairedEndTags))
+			foreach (var permutation in _contigsFilter.Filter(contigsPermutations, pairedEndTags))
 			{
 				var scaffold = _scaffoldBuilder.Build(permutation.ToArray(), pairedEndTags);
 
