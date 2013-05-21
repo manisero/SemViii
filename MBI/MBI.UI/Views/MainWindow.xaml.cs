@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MBI.UI
+namespace MBI.UI.Views
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
