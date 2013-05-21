@@ -5,6 +5,6 @@ namespace MBI.Logic.DNAAssemblance
 {
 	public interface IAssemblyFilter
 	{
-		IEnumerable<IList<Contig>> Filter(IEnumerable<IList<Contig>> contigsCombinations, IEnumerable<PairedEndTag> pairedEndTags);
+		IEnumerable<IList<Contig>> Filter(IList<IList<Contig>> contigsCombinations, IEnumerable<PairedEndTag> pairedEndTags);
 	}
 }
