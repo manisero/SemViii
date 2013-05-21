@@ -20,9 +20,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 		{
 			var result = new List<Scaffold>();
 
-			var contigsPermutations = contigs.GetPermutations();
-
-			foreach (var permutation in _contigsFilter.Filter(contigsPermutations, pairedEndTags))
+			foreach (var permutation in _contigsFilter.Filter(contigs, pairedEndTags))
 			{
 				var scaffold = _scaffoldBuilder.Build(permutation.ToArray(), pairedEndTags);
 

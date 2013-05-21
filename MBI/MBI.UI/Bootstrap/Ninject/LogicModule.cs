@@ -14,7 +14,7 @@ namespace MBI.UI.Bootstrap.Ninject
 			Bind<IAssemblyParser>().To<AssemblyParser>();
 
 			Bind<IDNAAssembler>().To<DNAAssembler>();
-			Bind<IAssemblyFilter>().To<ContigsFilter>();
+			Bind<IContigsFilter>().To<ContigsFilter>();
 			Bind<IScaffoldBuilder>().To<ScaffoldBuilder>();
 			Bind<IScaffoldSerializer>().To<ScaffoldSerializer>();
 		}

@@ -19,29 +19,19 @@ namespace MBI.Logic.Tests
 			var contig3 = new Contig("gghhii");
 			var pairedEndTags = new[] { new PairedEndTag { Beginning = "bb", End = "hh" } };
 
-			var rejectedCombinations = new[]
-			                         	{
-											new List<Contig> { contig2, contig3, contig1 },
-											new List<Contig> { contig3, contig2, contig1 },
-											new List<Contig> { contig3, contig1, contig2 }
-			                         	};
-
-			var acceptedCombinations = new[]
+			var expecetedResult = new[]
 			                         	{
 			                         		new List<Contig> { contig1, contig2, contig3 },
 											new List<Contig> { contig1, contig3, contig2 },
 											new List<Contig> { contig2, contig1, contig3 }
 			                         	};
 
-			var allContigs = rejectedCombinations.ToList();
-			allContigs.AddRange(acceptedCombinations);
-
 			// Act
-			var result = new ContigsFilter().Filter(allContigs.ToArray(), pairedEndTags);
+			var result = new ContigsFilter().Filter(new[] { contig1, contig2, contig3 }, pairedEndTags);
 
 			// Assert
 			Assert.IsNotNull(result);
-			AssertExtensions.AreEqual(acceptedCombinations, result);
+			AssertExtensions.AreEqual(result, expecetedResult);
 		}
 
 		[Test]
@@ -58,29 +48,19 @@ namespace MBI.Logic.Tests
 										new PairedEndTag { Beginning = "bb", End = "hh" }
 			                    	};
 
-			var rejectedCombinations = new[]
-			                         	{
-											new List<Contig> { contig2, contig3, contig1 },
-											new List<Contig> { contig3, contig2, contig1 },
-											new List<Contig> { contig3, contig1, contig2 }
-			                         	};
-
-			var acceptedCombinations = new[]
+			var expectedResult = new[]
 			                         	{
 			                         		new List<Contig> { contig1, contig2, contig3 },
 											new List<Contig> { contig1, contig3, contig2 },
 											new List<Contig> { contig2, contig1, contig3 }
 			                         	};
 
-			var allContigs = rejectedCombinations.ToList();
-			allContigs.AddRange(acceptedCombinations);
-
 			// Act
-			var result = new ContigsFilter().Filter(allContigs.ToArray(), pairedEndTags);
+			var result = new ContigsFilter().Filter(new[] { contig1, contig2, contig3 }, pairedEndTags);
 
 			// Assert
 			Assert.IsNotNull(result);
-			AssertExtensions.AreEqual(acceptedCombinations, result);
+			AssertExtensions.AreEqual(result, expectedResult);
 		}
 
 		[Test]
@@ -95,18 +75,18 @@ namespace MBI.Logic.Tests
 										new PairedEndTag { Beginning = "xx", End = "ee" }
 			                    	};
 
-			var combinations = new[]
+			var expectedResult = new[]
 			                         	{
 											new List<Contig> { contig1, contig2 },
 											new List<Contig> { contig2, contig1 }
 			                         	};
 
 			// Act
-			var result = new ContigsFilter().Filter(combinations, pairedEndTags);
+			var result = new ContigsFilter().Filter(new[] { contig1, contig2 }, pairedEndTags);
 
 			// Assert
 			Assert.IsNotNull(result);
-			AssertExtensions.AreEqual(combinations, result);
+			AssertExtensions.AreEqual(result, expectedResult);
 		}
 	}
 }

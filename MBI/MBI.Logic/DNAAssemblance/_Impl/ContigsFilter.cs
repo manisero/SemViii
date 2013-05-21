@@ -1,23 +1,26 @@
 using System.Collections.Generic;
 using MBI.Logic.Entities;
 using System.Linq;
+using MBI.Logic.Extensions;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class ContigsFilter : IContigsFilter
 	{
-		public IEnumerable<IList<Contig>> Filter(IList<IList<Contig>> contigsCombinations, IEnumerable<PairedEndTag> pairedEndTags)
+		public IEnumerable<IList<Contig>> Filter(IList<Contig> contigs, IEnumerable<PairedEndTag> pairedEndTags)
 		{
+			var permutations = contigs.GetPermutations();
+
 			foreach (var pairedEndTag in pairedEndTags)
 			{
-				var beginning = contigsCombinations[0].FirstOrDefault(x => x.Content.Contains(pairedEndTag.Beginning));
+				var beginning = permutations[0].FirstOrDefault(x => x.Content.Contains(pairedEndTag.Beginning));
 
 				if (beginning == null)
 				{
 					continue;
 				}
 
-				var end = contigsCombinations[0].FirstOrDefault(x => x.Content.Contains(pairedEndTag.End));
+				var end = permutations[0].FirstOrDefault(x => x.Content.Contains(pairedEndTag.End));
 
 				if (end == null || beginning == end)
 				{
@@ -26,7 +29,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 
 				var result = new List<IList<Contig>>();
 
-				foreach (var combination in contigsCombinations)
+				foreach (var combination in permutations)
 				{
 					if (combination.IndexOf(beginning) < combination.IndexOf(end))
 					{
@@ -37,7 +40,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 				return result;
 			}
 
-			return contigsCombinations;
+			return permutations;
 		}
 	}
 }
