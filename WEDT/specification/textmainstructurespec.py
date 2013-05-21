@@ -76,8 +76,6 @@ class TextLengthMainStructureSpecification:
                 text_length = self.__get_max_text_length_in_node(children)
 
         if text_length < len(node.get_text()):
-            if len(node.get_text()) == 228:
-                print "catch on node: " + node.get_tag() + " with attrs: " + str(node.get_attributes()) + " and text: " + node.get_text()
             return len(node.get_text())
 
         return text_length
