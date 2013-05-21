@@ -50,6 +50,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyFilterTests.cs" />
     <Compile Include="ScaffoldBuilderTests\LengthValidationTests.cs" />
     <Compile Include="ScaffoldBuilderTests\PartialMatchRankingTests.cs" />
     <Compile Include="ScaffoldBuilderTests\ScaffoldBuildingTests.cs" />
