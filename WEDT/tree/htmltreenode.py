@@ -21,6 +21,7 @@ class HTMLTreeNode:
     __nodes = []
     __attributes = []
     __parent = None
+    __size = 0, 0
     
     def __init__(self, tag, text, attributes):
         self.__tag = tag
@@ -46,6 +47,12 @@ class HTMLTreeNode:
         
     def set_parent(self, parent):
         self.__parent = parent
+
+    def get_size(self):
+        return self.__size
+
+    def set_size(self, size):
+        self.__size = size
         
     def append_text(self, text):
         self.__text += str(text)
