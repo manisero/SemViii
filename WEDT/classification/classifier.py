@@ -42,17 +42,20 @@ class Classifier:
 
             if classification:
 
-                print "classification: " + str(classification)
+                sum = 0.0
+
+                for entry in classification:
+                    sum += classification[entry]
 
                 sorted_classification = sorted(classification, key=classification.get, reverse=True)
 
-                return sorted_classification[0]
+                if sum > float(self.__configuration_provider.get_threshold()):
+                    return sorted_classification[0]
+
+                return None
 
         except Exception as ex:
             print >> sys.stderr, 'Failed to open URL: ' + url + ' because of: ' + str(ex)
             traceback.print_exc()
 
         return None
-
-    def __get_hit_ratio(self, classification, category):
-        return float(classification[category]) / float(len(self.__specification_registry.get_specifications()))
