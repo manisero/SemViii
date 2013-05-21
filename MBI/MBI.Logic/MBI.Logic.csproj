@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DNAAssemblance\_Impl\AssemblyFilter.cs" />
+    <Compile Include="DNAAssemblance\IAssemblyFilter.cs" />
     <Compile Include="Entities\Contig.cs" />
     <Compile Include="Entities\Gap.cs" />
     <Compile Include="Entities\ScaffoldPiece.cs" />

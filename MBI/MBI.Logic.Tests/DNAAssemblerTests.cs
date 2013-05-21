@@ -10,14 +10,16 @@ namespace MBI.Logic.Tests
 	[TestFixture]
 	public class DNAAssemblerTests
 	{
+		private IAssemblyFilter _assemblyFilterMock;
 		private IScaffoldBuilder _scaffoldBuilderMock;
 		private DNAAssembler _dnaAssembler;
 
 		[SetUp]
 		public void SetUp()
 		{
+			_assemblyFilterMock = MockRepository.GenerateStrictMock<IAssemblyFilter>();
 			_scaffoldBuilderMock = MockRepository.GenerateStrictMock<IScaffoldBuilder>();
-			_dnaAssembler = new DNAAssembler(_scaffoldBuilderMock);
+			_dnaAssembler = new DNAAssembler(_assemblyFilterMock, _scaffoldBuilderMock);
 		}
 
 		[Test]

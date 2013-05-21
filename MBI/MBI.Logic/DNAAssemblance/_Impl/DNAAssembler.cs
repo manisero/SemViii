@@ -7,20 +7,24 @@ namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class DNAAssembler : IDNAAssembler
 	{
-		private readonly IScaffoldBuilder _assemblyBuilder;
+		private readonly IAssemblyFilter _assemblyFilter;
+		private readonly IScaffoldBuilder _scaffoldBuilder;
 
-		public DNAAssembler(IScaffoldBuilder assemblyBuilder)
+		public DNAAssembler(IAssemblyFilter assemblyFilter, IScaffoldBuilder scaffoldBuilder)
 		{
-			_assemblyBuilder = assemblyBuilder;
+			_assemblyFilter = assemblyFilter;
+			_scaffoldBuilder = scaffoldBuilder;
 		}
 
 		public IList<Scaffold> Assemble(Contig[] contigs, PairedEndTag[] pairedEndTags)
 		{
 			var result = new List<Scaffold>();
 
-			foreach (var permutation in contigs.GetPermutations().Select(x => x.ToArray()))
+			var contigsPermutations = contigs.GetPermutations().Select(x => x.ToArray());
+
+			foreach (var permutation in _assemblyFilter.Filter(contigsPermutations, pairedEndTags).Select(x => x.ToArray()))
 			{
-				var scaffold = _assemblyBuilder.Build(permutation, pairedEndTags);
+				var scaffold = _scaffoldBuilder.Build(permutation, pairedEndTags);
 
 				if (scaffold.Rank > 0)
 				{
