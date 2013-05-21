@@ -7,7 +7,7 @@ namespace MBI.Logic.Tests.Extensions
 {
 	public static class AssertExtensions
 	{
-		public static void AreEqual<T1, T2>(IEnumerable<T1> expected, IEnumerable<T2> actual)
+		public static bool AreEqual<T1, T2>(IEnumerable<T1> expected, IEnumerable<T2> actual)
 		{
 			var expectedCount = expected.Count();
 
@@ -17,9 +17,11 @@ namespace MBI.Logic.Tests.Extensions
 			{
 				Assert.AreEqual(expected.ElementAt(i), actual.ElementAt(i));
 			}
+
+			return true;
 		}
 
-		public static void AreEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual, Action<T, T> itemAssertion)
+		public static bool AreEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual, Action<T, T> itemAssertion)
 		{
 			var expectedCount = expected.Count();
 
@@ -32,6 +34,8 @@ namespace MBI.Logic.Tests.Extensions
 
 				itemAssertion(expectedItem, actualItem);
 			}
+
+			return true;
 		}
 	}
 }

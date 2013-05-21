@@ -5,9 +5,9 @@ namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class AssemblyFilter : IAssemblyFilter
 	{
-		public IEnumerable<IList<Contig>> Filter(IEnumerable<IList<Contig>> contigs, IEnumerable<PairedEndTag> pairedEndTags)
+		public IEnumerable<IList<Contig>> Filter(IEnumerable<IList<Contig>> contigsPermutations, IEnumerable<PairedEndTag> pairedEndTags)
 		{
-			return contigs;
+			return contigsPermutations;
 		}
 	}
 }
