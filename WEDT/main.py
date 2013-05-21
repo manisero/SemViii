@@ -39,9 +39,3 @@ if __name__ == "__main__":
     file_handler.write_classification(configuration_provider.get_output_file_name(), classification)
 
     SummaryPrinter().print_summary(classification, url_map_to_classify)
-
-    while input != 'quit':
-        input = raw_input("URL: ")
-
-        if input.startswith('http://'):
-            classifier.classify([input])
