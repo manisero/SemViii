@@ -1,0 +1,1 @@
+java -cp lib\jade.jar;bin jade.Boot -gui
