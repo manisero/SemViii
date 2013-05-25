@@ -6,13 +6,14 @@ import jade.lang.acl.*;
 
 import java.io.*;
 
+import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.Location;
 
 public class RequestDirectionBehaviour extends TickerBehaviour
 {
 	private static final long serialVersionUID = -111284932650857342L;
 	
-	private AID cityAgentAID;
+	private final AID cityAgentAID;
 	
 	public RequestDirectionBehaviour(CarAgent agent, long period, AID cityAgentAID)
 	{
@@ -34,8 +35,8 @@ public class RequestDirectionBehaviour extends TickerBehaviour
 			Location location = getCarAgent().getLocation();
 			
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-
 			message.addReceiver(cityAgentAID);
+			message.setConversationId(ConversationTypes.CAR_DIRECTION_CONVERSATION_TYPE);
 			message.setContentObject(location);
 			
 			myAgent.send(message);

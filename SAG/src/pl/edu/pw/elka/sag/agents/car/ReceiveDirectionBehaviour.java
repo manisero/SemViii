@@ -2,6 +2,7 @@ package pl.edu.pw.elka.sag.agents.car;
 
 import java.util.*;
 
+import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
@@ -9,7 +10,8 @@ import jade.lang.acl.*;
 public class ReceiveDirectionBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -6171122937430472879L;
-
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.CAR_DIRECTION_CONVERSATION_TYPE);
+	
 	public ReceiveDirectionBehaviour(CarAgent agent)
 	{
 		super(agent);
@@ -23,7 +25,7 @@ public class ReceiveDirectionBehaviour extends CyclicBehaviour
 	@Override
 	public void action()
 	{
-		ACLMessage message = myAgent.receive();
+		ACLMessage message = myAgent.receive(messageTemplate);
 		
 		if (message != null)
 		{
