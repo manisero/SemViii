@@ -1,19 +1,29 @@
 package pl.edu.pw.elka.sag.gui.panels;
 
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 
 import javax.swing.JPanel;
 
+import pl.edu.pw.elka.sag.entities.Direction;
+import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
+import pl.edu.pw.elka.sag.gui.logic.IPaintablePropertyProvider;
+import pl.edu.pw.elka.sag.gui.logic.IPaintablePropertyReceiver;
 
-public class CityMap extends JPanel
+public class CityMap extends JPanel implements IPaintablePropertyProvider
 {
 	private static final long serialVersionUID = 1468374317265426866L;
 
 	private int citySize;
 	private int screenSize;
+	
+	private Collection<Canvas> drawableObjects = new LinkedHashSet<Canvas>();
 	
 	/**
 	 * Constructs city map view.
@@ -25,6 +35,103 @@ public class CityMap extends JPanel
 	{
 		this.citySize = citySize;
 		this.screenSize = screenSize;
+	}
+	
+	/**
+	 * Returns car's radius.
+	 * 
+	 * @return int car object's radius
+	 */
+	@Override
+	public int getCarBoundingBoxSize()
+	{
+		return getLaneOffset();
+	}
+
+	/**
+	 * Returns car's position on the screen.
+	 * 
+	 * @return {@link java.awt.Point} car's position
+	 */
+	@Override
+	public Point getCarScreenPosition(Location currentLocation, Location previousLocation)
+	{
+		int xCar = getMarginSize() + currentLocation.getX() * getStreetLength() + (int) (getStreetWidth() / 2.0) + 
+				(int) (1.5 * getCarBoundingBoxSize());
+	
+		int yCar = getMarginSize() + currentLocation.getY() * getStreetLength() + (int) (getStreetWidth() / 2.0) +
+				(int) (1.5 * getCarBoundingBoxSize());
+		
+		Direction direction = null;
+		
+		int xDifference = currentLocation.getX() - previousLocation.getX();
+		int yDifference = currentLocation.getY() - previousLocation.getY();
+		
+		if (xDifference > 0)
+		{
+			direction = Direction.EAST;
+		}
+		else if (xDifference < 0)
+		{
+			direction = Direction.WEST;
+		}
+		else if (yDifference > 0)
+		{
+			direction = Direction.SOUTH;
+		}
+		else if (yDifference < 0)
+		{
+			direction = Direction.NORTH;
+		}
+		
+		int xCorrection = 0;
+		int yCorrection = 0; 
+		
+		if (direction.equals(Direction.EAST))
+		{
+			xCorrection -= ((int) (3 * getCarBoundingBoxSize() / 2.0));
+			yCorrection += (int) (getCarBoundingBoxSize() / 2.0); 
+		}
+		else if (direction.equals(Direction.WEST))
+		{
+			xCorrection += ((int) (3 * getCarBoundingBoxSize() / 2.0));
+			yCorrection -= (int) (getCarBoundingBoxSize() / 2.0);
+		}
+		else if (direction.equals(Direction.NORTH))
+		{
+			xCorrection += (int) (getCarBoundingBoxSize() / 2.0);
+			yCorrection += ((int) (3 * getCarBoundingBoxSize() / 2.0));
+		}
+		else if (direction.equals(Direction.SOUTH))
+		{
+			xCorrection -= (int) (getCarBoundingBoxSize() / 2.0);
+			yCorrection -= ((int) (3 * getCarBoundingBoxSize() / 2.0));
+		}
+		
+		return new Point(xCar + xCorrection, yCar + yCorrection);
+	}
+	
+	/**
+	 * Adds drawable object. 
+	 * 
+	 * @param object {@link java.awt.Canvas} to draw
+	 */
+	public void addDrawableObject(Canvas object)
+	{
+		if (drawableObjects.add(object) && object instanceof IPaintablePropertyReceiver)
+		{
+			((IPaintablePropertyReceiver) object).setPropertyProvider(this);
+		}
+	}
+	
+	/**
+	 * Removes drawable object.
+	 * 
+	 * @param object {@link java.awt.Canvas} to draw
+	 */
+	public void removeDrawableObject(Canvas object)
+	{
+		drawableObjects.remove(object);
 	}
 	
 	/**
@@ -70,7 +177,7 @@ public class CityMap extends JPanel
 	}
 	
 	/**
-	 * Returns single lane's length
+	 * Returns single lane's length.
 	 * 
 	 * @return int lane's length
 	 */
@@ -85,7 +192,7 @@ public class CityMap extends JPanel
 	}
 	
 	/**
-	 * Returns single lane's space length
+	 * Returns single lane's space length.
 	 * 
 	 * @return int lane's space length
 	 */
@@ -94,6 +201,30 @@ public class CityMap extends JPanel
 		double laneSpaceLength = getLaneLength() * PaintSettings.LANE_TO_SPACE_LENGTH_RATIO;
 		
 		return (int) laneSpaceLength;
+	}
+	
+	/**
+	 * Returns single lane's thickness.
+	 * 
+	 * @return int lane's thickness
+	 */
+	private int getLaneThickness()
+	{
+		boolean streetWidthEven = getStreetWidth() % 2 == 0;
+		
+		return streetWidthEven ? 2 : 1;
+	}
+	
+	/**
+	 * Returns single lane's offset.
+	 * 
+	 * @return 
+	 */
+	private int getLaneOffset()
+	{
+		boolean streetWidthEven = getStreetWidth() % 2 == 0;
+		
+		return (int) (getStreetWidth() / 2.0) + (streetWidthEven ? 0 : 1);
 	}
 	
 	/**
@@ -109,17 +240,31 @@ public class CityMap extends JPanel
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		
 		paintStreetGrid(graphics2D);
+		paintNestedObjects(graphics2D);
 	}
 	
 	/**
 	 * Paints city's streets grid.
 	 * 
-	 * @param graphics {@link java.awt.Graphics2D} instance
+	 * @param graphics2D {@link java.awt.Graphics2D} instance
 	 */
 	private void paintStreetGrid(Graphics2D graphics2D)
 	{
 		paintHalfGrid(graphics2D, false);
 		paintHalfGrid(graphics2D, true);
+	}
+	
+	/**
+	 * Paints nested objects.
+	 * 
+	 * @param graphics2D {@link java.awt.Graphics2D} instance
+	 */
+	private void paintNestedObjects(Graphics2D graphics2D)
+	{
+		for (Canvas canvas : drawableObjects)
+		{
+			canvas.paint(graphics2D);
+		}
 	}
 	
 	/**
@@ -162,10 +307,8 @@ public class CityMap extends JPanel
 			drawFilledRectangle(graphics, PaintSettings.STREET_COLOR, currentWidth, currentHeight, baseLength, 
 					streetWidth, verticalGrid);
 			
-			boolean evenStreetWidth = streetWidth % 2 == 0;
-			
-			int laneOffset = (int) (streetWidth / 2.0) + (evenStreetWidth ? 0 : 1);
-			int laneThickness = evenStreetWidth ? 2 : 1;
+			int laneOffset = getLaneOffset();
+			int laneThickness = getLaneThickness();
 			
 			for (int j = 0; j < citySize - 1; ++j)
 			{

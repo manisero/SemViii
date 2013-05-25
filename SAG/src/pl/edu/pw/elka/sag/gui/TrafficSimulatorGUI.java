@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.sag.gui;
 
+import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -12,10 +13,22 @@ public class TrafficSimulatorGUI extends JFrame
 {
 	private static final long serialVersionUID = 5554036514535482563L;
 	
+	private CityMap cityMap;
+	
 	public TrafficSimulatorGUI(int citySize)
 	{
 		initializeComponents(citySize);
 		setShutdownApplicationOnClose();
+	}
+	
+	/**
+	 * Adds drawable object to nested {@link pl.edu.pw.elka.sag.gui.panels.CityMap}.
+	 * 
+	 * @param drawable object to add
+	 */
+	public void addDrawableObjectToCityMap(Canvas drawable)
+	{
+		cityMap.addDrawableObject(drawable);
 	}
 	
 	/**
@@ -39,7 +52,9 @@ public class TrafficSimulatorGUI extends JFrame
 	 */
 	private void initializeComponents(int citySize)
 	{
-		add(new CityMap(citySize, setWindowSize()));
+		cityMap = new CityMap(citySize, setWindowSize());
+		
+		add(cityMap);
 	}
 	
 	/**

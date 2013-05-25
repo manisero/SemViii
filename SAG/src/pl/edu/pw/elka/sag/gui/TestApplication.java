@@ -2,6 +2,9 @@ package pl.edu.pw.elka.sag.gui;
 
 import java.awt.EventQueue;
 
+import pl.edu.pw.elka.sag.entities.Location;
+import pl.edu.pw.elka.sag.gui.objects.AnimatedCar;
+
 public class TestApplication
 {
 	private static final int CITY_SIZE = 4;
@@ -13,7 +16,13 @@ public class TestApplication
 			@Override
 			public void run()
 			{
-				new TrafficSimulatorGUI(CITY_SIZE).setVisible(true);
+				AnimatedCar car = new AnimatedCar(new Location(0, 1), new Location(0, 0));
+				
+				TrafficSimulatorGUI gui = new TrafficSimulatorGUI(CITY_SIZE);
+				
+				gui.addDrawableObjectToCityMap(car);
+				
+				gui.setVisible(true);
 			}
 		});
 	}
