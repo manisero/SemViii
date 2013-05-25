@@ -6,6 +6,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 import pl.edu.pw.elka.sag.Direction;
@@ -44,7 +45,7 @@ public class ChooseDirectionBehaviour extends TickerBehaviour
 			
 			DirectionsCollection directions = (DirectionsCollection) reply.getContentObject();
 			
-			Direction direction = directions.getDirections().get(new Random().nextInt(directions.getDirections().size()));
+			Direction direction = chooseDirection(directions);
 			
 			getCarAgent().move(direction);
 		}
@@ -61,5 +62,19 @@ public class ChooseDirectionBehaviour extends TickerBehaviour
 	private CarAgent getCarAgent()
 	{
 		return (CarAgent) myAgent;
+	}
+	
+	private Direction chooseDirection(DirectionsCollection directions)
+	{
+		List<Direction> directionsList = directions.getDirections();
+		
+		Direction currentCarDirection = getCarAgent().getDirection();
+		
+		if (currentCarDirection != null)
+		{
+			directionsList.remove(currentCarDirection.getOppositeDirection());
+		}
+		
+		return directionsList.get(new Random().nextInt(directionsList.size()));
 	}
 }

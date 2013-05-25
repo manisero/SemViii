@@ -17,6 +17,7 @@ public class CarAgent extends Agent
 	private static final long serialVersionUID = 258671427576035083L;
 	
 	private Location location = new Location();
+	private Direction direction;
 	
 	@Override
 	protected void setup()
@@ -34,6 +35,11 @@ public class CarAgent extends Agent
 	public void setLocation(Location location)
 	{
 		this.location = location;
+	}
+	
+	public Direction getDirection()
+	{
+		return direction;
 	}
 	
 	public void move(Direction direction)
@@ -54,6 +60,8 @@ public class CarAgent extends Agent
 		{
 			location.setX(location.getX() - 1);
 		}
+		
+		this.direction = direction;
 		
 		System.out.println("Current location: [x=" + location.getX() + ",y=" + location.getY() + "]");
 	}
