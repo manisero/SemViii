@@ -90,12 +90,15 @@ public class CityMap extends JPanel
 	 */
 	private void paintStreetGrid(Graphics2D graphics2D)
 	{
+		System.out.println("horizontal");
 		paintHalfGrid(graphics2D, false);
+		System.out.println("vertical");
 		paintHalfGrid(graphics2D, true);
 	}
 	
 	/**
-	 * Wrapped {@link java.awt.Graphics2D}'s method allowing to easily swap x and y axis
+	 * Wrapped {@link java.awt.Graphics2D}'s method allowing to easily swap x and y axis while drawing 
+	 * {@link java.awt.Rectangle}.
 	 * 
 	 * @param graphics2D {@link java.awt.Graphics2D} instance
 	 * @param x1 x-coordinate of line's beginning
@@ -104,9 +107,14 @@ public class CityMap extends JPanel
 	 * @param y2 y-coordinate of line's ending
 	 * @param swapAxis 
 	 */
-	private void drawLine(Graphics2D graphics2D, int x1, int y1, int x2, int y2, boolean swapAxis)
+	private void drawFilledRectangle(Graphics2D graphics2D, int x, int y, int width, int height, boolean swapAxis)
 	{
-		graphics2D.drawLine(swapAxis ? y1 : x1, swapAxis ? x1: y1, swapAxis ? y2 : x2, swapAxis ? x2: y2);
+		graphics2D.fillRect(swapAxis ? y : x, swapAxis? x : y, swapAxis ? height : width, swapAxis ? width : height);
+		
+		System.out.println("drawing rect of x: " + (swapAxis ? y : x));
+		System.out.println("drawing rect of y: " + (swapAxis? x : y));
+		System.out.println("drawing rect of width: " + (swapAxis ? height : width));
+		System.out.println("drawing rect of height: " + (swapAxis ? width : height));
 	}
 	
 	/**
@@ -120,39 +128,18 @@ public class CityMap extends JPanel
 		int streetWidth = getStreetWidth();
 		int streetLength = getStreetLength();
 		
-		int baseLength = (streetWidth + streetLength) * citySize - streetLength;
+		int baseLength = streetLength * (citySize - 1) + streetWidth;
 		
-		int currentHeight = getMarginSize();
-		int currentWidth = getMarginSize();
+		int currentHeight = getMarginSize() + streetWidth;
+		int currentWidth = getMarginSize() + streetWidth;
 		
-		drawLine(graphics, currentWidth, currentHeight, baseLength + currentWidth, currentHeight, verticalGrid);
+		graphics.setColor(PaintSettings.STREET_COLOR);
 		
-		for (int i = 0; i < citySize - 1; ++i)
+		for (int i = 0; i < citySize; ++i)
 		{
-			currentWidth = getMarginSize() + streetWidth;
-			currentHeight += streetWidth;
+			drawFilledRectangle(graphics, currentWidth, currentHeight, baseLength, streetWidth, verticalGrid);
 			
-			for (int j = 0; j < citySize - 1; ++j)
-			{
-				drawLine(graphics, currentWidth, currentHeight, currentWidth + streetLength, currentHeight, verticalGrid);
-				
-				currentWidth += streetWidth + streetLength;
-			}
-			
-			currentWidth = getMarginSize() + streetWidth;
 			currentHeight += streetLength;
-			
-			for (int j = 0; j < citySize - 1; ++j)
-			{
-				drawLine(graphics, currentWidth, currentHeight, currentWidth + streetLength, currentHeight, verticalGrid);
-				
-				currentWidth += streetWidth + streetLength;
-			}
 		}
-		
-		currentHeight += streetWidth;
-		currentWidth = getMarginSize();
-		
-		drawLine(graphics, currentWidth, currentHeight, baseLength + currentWidth, currentHeight, verticalGrid);
 	}
 }
