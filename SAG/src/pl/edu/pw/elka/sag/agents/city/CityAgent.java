@@ -13,9 +13,6 @@ public class CityAgent extends AgentBase
 	protected void setup()
 	{
 		super.setup();
-		
 		addBehaviour(new ServeDirectionBehaviour(CITY_WIDTH, CITY_HEIGHT));
-		
-		System.out.println("CityAgent " + getName()  + " is ready!");
 	}
 }

@@ -13,11 +13,8 @@ public class CarAgent extends TrafficAgent
 	protected void setup()
 	{
 		super.setup();
-		
 		addBehaviour(new RequestDirectionBehaviour(this, 5000, getCityAgentID()));
 		addBehaviour(new ReceiveDirectionBehaviour(this));
-		
-		System.out.println("CarAgent " + getName()  + " is ready!");
 	}
 	
 	public Direction getDirection()

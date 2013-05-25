@@ -55,7 +55,7 @@ public class ReceiveDirectionBehaviour extends CyclicBehaviour
 		
 		if (currentCarDirection != null)
 		{
-			directionsList.remove(currentCarDirection.getOppositeDirection());
+			directionsList.remove(currentCarDirection.getOpposite());
 		}
 		
 		return directionsList.get(new Random().nextInt(directionsList.size()));
