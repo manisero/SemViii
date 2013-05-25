@@ -1,4 +1,5 @@
-﻿using MBI.Logic.DNAAssemblance;
+﻿using System.Collections.Generic;
+using MBI.Logic.DNAAssemblance;
 using MBI.Logic.DNAAssemblance._Impl;
 using MBI.Logic.Entities;
 using System.Linq;
@@ -10,14 +11,16 @@ namespace MBI.Logic.Tests
 	[TestFixture]
 	public class DNAAssemblerTests
 	{
+		private IContigsFilter _contigsFilterMock;
 		private IScaffoldBuilder _scaffoldBuilderMock;
 		private DNAAssembler _dnaAssembler;
 
 		[SetUp]
 		public void SetUp()
 		{
+			_contigsFilterMock = MockRepository.GenerateStrictMock<IContigsFilter>();
 			_scaffoldBuilderMock = MockRepository.GenerateStrictMock<IScaffoldBuilder>();
-			_dnaAssembler = new DNAAssembler(_scaffoldBuilderMock);
+			_dnaAssembler = new DNAAssembler(_contigsFilterMock, _scaffoldBuilderMock);
 		}
 
 		[Test]
@@ -26,6 +29,7 @@ namespace MBI.Logic.Tests
 			// Arrange
 			var contig1 = new Contig("aaa");
 			var contig2 = new Contig("bbb");
+			var initialContigs = new[] { contig1, contig2 };
 			var contigs_accepted = new[] { contig1, contig2 };
 			var contigs_rejected = new[] { contig2, contig1 };
 			var pairedEndTags = new[] { new PairedEndTag() };
@@ -33,11 +37,13 @@ namespace MBI.Logic.Tests
 			var scaffold_accepted = new Scaffold { Rank = 10 };
 			var scaffold_rejected = new Scaffold { Rank = 0 };
 
+			_contigsFilterMock.Expect(x => x.Filter(initialContigs, pairedEndTags)).Return(new[] { contigs_accepted, contigs_rejected });
+
 			_scaffoldBuilderMock.Expect(x => x.Build(contigs_accepted, pairedEndTags)).Return(scaffold_accepted);
 			_scaffoldBuilderMock.Expect(x => x.Build(contigs_rejected, pairedEndTags)).Return(scaffold_rejected);
 
 			// Act
-			var result = _dnaAssembler.Assemble(new[] { contig1, contig2 }, pairedEndTags).ToList();
+			var result = _dnaAssembler.Assemble(initialContigs, pairedEndTags).ToList();
 
 			// Assert
 			Assert.IsNotNull(result);
@@ -53,6 +59,7 @@ namespace MBI.Logic.Tests
 			var contig1 = new Contig("aaa");
 			var contig2 = new Contig("bbb");
 			var contig3 = new Contig("ccc");
+			var contigs = new[] { contig1, contig2, contig3 };
 			var pairedEndTags = new[] { new PairedEndTag() };
 
 			var assembly1 = new[] { contig2, contig1, contig3 };
@@ -63,13 +70,14 @@ namespace MBI.Logic.Tests
 			var scaffold2 = new Scaffold { Rank = 2 };
 			var scaffold3 = new Scaffold { Rank = 1 };
 
+			_contigsFilterMock.Expect(x => x.Filter(contigs, pairedEndTags)).Return(new[] { assembly1, assembly2, assembly3 });
+
 			_scaffoldBuilderMock.Expect(x => x.Build(assembly1, pairedEndTags)).Return(scaffold1);
 			_scaffoldBuilderMock.Expect(x => x.Build(assembly2, pairedEndTags)).Return(scaffold2);
 			_scaffoldBuilderMock.Expect(x => x.Build(assembly3, pairedEndTags)).Return(scaffold3);
-			_scaffoldBuilderMock.Expect(x => x.Build(Arg<Contig[]>.Is.Anything, Arg<PairedEndTag[]>.Is.Equal(pairedEndTags))).Return(new Scaffold { Rank = 0 });
 			
 			// Act
-			var result = _dnaAssembler.Assemble(new[] { contig1, contig2, contig3 }, pairedEndTags);
+			var result = _dnaAssembler.Assemble(contigs, pairedEndTags);
 
 			// Assert
 			Assert.IsNotNull(result);
@@ -78,29 +86,6 @@ namespace MBI.Logic.Tests
 			Assert.AreEqual(scaffold2, result[1]);
 			Assert.AreEqual(scaffold3, result[2]);
 
-			_scaffoldBuilderMock.VerifyAllExpectations();
-		}
-
-		[Test]
-		public void validates_all_contigs_combinations()
-		{
-			// Arrange
-			var contig1 = new Contig("aaa");
-			var contig2 = new Contig("bbb");
-			var contig3 = new Contig("ccc");
-			var pairedEndTags = new[] { new PairedEndTag() };
-
-			_scaffoldBuilderMock.Expect(x => x.Build(new[] { contig1, contig2, contig3 }, pairedEndTags)).Return(new Scaffold());
-			_scaffoldBuilderMock.Expect(x => x.Build(new[] { contig1, contig3, contig2 }, pairedEndTags)).Return(new Scaffold());
-			_scaffoldBuilderMock.Expect(x => x.Build(new[] { contig2, contig1, contig3 }, pairedEndTags)).Return(new Scaffold());
-			_scaffoldBuilderMock.Expect(x => x.Build(new[] { contig2, contig3, contig1 }, pairedEndTags)).Return(new Scaffold());
-			_scaffoldBuilderMock.Expect(x => x.Build(new[] { contig3, contig1, contig2 }, pairedEndTags)).Return(new Scaffold());
-			_scaffoldBuilderMock.Expect(x => x.Build(new[] { contig3, contig2, contig1 }, pairedEndTags)).Return(new Scaffold());
-
-			// Act
-			_dnaAssembler.Assemble(new[] { contig1, contig2, contig3 }, pairedEndTags);
-
-			// Assert
 			_scaffoldBuilderMock.VerifyAllExpectations();
 		}
 	}
