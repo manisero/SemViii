@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.sag.gui.panels;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -69,6 +70,33 @@ public class CityMap extends JPanel
 	}
 	
 	/**
+	 * Returns single lane's length
+	 * 
+	 * @return int lane's length
+	 */
+	private int getLaneLength()
+	{
+		int streetLength = getStreetLength() - getStreetWidth();
+		
+		double laneLength = streetLength / (PaintSettings.LANES_PER_STREET * 
+				(1 + PaintSettings.LANE_TO_SPACE_LENGTH_RATIO) + PaintSettings.LANE_TO_SPACE_LENGTH_RATIO);
+		
+		return (int) laneLength;
+	}
+	
+	/**
+	 * Returns single lane's space length
+	 * 
+	 * @return int lane's space length
+	 */
+	private int getLaneSpaceLength()
+	{
+		double laneSpaceLength = getLaneLength() * PaintSettings.LANE_TO_SPACE_LENGTH_RATIO;
+		
+		return (int) laneSpaceLength;
+	}
+	
+	/**
 	 * Paints city map.
 	 *  
 	 *  @param graphics {@link java.awt.Graphics2D} instance
@@ -90,9 +118,7 @@ public class CityMap extends JPanel
 	 */
 	private void paintStreetGrid(Graphics2D graphics2D)
 	{
-		System.out.println("horizontal");
 		paintHalfGrid(graphics2D, false);
-		System.out.println("vertical");
 		paintHalfGrid(graphics2D, true);
 	}
 	
@@ -101,20 +127,18 @@ public class CityMap extends JPanel
 	 * {@link java.awt.Rectangle}.
 	 * 
 	 * @param graphics2D {@link java.awt.Graphics2D} instance
+	 * @param color {@link java.awt.Color} of the rectangle
 	 * @param x1 x-coordinate of line's beginning
 	 * @param y1 y-coordinate of line's beginning
 	 * @param x2 x-coordinate of line's ending
 	 * @param y2 y-coordinate of line's ending
 	 * @param swapAxis 
 	 */
-	private void drawFilledRectangle(Graphics2D graphics2D, int x, int y, int width, int height, boolean swapAxis)
+	private void drawFilledRectangle(Graphics2D graphics2D, Color color, int x, int y, int width, int height, 
+			boolean swapAxis)
 	{
+		graphics2D.setColor(color);
 		graphics2D.fillRect(swapAxis ? y : x, swapAxis? x : y, swapAxis ? height : width, swapAxis ? width : height);
-		
-		System.out.println("drawing rect of x: " + (swapAxis ? y : x));
-		System.out.println("drawing rect of y: " + (swapAxis? x : y));
-		System.out.println("drawing rect of width: " + (swapAxis ? height : width));
-		System.out.println("drawing rect of height: " + (swapAxis ? width : height));
 	}
 	
 	/**
@@ -133,11 +157,29 @@ public class CityMap extends JPanel
 		int currentHeight = getMarginSize() + streetWidth;
 		int currentWidth = getMarginSize() + streetWidth;
 		
-		graphics.setColor(PaintSettings.STREET_COLOR);
-		
 		for (int i = 0; i < citySize; ++i)
 		{
-			drawFilledRectangle(graphics, currentWidth, currentHeight, baseLength, streetWidth, verticalGrid);
+			drawFilledRectangle(graphics, PaintSettings.STREET_COLOR, currentWidth, currentHeight, baseLength, 
+					streetWidth, verticalGrid);
+			
+			boolean evenStreetWidth = streetWidth % 2 == 0;
+			
+			int laneOffset = (int) (streetWidth / 2.0) + (evenStreetWidth ? 0 : 1);
+			int laneThickness = evenStreetWidth ? 2 : 1;
+			
+			for (int j = 0; j < citySize - 1; ++j)
+			{
+				int xLane = currentWidth + streetWidth + getLaneSpaceLength() + j * streetLength; 
+				int yLane = currentHeight + laneOffset;
+				
+				for (int k = 0; k < PaintSettings.LANES_PER_STREET; ++k)
+				{
+					drawFilledRectangle(graphics, PaintSettings.LANE_COLOR, xLane, yLane, getLaneLength(),
+							laneThickness, verticalGrid);
+					
+					xLane += getLaneLength() + getLaneSpaceLength();
+				}
+			}
 			
 			currentHeight += streetLength;
 		}
