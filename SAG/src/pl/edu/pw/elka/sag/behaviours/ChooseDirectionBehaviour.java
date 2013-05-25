@@ -17,11 +17,13 @@ public class ChooseDirectionBehaviour extends TickerBehaviour
 {
 	private static final long serialVersionUID = -111284932650857342L;
 	
-	private static final String RECEIVER = "city";
+	private AID cityAgentAID;
 	
-	public ChooseDirectionBehaviour(CarAgent agent, long period)
+	public ChooseDirectionBehaviour(CarAgent agent, long period, AID cityAgentAID)
 	{
 		super(agent, period);
+		
+		this.cityAgentAID = cityAgentAID;
 	}
 
 	@Override
@@ -33,7 +35,7 @@ public class ChooseDirectionBehaviour extends TickerBehaviour
 			
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 
-			message.addReceiver(new AID(RECEIVER, AID.ISLOCALNAME));
+			message.addReceiver(cityAgentAID);
 			message.setContentObject(location);
 			
 			myAgent.send(message);
