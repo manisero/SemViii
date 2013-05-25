@@ -60,6 +60,38 @@ public class AgentRegistrar
 		}
 	}
 	
+	public List<AID> getAgents(Agent agent, Class<?> searchedAgentClass)
+	{
+		if (!agentTypes.containsKey(searchedAgentClass))
+		{
+			throw new UnknownAgentTypeException();
+		}
+		
+		List<AID> result = new ArrayList<AID>();
+		
+		try
+		{
+			ServiceDescription serviceDescription = new ServiceDescription();
+			serviceDescription.setType(agentTypes.get(searchedAgentClass));
+			
+			DFAgentDescription template = new DFAgentDescription();
+			template.addServices(serviceDescription);
+			
+			DFAgentDescription[] agentDescriptions = DFService.search(agent, template);
+				
+			for (DFAgentDescription description : agentDescriptions)
+			{
+				result.add(description.getName());
+			}
+		}
+		catch (FIPAException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void unregister(Agent agent)
 	{
 		try

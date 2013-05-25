@@ -1,13 +1,20 @@
 package pl.edu.pw.elka.sag.agents;
 
-import pl.edu.pw.elka.sag.*;
-import pl.edu.pw.elka.sag.entities.*;
-import pl.edu.pw.elka.sag.exceptions.*;
+import jade.core.*;
 
-public class LocatableAgent extends AgentBase implements ILocatable
+import java.util.*;
+
+import pl.edu.pw.elka.sag.*;
+import pl.edu.pw.elka.sag.agents.city.*;
+import pl.edu.pw.elka.sag.entities.Location;
+import pl.edu.pw.elka.sag.exceptions.*;
+import pl.edu.pw.elka.sag.util.*;
+
+public class TrafficAgent extends AgentBase implements ILocatable
 {
 	private static final long serialVersionUID = -3136958477961496734L;
 	
+	private AID cityId;
 	private Location location;
 	
 	@Override
@@ -37,5 +44,22 @@ public class LocatableAgent extends AgentBase implements ILocatable
 	protected void setLocation(Location location)
 	{
 		this.location = location;
+	}
+	
+	protected AID getCityAgentID()
+	{
+		if (cityId == null)
+		{
+			List<AID> agents = AgentRegistrar.getInstance().getAgents(this, CityAgent.class);
+			
+			if (agents.size() != 1)
+			{
+				throw new NoCityAgentFoundException();
+			}
+			
+			cityId = agents.get(0);
+		}
+		
+		return cityId;
 	}
 }
