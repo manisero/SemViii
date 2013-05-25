@@ -10,6 +10,9 @@ public class AgentBase extends Agent
 	@Override
 	protected void setup()
 	{
+		super.setup();
+		System.out.println("Initializing " + this.getClass().getSimpleName() + " " + getName());
+		
 		AgentRegistrar.getInstance().register(this);
 	}
 	

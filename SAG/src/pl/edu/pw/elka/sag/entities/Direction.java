@@ -2,12 +2,46 @@ package pl.edu.pw.elka.sag.entities;
 
 public enum Direction
 {
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST;
+	UNKNOWN	(Integer.parseInt("0000", 2)),
+	NORTH	(Integer.parseInt("0001", 2)),
+	SOUTH	(Integer.parseInt("0010", 2)),
+	EAST	(Integer.parseInt("0100", 2)),
+	WEST	(Integer.parseInt("1000", 2)),
 	
-	public Direction getOppositeDirection()
+	NORTH_SOUTH	(Integer.parseInt("0011", 2)),
+	EAST_WEST	(Integer.parseInt("1100", 2));
+	
+	private final int _id;
+	
+	Direction(int id)
+	{
+		_id = id;
+	}
+	
+	public int getValue()
+	{
+		return _id;
+	}
+	
+	public static Direction valueOf(Integer value)
+	{
+		for (Direction direction : Direction.values())
+		{
+			if (direction.getValue() == value)
+			{
+				return direction;
+			}
+		}
+		
+		return Direction.UNKNOWN;
+	}
+	
+	public boolean hasPart(Direction part)
+	{
+		return (getValue() & part.getValue()) != Direction.UNKNOWN.getValue();
+	}
+	
+	public Direction getOpposite()
 	{
 		if (equals(Direction.NORTH))
 		{
@@ -21,9 +55,19 @@ public enum Direction
 		{
 			return Direction.EAST;
 		}
-		else
+		else if (equals(Direction.EAST))
 		{
 			return Direction.WEST;
 		}
+		else if (equals(Direction.NORTH_SOUTH))
+		{
+			return Direction.EAST_WEST;
+		}
+		else if (equals(Direction.EAST_WEST))
+		{
+			return Direction.NORTH_SOUTH;
+		}
+		
+		return Direction.UNKNOWN;
 	}
 }
