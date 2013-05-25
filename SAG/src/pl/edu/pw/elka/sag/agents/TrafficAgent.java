@@ -33,6 +33,8 @@ public class TrafficAgent extends AgentBase implements ILocatable
 		int locationY = Integer.parseInt(arguments[1].toString());
 		
 		location = new Location(locationX, locationY);
+		
+		addBehaviour(new ServeLocationBehaviour(this));
 	}
 
 	@Override

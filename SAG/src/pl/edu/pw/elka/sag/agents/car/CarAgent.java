@@ -14,7 +14,8 @@ public class CarAgent extends TrafficAgent
 	{
 		super.setup();
 		
-		addBehaviour(new ChooseDirectionBehaviour(this, 5000, getCityAgentID()));
+		addBehaviour(new RequestDirectionBehaviour(this, 5000, getCityAgentID()));
+		addBehaviour(new ReceiveDirectionBehaviour(this));
 		
 		System.out.println("CarAgent " + getName()  + " is ready!");
 	}
