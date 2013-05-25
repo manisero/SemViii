@@ -13,7 +13,7 @@ namespace MBI.Logic.Extensions
 			}
 		}
 
-		public static IEnumerable<IList<T>> GetPermutations<T>(this IList<T> list)
+		public static IList<IList<T>> GetPermutations<T>(this IList<T> list)
 		{
 			if (list.Count == 1)
 			{

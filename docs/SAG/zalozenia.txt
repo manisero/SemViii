@@ -1,0 +1,18 @@
+agenty:
+
+1. Miasto:
+	- zna rozmiar miasta (rozklad ulic)
+	- odpytuje Sygnalizacje (gdzie sa i jakie kierunki puszczaja)
+	- mowi Samochodom gdzie moga jechac
+
+2. Samochod:
+	- jezdzi (pol przecznicy co staly okres czasu)
+	- przed kazdym skrzyzowaniem pyta Miasto o kierunki, w ktorych moze jechac
+	- przed kazdym skrzyzowaniem sprawdza Sygnalizacje
+	- przed kazdym skrzyzowaniem pyta inne Samochody (ustala pierwszenstwo)
+
+3. Sygnalizacja:
+	- stoi zawsze w tym samym miejscu
+	- w danej chwili przepuszcza dwa kierunki (N i S albo W i E)
+	- co staly okres czasu przelacza przepuszczane kierunki
+	- zolte swiatlo? (nikt nie moze jechac)

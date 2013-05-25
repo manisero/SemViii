@@ -1,4 +1,6 @@
-﻿namespace MBI.UI.ViewModelLocation
+﻿using MBI.UI.ViewModels;
+
+namespace MBI.UI.ViewModelLocation
 {
 	public class ViewModelLocator
 	{
