@@ -1,4 +1,4 @@
-package pl.edu.pw.elka.sag;
+package pl.edu.pw.elka.sag.entities;
 
 import java.io.Serializable;
 

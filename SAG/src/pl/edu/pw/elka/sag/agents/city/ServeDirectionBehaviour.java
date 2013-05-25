@@ -1,4 +1,4 @@
-package pl.edu.pw.elka.sag.behaviours;
+package pl.edu.pw.elka.sag.agents.city;
 
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import pl.edu.pw.elka.sag.Direction;
-import pl.edu.pw.elka.sag.DirectionsCollection;
-import pl.edu.pw.elka.sag.Location;
+import pl.edu.pw.elka.sag.entities.*;
 
 public class ServeDirectionBehaviour extends CyclicBehaviour
 {

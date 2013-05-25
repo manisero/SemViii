@@ -1,40 +1,27 @@
-package pl.edu.pw.elka.sag.agents;
+package pl.edu.pw.elka.sag.agents.car;
 
-import jade.core.AID;
-import jade.core.Agent;
-import jade.domain.DFService;
-import jade.domain.FIPAException;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import pl.edu.pw.elka.sag.Direction;
-import pl.edu.pw.elka.sag.Location;
-import pl.edu.pw.elka.sag.behaviours.ChooseDirectionBehaviour;
-import pl.edu.pw.elka.sag.constants.AgentTypes;
-import pl.edu.pw.elka.sag.exception.NoCityAgentRegisteredException;
+import jade.core.*;
+import jade.domain.*;
+import jade.domain.FIPAAgentManagement.*;
+import pl.edu.pw.elka.sag.agents.*;
+import pl.edu.pw.elka.sag.constants.*;
+import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.exceptions.*;
 
-public class CarAgent extends Agent
+public class CarAgent extends LocatableAgent
 {
 	private static final long serialVersionUID = 258671427576035083L;
 	
-	private Location location = new Location();
 	private Direction direction;
 	
 	@Override
 	protected void setup()
 	{
+		super.setup();
+		
 		addBehaviour(new ChooseDirectionBehaviour(this, 5000, getCityAgentName()));
 		
-		System.out.println("CarAgent is ready!");
-	}
-
-	public Location getLocation()
-	{
-		return location;
-	}
-
-	public void setLocation(Location location)
-	{
-		this.location = location;
+		System.out.println("CarAgent " + getName()  + " is ready!");
 	}
 	
 	public Direction getDirection()
@@ -46,36 +33,34 @@ public class CarAgent extends Agent
 	{
 		if (direction.equals(Direction.NORTH))
 		{
-			location.setY(location.getY() + 1);
+			getLocation().setY(getLocation().getY() + 1);
 		}
 		else if (direction.equals(Direction.SOUTH))
 		{
-			location.setY(location.getY() - 1);
+			getLocation().setY(getLocation().getY() - 1);
 		}
 		else if (direction.equals(Direction.EAST))
 		{
-			location.setX(location.getX() + 1);
+			getLocation().setX(getLocation().getX() + 1);
 		}
 		else if (direction.equals(Direction.WEST))
 		{
-			location.setX(location.getX() - 1);
+			getLocation().setX(getLocation().getX() - 1);
 		}
 		
 		this.direction = direction;
 		
-		System.out.println("Current location: [x=" + location.getX() + ",y=" + location.getY() + "]");
+		System.out.println("Current location: [x=" + getLocation().getX() + ",y=" + getLocation().getY() + "]");
 	}
 	
 	private AID getCityAgentName()
 	{
 		try
 		{
-			DFAgentDescription template = new DFAgentDescription();
-			
 			ServiceDescription serviceDescription = new ServiceDescription();
-			
 			serviceDescription.setType(AgentTypes.CITY_AGENT_TYPE);
 			
+			DFAgentDescription template = new DFAgentDescription();
 			template.addServices(serviceDescription);
 			
 			DFAgentDescription[] agentDescriptions = DFService.search(this, template);

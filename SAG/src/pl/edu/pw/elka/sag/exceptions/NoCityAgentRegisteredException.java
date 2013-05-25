@@ -1,4 +1,4 @@
-package pl.edu.pw.elka.sag.exception;
+package pl.edu.pw.elka.sag.exceptions;
 
 public class NoCityAgentRegisteredException extends RuntimeException
 {

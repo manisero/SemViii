@@ -1,18 +1,14 @@
-package pl.edu.pw.elka.sag.behaviours;
+package pl.edu.pw.elka.sag.agents.car;
 
-import jade.core.AID;
-import jade.core.behaviours.TickerBehaviour;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
+import jade.core.*;
+import jade.core.behaviours.*;
+import jade.lang.acl.*;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Random;
+import java.io.*;
+import java.util.*;
 
-import pl.edu.pw.elka.sag.Direction;
-import pl.edu.pw.elka.sag.DirectionsCollection;
-import pl.edu.pw.elka.sag.Location;
-import pl.edu.pw.elka.sag.agents.CarAgent;
+import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.entities.Location;
 
 public class ChooseDirectionBehaviour extends TickerBehaviour
 {
