@@ -1,7 +1,7 @@
-package pl.edu.pw.elka.sag;
+package pl.edu.pw.elka.sag.entities;
 
-import java.io.Serializable;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class DirectionsCollection implements Serializable
 {
