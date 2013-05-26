@@ -3,6 +3,9 @@
 \usepackage{polski}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{footnote}
+\usepackage{tabularx}
 \title{[SAG.A] Protokół MAS z~wykorzystaniem ontologii \\ Dokumentacja wstępna}
 \author{Michał Aniserowicz, Jakub Turek}
 \date{13.05.2013r}
@@ -60,5 +63,65 @@ Rysunek \ref{fig:protocol} przedstawia protokół komunikacyjny przedstawiony na
 \end{enumerate}
 
 Na podstawie otrzymanych informacji \verb+Samochód+ decyduje, czy może wjechać na skrzyżowanie, czy powinien się przed nim zatrzymać.
+
+\section{Ontologia}
+
+Tabela \ref{fig:ontology} przedstawia definicję ontologii, która będzie wykorzystywana do reprezentowania wiedzy w~obrębie systemu.
+
+\begin{table}[ht]
+    \centering
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \textbf{Koncepcja} & \textbf{Akcja} & \multicolumn{3}{c|}{\textbf{Predykat}} \\
+            \hline
+            & & \textbf{Nazwa} & \textbf{Typ} & \textbf{Wymagalność} \\
+            \hline
+            \multirow{6}{*}{Samochód} & & Pozycja X & Int & Tak \\
+            \cline{3-5}
+             & & Pozycja Y & Int & Tak \\
+            \cline{3-5}
+             & & Kierunek & Int & Tak \\
+            \cline{3-5}
+             & & Stan & Int & Tak \\
+            \cline{2-5}
+             & \multirow{2}{*}{Jazda} & Przesunięcie X & Int & Nie \\
+            \cline{3-5}
+             & & Przesunięcie Y & Int & Nie \\
+            \hline
+            \multirow{6}{*}{Sygnalizator} & & Stan & Int & Tak \\
+            \cline{3-5}
+             & & Pozycja X & Int & Tak \\
+            \cline{3-5}
+             & & Pozycja Y & Int & Tak \\
+            \cline{3-5}
+             & & Identyfikator & \multirow{2}{*}{Str} & \multirow{2}{*}{Tak} \\
+             & & skrzyżowania & & \\
+            \cline{2-5}
+             & Zmiana & Nowy stan & Int & Tak \\
+            \hline
+            \multirow{3}{*}{Miasto} & & Rozmiar & Int & Tak \\
+            \cline{3-5}
+            & & Identyfikatory & \multirow{2}{*}{CEL} & \multirow{2}{*}{Tak} \\
+            & & skrzyżowań & & \\
+            \hline
+            \multirow{3}{*}{Skrzyżowanie} & & Pozycja X & Int & Tak \\
+            \cline{3-5}
+             & & Pozycja Y & Int & Tak \\
+            \cline{3-5}
+             & & Kierunki & CEL & Tak \\
+            \hline
+            \multirow{5}{*}{Mapa} & & Wysokość & Int & Tak \\
+            \cline{3-5}
+             & & Szerokość & Int & Tak \\
+            \cline{2-5}
+            & \multirow{3}{*}{Wyświetlanie} & Częstotliwość & \multirow{3}{*}{Int} & \multirow{3}{*}{Nie} \\
+            & & aktualizacji & & \\
+            & & danych & & \\
+            \hline
+        \end{tabular}
+
+        \caption{Słownik ontologii.}
+        \label{fig:ontology}
+\end{table}
 
 \end{document}
