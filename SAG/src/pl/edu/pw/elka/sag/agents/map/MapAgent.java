@@ -15,6 +15,7 @@ public class MapAgent extends AgentBase
 	private static final long serialVersionUID = 6834846218522498189L;
 
 	private Map<AID, DrawableCar> cars = new LinkedHashMap<AID, DrawableCar>();
+	private Map<AID, DrawableTrafficLights> trafficLights = new LinkedHashMap<AID, DrawableTrafficLights>();
 	private TrafficSimulatorGUI gui;
 	
 	@Override
@@ -35,6 +36,8 @@ public class MapAgent extends AgentBase
 		
 		addBehaviour(new RequestCarMovementInfoBehaviour(this, 100));
 		addBehaviour(new ReceiveCarMovementInfoBehaviour(this));
+		addBehaviour(new RequestTrafficLightInfoBehaviour(this, 100));
+		addBehaviour(new ReceiveTrafficLightInfoBehaviour(this));
 	}
 	
 	public void updateCarInfo(AID carId, MovementInfo info)
@@ -50,6 +53,24 @@ public class MapAgent extends AgentBase
 			DrawableCar car = cars.get(carId);
 			car.setCarLocation(info.getLocation());
 			car.setCarDirection(info.getDirection());
+		}
+	}
+	
+	public void updateTrafficLightInfo(AID trafficLightId, TrafficLightInfo info)
+	{
+		System.out.println("adding traffic " + trafficLightId.getName());
+		
+		if (!trafficLights.containsKey(trafficLightId))
+		{
+			DrawableTrafficLights trafficLight = new DrawableTrafficLights(info.getLocation(), info.getAllowedDirection());
+			trafficLights.put(trafficLightId, trafficLight);
+			gui.addDrawableObjectToCityMap(trafficLight);
+		}
+		else
+		{
+			DrawableTrafficLights trafficLight = trafficLights.get(trafficLightId);
+			trafficLight.setTrafficLightsLocation(info.getLocation());
+			trafficLight.setTrafficLightAllowedDirection(info.getAllowedDirection());
 		}
 	}
 }

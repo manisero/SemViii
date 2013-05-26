@@ -7,7 +7,7 @@ public class MovableTrafficAgent extends LocatableTrafficAgent implements IMovab
 {
 	private static final long serialVersionUID = -6842011892069749555L;
 
-	private Direction direction;
+	private Direction direction = Direction.UNKNOWN;
 	
 	@Override
 	protected void setup()
