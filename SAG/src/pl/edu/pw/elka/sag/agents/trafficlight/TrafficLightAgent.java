@@ -13,8 +13,9 @@ public class TrafficLightAgent extends LocatableTrafficAgent
 	protected void setup()
 	{
 		super.setup();
-		addBehaviour(new TrafficLightCycleBehavior(this));
+		addBehaviour(new TrafficLightCycleBehavior(this, 2000));
 		addBehaviour(new ServeAllowedDirectionBehavior(this));
+		addBehaviour(new ServeTrafficLightInfoBehaviour(this));
 	}
 	
 	public Direction getAllowedDirection()

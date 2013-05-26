@@ -18,6 +18,7 @@ public class ServeMovementInfoBehaviour extends CyclicBehaviour
 
 	public ServeMovementInfoBehaviour(IMovable movable)
 	{
+		super();
 		this.movable = movable;
 	}
 	

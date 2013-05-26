@@ -15,13 +15,11 @@ public class ServeDirectionBehaviour extends CyclicBehaviour
 	private static final long serialVersionUID = -5851725356214090232L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 	
-	private final int cityWidth;
-	private final int cityHeight;
+	private final int citySize;
 	
-	public ServeDirectionBehaviour(int cityWidth, int cityHeight)
+	public ServeDirectionBehaviour(int citySize)
 	{
-		this.cityWidth = cityWidth;
-		this.cityHeight = cityHeight;
+		this.citySize = citySize;
 	}
 
 	@Override
@@ -65,7 +63,7 @@ public class ServeDirectionBehaviour extends CyclicBehaviour
 			directions.add(Direction.WEST);
 		}
 		
-		if (location.getX() < cityWidth - 1)
+		if (location.getX() < citySize - 1)
 		{
 			directions.add(Direction.EAST);
 		}
@@ -75,7 +73,7 @@ public class ServeDirectionBehaviour extends CyclicBehaviour
 			directions.add(Direction.SOUTH);
 		}
 		
-		if (location.getY() < cityHeight - 1)
+		if (location.getY() < citySize - 1)
 		{
 			directions.add(Direction.NORTH);
 		}

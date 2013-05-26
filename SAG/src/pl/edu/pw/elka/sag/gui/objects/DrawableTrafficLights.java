@@ -64,7 +64,7 @@ public class DrawableTrafficLights extends Canvas implements IDrawablePropertyRe
 	 * 
 	 * @return allowed {@link pl.edu.pw.elka.sag.entities.Direction} of traffic lights
 	 */
-	public Direction getAllowedDirection()
+	public Direction getTrafficLightAllowedDirection()
 	{
 		return allowedDirection;
 	}
@@ -74,7 +74,7 @@ public class DrawableTrafficLights extends Canvas implements IDrawablePropertyRe
 	 * 
 	 * @param allowedDirection allowed {@link pl.edu.pw.elka.sag.entities.Direction} of traffic lights to set
 	 */
-	public void setAllowedDirection(Direction allowedDirection)
+	public void setTrafficLightAllowedDirection(Direction allowedDirection)
 	{
 		this.allowedDirection = allowedDirection;
 	}
