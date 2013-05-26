@@ -24,27 +24,37 @@ public class MovementBehaviour extends TickerBehaviour
 	@Override
 	protected void onTick()
 	{
-		int position = getCarAgent().getDirection().hasParts(Direction.EAST, Direction.WEST) 
+		int position = getCarAgent().getDirection().hasAnyOfParts(Direction.EAST, Direction.WEST) 
 							? getCarAgent().getLocation().getX()
 							: getCarAgent().getLocation().getY();
+							
+		int step = position % 10;
 		
-		position %= 10;
+		if (step != 0 && getCarAgent().getDirection().hasAnyOfParts(Direction.WEST, Direction.SOUTH))
+		{
+			step = 10 - step;
+		}
 		
-		if (position == 0)
+		if (step < 0)
+		{
+			System.out.println("Step: " + step);
+		}
+		
+		if (step == 0)
 		{
 			getCarAgent().setDirection(getCarAgent().getNextDirection());
 			getCarAgent().setNextDirection(Direction.UNKNOWN);
 		}
-		else if (position == 1)
+		else if (step == 1)
 		{
 			getCarAgent().setStatus(CarStatus.Driving);
 		}
-		else if (position == 8)
+		else if (step == 8)
 		{
 			getCarAgent().setStatus(CarStatus.NearCrossroads);
 			requestPossibleDirections();
 		}
-		else if (position == 9)
+		else if (step == 9)
 		{
 			if (getCarAgent().getNextDirection() == Direction.UNKNOWN)
 			{
@@ -62,7 +72,21 @@ public class MovementBehaviour extends TickerBehaviour
 	{
 		try
 		{
-			Location location = getCarAgent().getLocation();
+			int x = (getCarAgent().getLocation().getX() / 10) * 10;
+			int y = (getCarAgent().getLocation().getY() / 10) * 10;
+			
+			if (getCarAgent().getDirection() == Direction.EAST)
+			{
+				x += 10;
+			}
+			else if (getCarAgent().getDirection() == Direction.NORTH)
+			{
+				y += 10;
+			}
+			
+			Location location = new Location(x, y);
+			
+			System.out.println("CarLoc: " + getCarAgent().getLocation() + ", CarDir: " + getCarAgent().getDirection() + "; sent: " + location);
 			
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(getCarAgent().getCityAgentID());

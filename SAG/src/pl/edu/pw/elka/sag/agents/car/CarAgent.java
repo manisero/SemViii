@@ -28,7 +28,7 @@ public class CarAgent extends MovableTrafficAgent
 		int speed = Integer.parseInt(arguments[3].toString());
 		
 		addBehaviour(new MovementBehaviour(this, speed));
-		addBehaviour(new ReceiveDirectionBehaviour(this));
+		addBehaviour(new ReceivePossibleDirectionBehaviour(this));
 	}
 	
 	@Override
@@ -74,6 +74,18 @@ public class CarAgent extends MovableTrafficAgent
 		else if (getDirection().equals(Direction.WEST))
 		{
 			getLocation().setX(getLocation().getX() - 1);
+		}
+		
+		//System.out.println("Location: " + getLocation() + "; Direction: " + getDirection());
+		
+		if (getLocation().getX() < 0)
+		{
+			System.out.println("Dupa na x: " + getLocation());
+		}
+		
+		if (getLocation().getY() < 0)
+		{
+			System.out.println("Dupa na y: " + getLocation());
 		}
 	}
 }
