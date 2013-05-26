@@ -6,7 +6,7 @@ public class CityAgent extends AgentBase
 {
 	private static final long serialVersionUID = 4471164341534623888L;
 	
-	private static int BLOCKS_COUNT = 2;
+	private static int BLOCKS_COUNT = 3;
 
 	@Override
 	protected void setup()

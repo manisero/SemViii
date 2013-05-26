@@ -75,17 +75,5 @@ public class CarAgent extends MovableTrafficAgent
 		{
 			getLocation().setX(getLocation().getX() - 1);
 		}
-		
-		//System.out.println("Location: " + getLocation() + "; Direction: " + getDirection());
-		
-		if (getLocation().getX() < 0)
-		{
-			System.out.println("Dupa na x: " + getLocation());
-		}
-		
-		if (getLocation().getY() < 0)
-		{
-			System.out.println("Dupa na y: " + getLocation());
-		}
 	}
 }

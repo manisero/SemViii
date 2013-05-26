@@ -86,8 +86,6 @@ public class MovementBehaviour extends TickerBehaviour
 			
 			Location location = new Location(x, y);
 			
-			System.out.println("CarLoc: " + getCarAgent().getLocation() + ", CarDir: " + getCarAgent().getDirection() + "; sent: " + location);
-			
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(getCarAgent().getCityAgentID());
 			message.setConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);

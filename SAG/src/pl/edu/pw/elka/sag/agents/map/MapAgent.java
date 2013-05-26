@@ -58,8 +58,6 @@ public class MapAgent extends AgentBase
 	
 	public void updateTrafficLightInfo(AID trafficLightId, TrafficLightInfo info)
 	{
-		System.out.println("adding traffic " + trafficLightId.getName());
-		
 		if (!trafficLights.containsKey(trafficLightId))
 		{
 			DrawableTrafficLights trafficLight = new DrawableTrafficLights(info.getLocation(), info.getAllowedDirection());
