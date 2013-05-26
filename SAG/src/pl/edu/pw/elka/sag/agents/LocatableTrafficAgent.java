@@ -48,7 +48,7 @@ public class LocatableTrafficAgent extends AgentBase implements ILocatable
 		this.location = location;
 	}
 	
-	protected AID getCityAgentID()
+	public AID getCityAgentID()
 	{
 		if (cityId == null)
 		{

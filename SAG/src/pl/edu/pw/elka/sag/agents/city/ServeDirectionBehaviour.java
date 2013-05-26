@@ -17,9 +17,9 @@ public class ServeDirectionBehaviour extends CyclicBehaviour
 	
 	private final int citySize;
 	
-	public ServeDirectionBehaviour(int citySize)
+	public ServeDirectionBehaviour(int blocksCount)
 	{
-		this.citySize = citySize;
+		this.citySize = blocksCount * 10;
 	}
 
 	@Override

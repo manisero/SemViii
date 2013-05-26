@@ -2,40 +2,90 @@ package pl.edu.pw.elka.sag.agents.car;
 
 import pl.edu.pw.elka.sag.agents.*;
 import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.exceptions.*;
 
 public class CarAgent extends MovableTrafficAgent
 {
 	private static final long serialVersionUID = 258671427576035083L;
 	
+	private Direction nextDirection;
+	private CarStatus status;
+	
 	@Override
 	protected void setup()
 	{
 		super.setup();
-		addBehaviour(new RequestDirectionBehaviour(this, 5000, getCityAgentID()));
-		addBehaviour(new ReceiveDirectionBehaviour(this));
+		
+		Object[] arguments = getArguments();
+		
+		if (arguments == null || arguments.length < 4)
+		{
+			throw new InvalidAgentArgumentsException();
+		}
+		
+		setNextDirection(Direction.valueOf(arguments[2].toString()));
+		
+		int speed = Integer.parseInt(arguments[3].toString());
+		
+		addBehaviour(new MovementBehaviour(this, speed));
+		addBehaviour(new ReceivePossibleDirectionBehaviour(this));
 	}
 	
-	public void move(Direction direction)
+	@Override
+	public void setDirection(Direction direction)
 	{
-		if (direction.equals(Direction.NORTH))
+		super.setDirection(direction);
+	}
+	
+	public Direction getNextDirection()
+	{
+		return nextDirection;
+	}
+
+	public void setNextDirection(Direction nextDirection)
+	{
+		this.nextDirection = nextDirection;
+	}
+	
+	public CarStatus getStatus()
+	{
+		return status;
+	}
+
+	public void setStatus(CarStatus status)
+	{
+		this.status = status;
+	}
+	
+	public void move()
+	{
+		if (getDirection().equals(Direction.NORTH))
 		{
 			getLocation().setY(getLocation().getY() + 1);
 		}
-		else if (direction.equals(Direction.SOUTH))
+		else if (getDirection().equals(Direction.SOUTH))
 		{
 			getLocation().setY(getLocation().getY() - 1);
 		}
-		else if (direction.equals(Direction.EAST))
+		else if (getDirection().equals(Direction.EAST))
 		{
 			getLocation().setX(getLocation().getX() + 1);
 		}
-		else if (direction.equals(Direction.WEST))
+		else if (getDirection().equals(Direction.WEST))
 		{
 			getLocation().setX(getLocation().getX() - 1);
 		}
 		
-		setDirection(direction);
+		//System.out.println("Location: " + getLocation() + "; Direction: " + getDirection());
 		
-		System.out.println("Current location: [x=" + getLocation().getX() + ",y=" + getLocation().getY() + "]");
+		if (getLocation().getX() < 0)
+		{
+			System.out.println("Dupa na x: " + getLocation());
+		}
+		
+		if (getLocation().getY() < 0)
+		{
+			System.out.println("Dupa na y: " + getLocation());
+		}
 	}
 }
