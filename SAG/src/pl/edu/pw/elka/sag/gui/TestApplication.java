@@ -24,7 +24,7 @@ public class TestApplication
 			{
 				TrafficSimulatorGUI gui = new TrafficSimulatorGUI(CITY_SIZE);
 
-				final DrawableCar car = new DrawableCar(new Location(0, 1), Direction.SOUTH);
+				final DrawableCar car = new DrawableCar(new Location(0, 10), Direction.SOUTH);
 				gui.addDrawableObjectToCityMap(car);
 				
 				final DrawableTrafficLights trafficLights = 
@@ -32,7 +32,7 @@ public class TestApplication
 				gui.addDrawableObjectToCityMap(trafficLights);
 				
 				final DrawableTrafficLights otherTrafficLights = 
-						new DrawableTrafficLights(new Location(2, 2), Direction.EAST_WEST);
+						new DrawableTrafficLights(new Location(20, 20), Direction.EAST_WEST);
 				gui.addDrawableObjectToCityMap(otherTrafficLights);
 				
 				gui.setVisible(true);
@@ -44,16 +44,16 @@ public class TestApplication
 					{
 						Location location = car.getCarLocation();
 						
-						if (location.getY() >= 2.0)
+						if (location.getY() >= 20)
 						{
-							location.setX(location.getX() + 0.1);
+							location.setX(location.getX() + 1);
 							
 							car.setCarLocation(location);
 							car.setCarDirection(Direction.EAST);
 						}
 						else
 						{
-							location.setY(location.getY() + 0.1);
+							location.setY(location.getY() + 1);
 							
 							car.setCarLocation(location);
 						}

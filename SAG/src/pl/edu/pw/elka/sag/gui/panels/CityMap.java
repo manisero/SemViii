@@ -76,11 +76,11 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	@Override
 	public Point getCarScreenPosition(Location location, Direction direction)
 	{
-		int xCar = (int) (getMarginSize() + location.getX() * getStreetLength() + (int) (getStreetWidth() / 2.0) + 
-				(int) (1.5 * getCarBoundingBoxSize()));
+		int xCar = (int) (getMarginSize() + location.getX() / 10.0 * getStreetLength() + 
+				(int) (getStreetWidth() / 2.0) + (int) (1.5 * getCarBoundingBoxSize()));
 	
-		int yCar = (int) (getMarginSize() + location.getY() * getStreetLength() + (int) (getStreetWidth() / 2.0) +
-				(int) (1.5 * getCarBoundingBoxSize()));
+		int yCar = (int) (getMarginSize() + location.getY() / 10.0 * getStreetLength() + (int) (getStreetWidth() / 2.0) 
+				+ (int) (1.5 * getCarBoundingBoxSize()));
 		
 		int xCorrection = 0;
 		int yCorrection = 0; 
@@ -151,11 +151,11 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 			return null;
 		}
 		
-		int xTrafficLights = (int) (getMarginSize() + 1.5 * getStreetWidth() + location.getX() * getStreetLength()
-				- 0.5 * getTrafficLightsBoundingBoxSize());
+		int xTrafficLights = (int) (getMarginSize() + 1.5 * getStreetWidth() + location.getX() * getStreetLength() / 
+				10.0 - 0.5 * getTrafficLightsBoundingBoxSize());
 		
-		int yTrafficLights = (int) (getMarginSize() + 1.5 * getStreetWidth() + location.getY() * getStreetLength()
-				- 0.5 * getTrafficLightsBoundingBoxSize());
+		int yTrafficLights = (int) (getMarginSize() + 1.5 * getStreetWidth() + location.getY() * getStreetLength() / 
+				10.0 - 0.5 * getTrafficLightsBoundingBoxSize());
 		
 		int xCorrection = 0;
 		int yCorrection = 0;
