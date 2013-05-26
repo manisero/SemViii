@@ -41,6 +41,19 @@ public enum Direction
 		return (getValue() & part.getValue()) != Direction.UNKNOWN.getValue();
 	}
 	
+	public boolean hasParts(Direction... parts)
+	{
+		for (Direction part : parts)
+		{
+			if (!hasPart(part))
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	public Direction getOpposite()
 	{
 		if (equals(Direction.NORTH))

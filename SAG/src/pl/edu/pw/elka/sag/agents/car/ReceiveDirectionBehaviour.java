@@ -33,8 +33,8 @@ public class ReceiveDirectionBehaviour extends CyclicBehaviour
 			{
 				DirectionsCollection directions = (DirectionsCollection) message.getContentObject();
 				
-				Direction direction = chooseDirection(directions);
-				getCarAgent().move(direction);
+				getCarAgent().setDirection(chooseDirection(directions));
+				getCarAgent().move();
 			}
 			catch (UnreadableException e)
 			{
