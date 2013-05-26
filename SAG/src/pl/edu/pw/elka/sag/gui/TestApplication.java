@@ -9,6 +9,7 @@ import javax.swing.Timer;
 import pl.edu.pw.elka.sag.entities.Direction;
 import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.gui.objects.DrawableCar;
+import pl.edu.pw.elka.sag.gui.objects.DrawableTrafficLights;
 
 public class TestApplication
 {
@@ -21,11 +22,14 @@ public class TestApplication
 			@Override
 			public void run()
 			{
-				final DrawableCar car = new DrawableCar(new Location(0, 1), Direction.SOUTH);
-				
 				TrafficSimulatorGUI gui = new TrafficSimulatorGUI(CITY_SIZE);
-				
+
+				final DrawableCar car = new DrawableCar(new Location(0, 1), Direction.SOUTH);
 				gui.addDrawableObjectToCityMap(car);
+				
+				final DrawableTrafficLights trafficLights = 
+						new DrawableTrafficLights(new Location(0, 0), Direction.NORTH_SOUTH);
+				gui.addDrawableObjectToCityMap(trafficLights);
 				
 				gui.setVisible(true);
 				
