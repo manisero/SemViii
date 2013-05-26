@@ -3,11 +3,9 @@ package pl.edu.pw.elka.sag.agents.car;
 import pl.edu.pw.elka.sag.agents.*;
 import pl.edu.pw.elka.sag.entities.*;
 
-public class CarAgent extends TrafficAgent
+public class CarAgent extends MovableTrafficAgent
 {
 	private static final long serialVersionUID = 258671427576035083L;
-	
-	private Direction direction;
 	
 	@Override
 	protected void setup()
@@ -15,11 +13,6 @@ public class CarAgent extends TrafficAgent
 		super.setup();
 		addBehaviour(new RequestDirectionBehaviour(this, 5000, getCityAgentID()));
 		addBehaviour(new ReceiveDirectionBehaviour(this));
-	}
-	
-	public Direction getDirection()
-	{
-		return direction;
 	}
 	
 	public void move(Direction direction)
@@ -41,7 +34,7 @@ public class CarAgent extends TrafficAgent
 			getLocation().setX(getLocation().getX() - 1);
 		}
 		
-		this.direction = direction;
+		setDirection(direction);
 		
 		System.out.println("Current location: [x=" + getLocation().getX() + ",y=" + getLocation().getY() + "]");
 	}

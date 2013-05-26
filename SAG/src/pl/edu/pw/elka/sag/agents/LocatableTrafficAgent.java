@@ -10,7 +10,7 @@ import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.exceptions.*;
 import pl.edu.pw.elka.sag.util.*;
 
-public class TrafficAgent extends AgentBase implements ILocatable
+public class LocatableTrafficAgent extends AgentBase implements ILocatable
 {
 	private static final long serialVersionUID = -3136958477961496734L;
 	

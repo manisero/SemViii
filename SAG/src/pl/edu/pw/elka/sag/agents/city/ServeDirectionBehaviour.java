@@ -13,7 +13,7 @@ import pl.edu.pw.elka.sag.entities.*;
 public class ServeDirectionBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -5851725356214090232L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.CAR_DIRECTION_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 	
 	private final int cityWidth;
 	private final int cityHeight;
