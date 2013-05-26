@@ -15,3 +15,5 @@ _ReSharper.*/
 output.txt
 MTPs-Main-Container.txt
 APDescription.txt
+*.synctex
+*.bak
