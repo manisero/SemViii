@@ -3,7 +3,7 @@ package pl.edu.pw.elka.sag.agents.trafficlight;
 import pl.edu.pw.elka.sag.agents.*;
 import pl.edu.pw.elka.sag.entities.*;
 
-public class TrafficLightAgent extends TrafficAgent
+public class TrafficLightAgent extends LocatableTrafficAgent
 {
 	private static final long serialVersionUID = 8004867227278039286L;
 	

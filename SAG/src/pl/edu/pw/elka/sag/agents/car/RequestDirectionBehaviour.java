@@ -36,7 +36,7 @@ public class RequestDirectionBehaviour extends TickerBehaviour
 			
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(cityAgentAID);
-			message.setConversationId(ConversationTypes.CAR_DIRECTION_CONVERSATION_TYPE);
+			message.setConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 			message.setContentObject(location);
 			
 			myAgent.send(message);
