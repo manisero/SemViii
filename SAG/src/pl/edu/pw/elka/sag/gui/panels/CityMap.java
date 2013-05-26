@@ -43,6 +43,21 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	}
 	
 	/**
+	 * Animates the city map.
+	 */
+	private void animate()
+	{
+		new Timer(1000 / PaintSettings.FPS, new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				repaint();
+			}
+		}).start();
+	}
+	
+	/**
 	 * Returns car's radius.
 	 * 
 	 * @return int car object's radius
@@ -94,16 +109,52 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 		return new Point(xCar + xCorrection, yCar + yCorrection);
 	}
 	
-	private void animate()
+	/**
+	 * Returns size of traffic lights bounding box.
+	 * 
+	 * @return size of traffic lights bounding box
+	 */
+	@Override
+	public int getTrafficLightsBoundingBoxSize()
 	{
-		new Timer(1000 / PaintSettings.FPS, new ActionListener()
+		return 15;
+	}
+
+	/**
+	 * Returns on screen position of traffic lights.
+	 * 
+	 * @param location {@link pl.edu.pw.elka.sag.entities.Location} of traffic lights
+	 * @param direction {@link pl.edu.pw.elka.sag.entities.Direction} of traffic lights
+	 * 
+	 * @return on screen position of traffic lights, null if lights should not be drawn.
+	 */
+	@Override
+	public Point getTrafficLightsScreenPosition(Location location, Direction direction)
+	{
+		if (location.getY() == 0.0 && direction.equals(Direction.SOUTH))
 		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				repaint();
-			}
-		}).start();
+			return null;
+		}
+		
+		if (location.getY() == citySize - 1 && direction.equals(Direction.NORTH))
+		{
+			return null;
+		}
+		
+		if (location.getX() == 0.0 && direction.equals(Direction.EAST))
+		{
+			return null;
+		}
+		
+		if (location.getX() == citySize - 1 && direction.equals(Direction.WEST))
+		{
+			return null;
+		}
+		
+		int xTrafficLights = (int) (getMarginSize() + location.getX() * getStreetLength() + getStreetWidth() / 2.0);
+		int yTrafficLights = (int) (getMarginSize() + location.getY() * getStreetLength() + getStreetWidth() / 2.0);
+		
+		return new Point(xTrafficLights, yTrafficLights);
 	}
 	
 	/**
