@@ -10,7 +10,7 @@ import jade.lang.acl.*;
 public class ReceiveDirectionBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -6171122937430472879L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.CAR_DIRECTION_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 	
 	public ReceiveDirectionBehaviour(CarAgent agent)
 	{
