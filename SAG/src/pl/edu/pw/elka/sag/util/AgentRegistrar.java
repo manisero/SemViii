@@ -8,6 +8,7 @@ import java.util.*;
 
 import pl.edu.pw.elka.sag.agents.car.*;
 import pl.edu.pw.elka.sag.agents.city.*;
+import pl.edu.pw.elka.sag.agents.map.*;
 import pl.edu.pw.elka.sag.agents.trafficlight.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.exceptions.*;
@@ -26,6 +27,7 @@ public class AgentRegistrar
 	private AgentRegistrar()
 	{
 		agentTypes.put(CityAgent.class, AgentTypes.CITY_AGENT_TYPE);
+		agentTypes.put(MapAgent.class, AgentTypes.MAP_AGENT_TYPE);
 		agentTypes.put(CarAgent.class, AgentTypes.CAR_AGENT_TYPE);
 		agentTypes.put(TrafficLightAgent.class, AgentTypes.TRAFFIC_LIGHT_AGENT_TYPE);
 	}
