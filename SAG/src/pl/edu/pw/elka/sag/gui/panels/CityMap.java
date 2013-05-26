@@ -16,10 +16,10 @@ import javax.swing.Timer;
 import pl.edu.pw.elka.sag.entities.Direction;
 import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
-import pl.edu.pw.elka.sag.gui.logic.IPaintablePropertyProvider;
-import pl.edu.pw.elka.sag.gui.logic.IPaintablePropertyReceiver;
+import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyProvider;
+import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyReceiver;
 
-public class CityMap extends JPanel implements IPaintablePropertyProvider
+public class CityMap extends JPanel implements IDrawablePropertyProvider
 {
 	private static final long serialVersionUID = 1468374317265426866L;
 
@@ -59,35 +59,13 @@ public class CityMap extends JPanel implements IPaintablePropertyProvider
 	 * @return {@link java.awt.Point} car's position
 	 */
 	@Override
-	public Point getCarScreenPosition(Location currentLocation, Location previousLocation)
+	public Point getCarScreenPosition(Location location, Direction direction)
 	{
-		int xCar = getMarginSize() + currentLocation.getX() * getStreetLength() + (int) (getStreetWidth() / 2.0) + 
-				(int) (1.5 * getCarBoundingBoxSize());
+		int xCar = (int) (getMarginSize() + location.getX() * getStreetLength() + (int) (getStreetWidth() / 2.0) + 
+				(int) (1.5 * getCarBoundingBoxSize()));
 	
-		int yCar = getMarginSize() + currentLocation.getY() * getStreetLength() + (int) (getStreetWidth() / 2.0) +
-				(int) (1.5 * getCarBoundingBoxSize());
-		
-		Direction direction = null;
-		
-		int xDifference = currentLocation.getX() - previousLocation.getX();
-		int yDifference = currentLocation.getY() - previousLocation.getY();
-		
-		if (xDifference > 0)
-		{
-			direction = Direction.EAST;
-		}
-		else if (xDifference < 0)
-		{
-			direction = Direction.WEST;
-		}
-		else if (yDifference > 0)
-		{
-			direction = Direction.SOUTH;
-		}
-		else if (yDifference < 0)
-		{
-			direction = Direction.NORTH;
-		}
+		int yCar = (int) (getMarginSize() + location.getY() * getStreetLength() + (int) (getStreetWidth() / 2.0) +
+				(int) (1.5 * getCarBoundingBoxSize()));
 		
 		int xCorrection = 0;
 		int yCorrection = 0; 
@@ -135,9 +113,9 @@ public class CityMap extends JPanel implements IPaintablePropertyProvider
 	 */
 	public void addDrawableObject(Canvas object)
 	{
-		if (drawableObjects.add(object) && object instanceof IPaintablePropertyReceiver)
+		if (drawableObjects.add(object) && object instanceof IDrawablePropertyReceiver)
 		{
-			((IPaintablePropertyReceiver) object).setPropertyProvider(this);
+			((IDrawablePropertyReceiver) object).setPropertyProvider(this);
 		}
 	}
 	
