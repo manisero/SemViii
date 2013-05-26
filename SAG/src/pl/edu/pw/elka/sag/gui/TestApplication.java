@@ -31,6 +31,10 @@ public class TestApplication
 						new DrawableTrafficLights(new Location(0, 0), Direction.NORTH_SOUTH);
 				gui.addDrawableObjectToCityMap(trafficLights);
 				
+				final DrawableTrafficLights otherTrafficLights = 
+						new DrawableTrafficLights(new Location(2, 2), Direction.EAST_WEST);
+				gui.addDrawableObjectToCityMap(otherTrafficLights);
+				
 				gui.setVisible(true);
 				
 				Timer timer = new Timer(500, new ActionListener()
