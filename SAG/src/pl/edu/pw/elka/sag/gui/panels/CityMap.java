@@ -117,7 +117,7 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	@Override
 	public int getTrafficLightsBoundingBoxSize()
 	{
-		return 15;
+		return (int) (PaintSettings.LIGHTS_TO_LANE_WIDTH_RATIO * getLaneOffset());
 	}
 
 	/**
@@ -151,10 +151,37 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 			return null;
 		}
 		
-		int xTrafficLights = (int) (getMarginSize() + location.getX() * getStreetLength() + getStreetWidth() / 2.0);
-		int yTrafficLights = (int) (getMarginSize() + location.getY() * getStreetLength() + getStreetWidth() / 2.0);
+		int xTrafficLights = (int) (getMarginSize() + 1.5 * getStreetWidth() + location.getX() * getStreetLength()
+				- 0.5 * getTrafficLightsBoundingBoxSize());
 		
-		return new Point(xTrafficLights, yTrafficLights);
+		int yTrafficLights = (int) (getMarginSize() + 1.5 * getStreetWidth() + location.getY() * getStreetLength()
+				- 0.5 * getTrafficLightsBoundingBoxSize());
+		
+		int xCorrection = 0;
+		int yCorrection = 0;
+		
+		if (direction.equals(Direction.NORTH))
+		{
+			xCorrection += (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+			yCorrection += (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+		}
+		else if (direction.equals(Direction.SOUTH))
+		{
+			xCorrection -= (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+			yCorrection -= (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+		}
+		else if (direction.equals(Direction.EAST))
+		{
+			xCorrection -= (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+			yCorrection += (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+		}
+		else if (direction.equals(Direction.WEST))
+		{
+			xCorrection += (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+			yCorrection -= (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+		}
+		
+		return new Point(xTrafficLights + xCorrection, yTrafficLights + yCorrection);
 	}
 	
 	/**
