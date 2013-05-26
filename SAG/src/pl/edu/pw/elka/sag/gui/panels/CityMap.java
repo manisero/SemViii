@@ -5,10 +5,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import pl.edu.pw.elka.sag.entities.Direction;
 import pl.edu.pw.elka.sag.entities.Location;
@@ -35,6 +38,8 @@ public class CityMap extends JPanel implements IPaintablePropertyProvider
 	{
 		this.citySize = citySize;
 		this.screenSize = screenSize;
+		
+		animate();
 	}
 	
 	/**
@@ -109,6 +114,18 @@ public class CityMap extends JPanel implements IPaintablePropertyProvider
 		}
 		
 		return new Point(xCar + xCorrection, yCar + yCorrection);
+	}
+	
+	private void animate()
+	{
+		new Timer(1000 / PaintSettings.FPS, new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				repaint();
+			}
+		}).start();
 	}
 	
 	/**

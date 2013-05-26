@@ -16,13 +16,15 @@ public class TestApplication
 			@Override
 			public void run()
 			{
-				AnimatedCar car = new AnimatedCar(new Location(0, 1), new Location(0, 0));
+				AnimatedCar car = new AnimatedCar(new Location(0, 1), new Location(0, 0), 5000L);
 				
 				TrafficSimulatorGUI gui = new TrafficSimulatorGUI(CITY_SIZE);
 				
 				gui.addDrawableObjectToCityMap(car);
 				
 				gui.setVisible(true);
+				
+				car.addDestination(new Location(1, 1));
 			}
 		});
 	}
