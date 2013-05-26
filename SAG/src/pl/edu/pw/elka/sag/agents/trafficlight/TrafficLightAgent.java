@@ -1,11 +1,18 @@
 package pl.edu.pw.elka.sag.agents.trafficlight;
 
 import pl.edu.pw.elka.sag.agents.*;
+import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.exceptions.*;
 
 public class TrafficLightAgent extends LocatableTrafficAgent
 {
 	private static final long serialVersionUID = 8004867227278039286L;
+	
+	public static String getTrafficLightServiceName(Location location)
+	{
+		return AgentTypes.TRAFFIC_LIGHT_AGENT_TYPE + location;
+	}
 	
 	private Direction allowedDirection = Direction.NORTH_SOUTH;
 	
@@ -13,9 +20,25 @@ public class TrafficLightAgent extends LocatableTrafficAgent
 	protected void setup()
 	{
 		super.setup();
-		addBehaviour(new TrafficLightCycleBehavior(this, 2000));
+		
+		Object[] arguments = getArguments();
+		
+		if (arguments == null || arguments.length < 3)
+		{
+			throw new InvalidAgentArgumentsException();
+		}
+		
+		int cyclePeriod = Integer.parseInt(arguments[2].toString());
+		
+		addBehaviour(new TrafficLightCycleBehavior(this, cyclePeriod));
 		addBehaviour(new ServeAllowedDirectionBehavior(this));
 		addBehaviour(new ServeTrafficLightInfoBehaviour(this));
+	}
+	
+	@Override
+	protected String getServiceName()
+	{
+		return getTrafficLightServiceName(getLocation());
 	}
 	
 	public Direction getAllowedDirection()

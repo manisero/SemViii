@@ -1,9 +1,14 @@
 package pl.edu.pw.elka.sag.agents.car;
 
 import java.io.*;
+import java.util.*;
 
+import pl.edu.pw.elka.sag.agents.trafficlight.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.entities.Location;
+import pl.edu.pw.elka.sag.util.*;
+import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
@@ -35,11 +40,6 @@ public class MovementBehaviour extends TickerBehaviour
 			step = 10 - step;
 		}
 		
-		if (step < 0)
-		{
-			System.out.println("Step: " + step);
-		}
-		
 		if (step == 0)
 		{
 			getCarAgent().setDirection(getCarAgent().getNextDirection());
@@ -61,7 +61,11 @@ public class MovementBehaviour extends TickerBehaviour
 				return;
 			}
 			
-			// TODO: check crossroads
+			if (!checkTrafficLight())
+			{
+				return;
+			}
+			
 			getCarAgent().setStatus(CarStatus.OnCrossroads);
 		}
 		
@@ -72,24 +76,10 @@ public class MovementBehaviour extends TickerBehaviour
 	{
 		try
 		{
-			int x = (getCarAgent().getLocation().getX() / 10) * 10;
-			int y = (getCarAgent().getLocation().getY() / 10) * 10;
-			
-			if (getCarAgent().getDirection() == Direction.EAST)
-			{
-				x += 10;
-			}
-			else if (getCarAgent().getDirection() == Direction.NORTH)
-			{
-				y += 10;
-			}
-			
-			Location location = new Location(x, y);
-			
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(getCarAgent().getCityAgentID());
 			message.setConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
-			message.setContentObject(location);
+			message.setContentObject(getNextCrossroadsLocation());
 			
 			myAgent.send(message);
 		}
@@ -97,5 +87,62 @@ public class MovementBehaviour extends TickerBehaviour
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private boolean checkTrafficLight()
+	{
+		Location trafficLightLocation = getNextCrossroadsLocation();
+		
+		List<AID> trafficLights = AgentRegistrar.getInstance().getAgents(getCarAgent(), TrafficLightAgent.class, TrafficLightAgent.getTrafficLightServiceName(trafficLightLocation));
+		
+		if (trafficLights.size() > 0)
+		{
+			System.out.println("Traffic light: " + trafficLights.get(0).getLocalName());
+			
+			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+			message.addReceiver(trafficLights.get(0));
+			message.setConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
+			myAgent.send(message);
+			
+			MessageTemplate responseTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
+			ACLMessage response = myAgent.blockingReceive(responseTemplate); // TODO: remove blockingReceive usage
+			
+			try
+			{
+				Direction allowedDirections = (Direction) response.getContentObject();
+				
+				System.out.println("Allowed: " + allowedDirections);
+				System.out.println("Direction: " + getCarAgent().getDirection());
+				
+				if (!allowedDirections.hasPart(getCarAgent().getDirection()))
+				{
+					return false;
+				}
+			}
+			catch (UnreadableException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private Location getNextCrossroadsLocation()
+	{
+		int x = (getCarAgent().getLocation().getX() / 10) * 10;
+		int y = (getCarAgent().getLocation().getY() / 10) * 10;
+		
+		if (getCarAgent().getDirection() == Direction.EAST)
+		{
+			x += 10;
+		}
+		else if (getCarAgent().getDirection() == Direction.NORTH)
+		{
+			y += 10;
+		}
+		
+		return new Location(x, y);
 	}
 }

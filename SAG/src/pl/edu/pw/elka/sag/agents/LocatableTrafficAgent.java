@@ -10,7 +10,7 @@ import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.exceptions.*;
 import pl.edu.pw.elka.sag.util.*;
 
-public class LocatableTrafficAgent extends AgentBase implements ILocatable
+public abstract class LocatableTrafficAgent extends AgentBase implements ILocatable
 {
 	private static final long serialVersionUID = -3136958477961496734L;
 	
@@ -29,17 +29,22 @@ public class LocatableTrafficAgent extends AgentBase implements ILocatable
 			throw new InvalidAgentArgumentsException();
 		}
 		
-		int locationX = Integer.parseInt(arguments[0].toString());
-		int locationY = Integer.parseInt(arguments[1].toString());
-		
-		location = new Location(locationX, locationY);
-		
 		addBehaviour(new ServeLocationBehaviour(this));
 	}
 
 	@Override
 	public Location getLocation()
 	{
+		if (location == null)
+		{
+			Object[] arguments = getArguments();
+			
+			int locationX = Integer.parseInt(arguments[0].toString());
+			int locationY = Integer.parseInt(arguments[1].toString());
+			
+			location = new Location(locationX, locationY);
+		}
+		
 		return location;
 	}
 

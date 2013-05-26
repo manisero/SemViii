@@ -6,9 +6,9 @@ public class TrafficLightCycleBehavior extends TickerBehaviour
 {
 	private static final long serialVersionUID = -9007943623679750944L;
 
-	public TrafficLightCycleBehavior(TrafficLightAgent agent, long period)
+	public TrafficLightCycleBehavior(TrafficLightAgent agent, long cyclePeriod)
 	{
-		super(agent, period);
+		super(agent, cyclePeriod);
 	}
 
 	private TrafficLightAgent getTrafficLightAgent()
