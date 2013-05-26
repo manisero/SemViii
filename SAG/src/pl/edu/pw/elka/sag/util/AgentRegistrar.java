@@ -34,6 +34,11 @@ public class AgentRegistrar
 	
 	public void register(Agent agent)
 	{
+		register(agent, null);
+	}
+	
+	public void register(Agent agent, String serviceName)
+	{
 		Class<?> agentClass = agent.getClass();
 		
 		if (!agentTypes.containsKey(agentClass))
@@ -46,7 +51,7 @@ public class AgentRegistrar
 			ServiceDescription serviceDescription = new ServiceDescription();
 			String type = agentTypes.get(agentClass);
 			serviceDescription.setType(type);
-			serviceDescription.setName(type);
+			serviceDescription.setName(serviceName != null ? serviceName : type);
 			
 			DFAgentDescription dfAgentDescription = new DFAgentDescription();
 			dfAgentDescription.setName(agent.getAID());
@@ -64,6 +69,11 @@ public class AgentRegistrar
 	
 	public List<AID> getAgents(Agent agent, Class<?> searchedAgentClass)
 	{
+		return getAgents(agent, searchedAgentClass, null);
+	}
+	
+	public List<AID> getAgents(Agent agent, Class<?> searchedAgentClass, String searchedServiceName)
+	{
 		if (!agentTypes.containsKey(searchedAgentClass))
 		{
 			throw new UnknownAgentTypeException();
@@ -75,6 +85,11 @@ public class AgentRegistrar
 		{
 			ServiceDescription serviceDescription = new ServiceDescription();
 			serviceDescription.setType(agentTypes.get(searchedAgentClass));
+			
+			if (searchedServiceName != null)
+			{
+				serviceDescription.setName(searchedServiceName);
+			}
 			
 			DFAgentDescription template = new DFAgentDescription();
 			template.addServices(serviceDescription);

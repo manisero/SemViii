@@ -3,7 +3,7 @@ package pl.edu.pw.elka.sag.agents;
 import pl.edu.pw.elka.sag.*;
 import pl.edu.pw.elka.sag.entities.*;
 
-public class MovableTrafficAgent extends LocatableTrafficAgent implements IMovable
+public abstract class MovableTrafficAgent extends LocatableTrafficAgent implements IMovable
 {
 	private static final long serialVersionUID = -6842011892069749555L;
 
