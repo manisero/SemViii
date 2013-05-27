@@ -39,8 +39,8 @@ public abstract class LocatableTrafficAgent extends AgentBase implements ILocata
 		{
 			Object[] arguments = getArguments();
 			
-			int locationX = Integer.parseInt(arguments[0].toString());
-			int locationY = Integer.parseInt(arguments[1].toString());
+			int locationX = Integer.parseInt(arguments[0].toString()) * 10;
+			int locationY = Integer.parseInt(arguments[1].toString()) * 10;
 			
 			location = new Location(locationX, locationY);
 		}

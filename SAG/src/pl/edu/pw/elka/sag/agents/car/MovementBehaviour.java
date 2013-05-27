@@ -49,12 +49,12 @@ public class MovementBehaviour extends TickerBehaviour
 		{
 			getCarAgent().setStatus(CarStatus.Driving);
 		}
-		else if (step == 8)
+		else if (step == 7)
 		{
 			getCarAgent().setStatus(CarStatus.NearCrossroads);
 			requestPossibleDirections();
 		}
-		else if (step == 9)
+		else if (step == 8)
 		{
 			if (getCarAgent().getNextDirection() == Direction.UNKNOWN)
 			{
@@ -97,8 +97,6 @@ public class MovementBehaviour extends TickerBehaviour
 		
 		if (trafficLights.size() > 0)
 		{
-			System.out.println("Traffic light: " + trafficLights.get(0).getLocalName());
-			
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(trafficLights.get(0));
 			message.setConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
@@ -110,9 +108,6 @@ public class MovementBehaviour extends TickerBehaviour
 			try
 			{
 				Direction allowedDirections = (Direction) response.getContentObject();
-				
-				System.out.println("Allowed: " + allowedDirections);
-				System.out.println("Direction: " + getCarAgent().getDirection());
 				
 				if (!allowedDirections.hasPart(getCarAgent().getDirection()))
 				{

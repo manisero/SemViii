@@ -79,31 +79,27 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 		int xCar = (int) (getMarginSize() + location.getX() / 10.0 * getStreetLength() + 
 				(int) (getStreetWidth() / 2.0) + (int) (1.5 * getCarBoundingBoxSize()));
 	
-		int yCar = (int) (getMarginSize() + location.getY() / 10.0 * getStreetLength() + (int) (getStreetWidth() / 2.0) 
-				+ (int) (1.5 * getCarBoundingBoxSize()));
+		int yCar = (int) (getMarginSize() - location.getY() / 10.0 * getStreetLength() + (int) (getStreetWidth() / 2.0) 
+				+ (int) (1.5 * getCarBoundingBoxSize())) + 3 * getStreetLength();
 		
 		int xCorrection = 0;
 		int yCorrection = 0; 
 		
 		if (direction.equals(Direction.EAST))
 		{
-			xCorrection -= ((int) (3 * getCarBoundingBoxSize() / 2.0));
 			yCorrection += (int) (getCarBoundingBoxSize() / 2.0); 
 		}
 		else if (direction.equals(Direction.WEST))
 		{
-			xCorrection += ((int) (3 * getCarBoundingBoxSize() / 2.0));
 			yCorrection -= (int) (getCarBoundingBoxSize() / 2.0);
 		}
 		else if (direction.equals(Direction.NORTH))
 		{
 			xCorrection += (int) (getCarBoundingBoxSize() / 2.0);
-			yCorrection += ((int) (3 * getCarBoundingBoxSize() / 2.0));
 		}
 		else if (direction.equals(Direction.SOUTH))
 		{
 			xCorrection -= (int) (getCarBoundingBoxSize() / 2.0);
-			yCorrection -= ((int) (3 * getCarBoundingBoxSize() / 2.0));
 		}
 		
 		return new Point(xCar + xCorrection, yCar + yCorrection);
@@ -131,12 +127,12 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	@Override
 	public Point getTrafficLightsScreenPosition(Location location, Direction direction)
 	{
-		if (location.getY() == 0.0 && direction.equals(Direction.SOUTH))
+		if (location.getY() == 0.0 && direction.equals(Direction.NORTH))
 		{
 			return null;
 		}
 		
-		if (location.getY() == citySize - 1 && direction.equals(Direction.NORTH))
+		if (location.getY() == citySize - 1 && direction.equals(Direction.SOUTH))
 		{
 			return null;
 		}
@@ -154,8 +150,8 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 		int xTrafficLights = (int) (getMarginSize() + 1.5 * getStreetWidth() + location.getX() * getStreetLength() / 
 				10.0 - 0.5 * getTrafficLightsBoundingBoxSize());
 		
-		int yTrafficLights = (int) (getMarginSize() + 1.5 * getStreetWidth() + location.getY() * getStreetLength() / 
-				10.0 - 0.5 * getTrafficLightsBoundingBoxSize());
+		int yTrafficLights = (int) (getMarginSize() + 1.5 * getStreetWidth() - location.getY() * getStreetLength() / 
+				10.0 - 0.5 * getTrafficLightsBoundingBoxSize()) + 3 * getStreetLength();
 		
 		int xCorrection = 0;
 		int yCorrection = 0;

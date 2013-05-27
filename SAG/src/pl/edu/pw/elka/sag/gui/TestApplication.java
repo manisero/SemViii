@@ -24,7 +24,7 @@ public class TestApplication
 			{
 				TrafficSimulatorGUI gui = new TrafficSimulatorGUI(CITY_SIZE);
 
-				final DrawableCar car = new DrawableCar(new Location(0, 10), Direction.SOUTH);
+				final DrawableCar car = new DrawableCar(new Location(0, 10), Direction.NORTH);
 				gui.addDrawableObjectToCityMap(car);
 				
 				final DrawableTrafficLights trafficLights = 
