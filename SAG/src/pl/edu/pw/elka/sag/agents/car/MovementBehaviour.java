@@ -1,5 +1,9 @@
 package pl.edu.pw.elka.sag.agents.car;
 
+import jade.core.*;
+import jade.core.behaviours.*;
+import jade.lang.acl.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -8,9 +12,6 @@ import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
 import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.util.*;
-import jade.core.*;
-import jade.core.behaviours.*;
-import jade.lang.acl.*;
 
 public class MovementBehaviour extends TickerBehaviour
 {
@@ -29,22 +30,18 @@ public class MovementBehaviour extends TickerBehaviour
 	@Override
 	protected void onTick()
 	{
-		int position = getCarAgent().getDirection().hasAnyOfParts(Direction.EAST, Direction.WEST) 
-							? getCarAgent().getLocation().getX()
-							: getCarAgent().getLocation().getY();
-							
-		int step = position % 10;
-		
-		if (step != 0 && getCarAgent().getDirection().hasAnyOfParts(Direction.WEST, Direction.SOUTH))
-		{
-			step = 10 - step;
-		}
+		int step = getStep();
 		
 		if (step == 0)
 		{
 			getCarAgent().setDirection(getCarAgent().getNextDirection());
 			getCarAgent().setNextCrossroadsLocation(getNextCrossroadsLocation());
 			getCarAgent().setNextDirection(Direction.UNKNOWN);
+			getCarAgent().setNextTrafficLight(null);
+			getCarAgent().setNextTrafficLightAllowedDirection(null);
+			getCarAgent().setOtherCarsToCheck(0);
+			getCarAgent().setOtherCarsChecked(0);
+			getCarAgent().setHasPriority(true);
 		}
 		else if (step == 1)
 		{
@@ -67,6 +64,10 @@ public class MovementBehaviour extends TickerBehaviour
 			{
 				checkTrafficLight();
 			}
+			else
+			{
+				checkOtherCars();
+			}
 		}
 		else if (step == 8)
 		{
@@ -83,13 +84,37 @@ public class MovementBehaviour extends TickerBehaviour
 					return;
 				}
 			}
+			else if (getCarAgent().getOtherCarsChecked() < getCarAgent().getOtherCarsToCheck())
+			{
+				return;
+			}
+			else if (getCarAgent().getHasPriority())
+			{
+				getCarAgent().setHasPriority(true);
+				checkOtherCars();
+				return;
+			}
 			
-			getCarAgent().setNextTrafficLight(null);
-			getCarAgent().setNextTrafficLightAllowedDirection(null);
 			getCarAgent().setStatus(CarStatus.OnCrossroads);
 		}
 		
 		getCarAgent().move();
+	}
+	
+	int getStep()
+	{
+		int position = getCarAgent().getDirection().hasAnyOfParts(Direction.EAST, Direction.WEST) 
+				? getCarAgent().getLocation().getX()
+				: getCarAgent().getLocation().getY();
+				
+		int step = position % 10;
+		
+		if (step != 0 && getCarAgent().getDirection().hasAnyOfParts(Direction.WEST, Direction.SOUTH))
+		{
+			step = 10 - step;
+		}
+		
+		return step;
 	}
 	
 	private Location getNextCrossroadsLocation()
@@ -139,7 +164,7 @@ public class MovementBehaviour extends TickerBehaviour
 	private boolean findTrafficLight()
 	{
 		String serviceName = TrafficLightAgent.getTrafficLightServiceName(getCarAgent().getNextCrossroadsLocation());
-		List<AID> trafficLights = AgentRegistrar.getInstance().getAgents(getCarAgent(), TrafficLightAgent.class, serviceName);
+		List<AID> trafficLights = AgentRegistrar.getInstance().getAgents(getCarAgent(), TrafficLightAgent.class, serviceName, true);
 		
 		if (trafficLights.size() > 0)
 		{
@@ -176,10 +201,11 @@ public class MovementBehaviour extends TickerBehaviour
 		
 		for (AID car : cars)
 		{
+			System.out.println("Checking " + car.getLocalName());
 			message.addReceiver(car);
 		}
 		
-		message.setConversationId(ConversationTypes.DESTINATION_INFO_CONVERSATION_TYPE);
+		message.setConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE);
 		myAgent.send(message);
 	}
 }

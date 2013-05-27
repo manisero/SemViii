@@ -5,12 +5,12 @@ import pl.edu.pw.elka.sag.entities.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
-public class ReceiveDestinationInfoBehaviour extends CyclicBehaviour
+public class ReceiveCarStatusInfoBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -1841154680537589138L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.DESTINATION_INFO_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE);
 	
-	public ReceiveDestinationInfoBehaviour(CarAgent agent)
+	public ReceiveCarStatusInfoBehaviour(CarAgent agent)
 	{
 		super(agent);
 	}
@@ -36,17 +36,24 @@ public class ReceiveDestinationInfoBehaviour extends CyclicBehaviour
 					return;
 				}
 				
+				CarStatusInfo info = (CarStatusInfo) message.getContentObject();
+				
+				if (info.getStatus() == CarStatus.OnCrossroads)
+				{
+					getCarAgent().setHasPriority(false);
+					return;
+				}
+				
 				Direction carDirection = getCarAgent().getDirection();
-				Direction otherCarDirection = ((DestinationInfo) message.getContentObject()).getFrom();
+				Direction otherCarDirection = info.getFrom();
 				
 				if (carDirection == Direction.NORTH && otherCarDirection == Direction.WEST ||
 					carDirection == Direction.WEST && otherCarDirection == Direction.SOUTH ||
 					carDirection == Direction.SOUTH && otherCarDirection == Direction.EAST ||
 					carDirection == Direction.EAST && otherCarDirection == Direction.NORTH)
 				{
-					// TODO: Stop the car
+					getCarAgent().setHasPriority(false);
 				}
-				
 			}
 			catch (UnreadableException e)
 			{

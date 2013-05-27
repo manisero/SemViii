@@ -2,19 +2,31 @@ package pl.edu.pw.elka.sag.entities;
 
 import java.io.*;
 
-public class DestinationInfo implements Serializable
+public class CarStatusInfo implements Serializable
 {
 	private static final long serialVersionUID = -3899690705742612607L;
 	
+	private CarStatus status;
 	private Direction from;
 	private Direction to;
 	
-	public DestinationInfo() { }
+	public CarStatusInfo() { }
 	
-	public DestinationInfo(Direction from, Direction to)
+	public CarStatusInfo(CarStatus staus, Direction from, Direction to)
 	{
+		this.status = staus;
 		this.from = from;
 		this.to = to;
+	}
+	
+	public CarStatus getStatus()
+	{
+		return status;
+	}
+
+	public void setStatus(CarStatus status)
+	{
+		this.status = status;
 	}
 	
 	public Direction getFrom()

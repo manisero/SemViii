@@ -17,6 +17,7 @@ public class CarAgent extends MovableTrafficAgent
 	private Direction nextTrafficLightAllowedDirection;
 	private int otherCarsToCheck;
 	private int otherCarsChecked;
+	private boolean hasPriority;
 	
 	@Override
 	protected void setup()
@@ -35,9 +36,10 @@ public class CarAgent extends MovableTrafficAgent
 		int speed = Integer.parseInt(arguments[3].toString());
 		
 		addBehaviour(new MovementBehaviour(this, speed));
-		addBehaviour(new ServeDestinationInfoBehaviour(this));
+		addBehaviour(new ServeCarStatusInfoBehaviour(this));
 		addBehaviour(new ReceivePossibleDirectionsBehaviour(this));
 		addBehaviour(new ReceiveAllowedDirectionBehaviour(this));
+		addBehaviour(new ReceiveCarStatusInfoBehaviour(this));
 	}
 	
 	public CarStatus getStatus()
@@ -114,6 +116,16 @@ public class CarAgent extends MovableTrafficAgent
 	public void setOtherCarsChecked(int otherCarsChecked)
 	{
 		this.otherCarsChecked = otherCarsChecked;
+	}
+
+	public boolean getHasPriority()
+	{
+		return hasPriority;
+	}
+
+	public void setHasPriority(boolean hasPriority)
+	{
+		this.hasPriority = hasPriority;
 	}
 
 	public void move()

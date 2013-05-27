@@ -69,10 +69,10 @@ public class AgentRegistrar
 	
 	public List<AID> getAgents(Agent agent, Class<?> searchedAgentClass)
 	{
-		return getAgents(agent, searchedAgentClass, null);
+		return getAgents(agent, searchedAgentClass, null, true);
 	}
 	
-	public List<AID> getAgents(Agent agent, Class<?> searchedAgentClass, String searchedServiceName)
+	public List<AID> getAgents(Agent agent, Class<?> searchedAgentClass, String searchedServiceName, boolean ignoreAgent)
 	{
 		if (!agentTypes.containsKey(searchedAgentClass))
 		{
@@ -98,7 +98,10 @@ public class AgentRegistrar
 				
 			for (DFAgentDescription description : agentDescriptions)
 			{
-				result.add(description.getName());
+				if (!ignoreAgent || !description.getName().equals(agent.getName()))
+				{
+					result.add(description.getName());
+				}
 			}
 		}
 		catch (FIPAException e)

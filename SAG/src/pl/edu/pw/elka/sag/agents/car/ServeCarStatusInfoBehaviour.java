@@ -8,12 +8,12 @@ import java.io.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
 
-public class ServeDestinationInfoBehaviour extends CyclicBehaviour
+public class ServeCarStatusInfoBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -696095265830797259L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.DESTINATION_INFO_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE);
 	
-	public ServeDestinationInfoBehaviour(CarAgent agent)
+	public ServeCarStatusInfoBehaviour(CarAgent agent)
 	{
 		super(agent);
 	}
@@ -37,7 +37,7 @@ public class ServeDestinationInfoBehaviour extends CyclicBehaviour
 				
 				ACLMessage reply = message.createReply();
 				
-				if (nextCrossroadsLocation == null || nextCrossroadsLocation.getX() != location.getX() || nextCrossroadsLocation.getY() != location.getY())
+				if (getCarAgent().getStatus() == CarStatus.Driving || nextCrossroadsLocation == null || nextCrossroadsLocation.getX() != location.getX() || nextCrossroadsLocation.getY() != location.getY())
 				{
 					reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
 				}
@@ -45,8 +45,8 @@ public class ServeDestinationInfoBehaviour extends CyclicBehaviour
 				{
 					reply.setPerformative(ACLMessage.INFORM);
 					
-					DestinationInfo destinationInfo = new DestinationInfo(getCarAgent().getDirection(), getCarAgent().getNextDirection());
-					reply.setContentObject(destinationInfo);
+					CarStatusInfo info = new CarStatusInfo(getCarAgent().getStatus(), getCarAgent().getDirection(), getCarAgent().getNextDirection());
+					reply.setContentObject(info);
 				}
 				
 				myAgent.send(reply);
