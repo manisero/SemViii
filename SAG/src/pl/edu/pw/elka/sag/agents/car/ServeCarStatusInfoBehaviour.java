@@ -11,7 +11,8 @@ import pl.edu.pw.elka.sag.entities.*;
 public class ServeCarStatusInfoBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -696095265830797259L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE),
+																			   MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
 	
 	public ServeCarStatusInfoBehaviour(CarAgent agent)
 	{
@@ -37,7 +38,8 @@ public class ServeCarStatusInfoBehaviour extends CyclicBehaviour
 				
 				ACLMessage reply = message.createReply();
 				
-				if (getCarAgent().getStatus() == CarStatus.Driving || nextCrossroadsLocation == null || nextCrossroadsLocation.getX() != location.getX() || nextCrossroadsLocation.getY() != location.getY())
+				if (getCarAgent().getStatus() == CarStatus.Driving || nextCrossroadsLocation == null ||
+					nextCrossroadsLocation.getX() != location.getX() || nextCrossroadsLocation.getY() != location.getY())
 				{
 					reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
 				}

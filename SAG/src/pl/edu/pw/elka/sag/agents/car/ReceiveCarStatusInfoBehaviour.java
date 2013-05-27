@@ -8,7 +8,8 @@ import jade.lang.acl.*;
 public class ReceiveCarStatusInfoBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -1841154680537589138L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE),
+			   																   MessageTemplate.not(MessageTemplate.MatchPerformative(ACLMessage.REQUEST)));
 	
 	public ReceiveCarStatusInfoBehaviour(CarAgent agent)
 	{

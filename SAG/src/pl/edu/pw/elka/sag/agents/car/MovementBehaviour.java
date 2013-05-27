@@ -88,7 +88,7 @@ public class MovementBehaviour extends TickerBehaviour
 			{
 				return;
 			}
-			else if (getCarAgent().getHasPriority())
+			else if (!getCarAgent().getHasPriority())
 			{
 				getCarAgent().setHasPriority(true);
 				checkOtherCars();
@@ -188,7 +188,6 @@ public class MovementBehaviour extends TickerBehaviour
 	private void checkOtherCars()
 	{
 		List<AID> cars = AgentRegistrar.getInstance().getAgents(getCarAgent(), CarAgent.class);
-		cars.remove(getCarAgent().getName());
 		
 		getCarAgent().setOtherCarsToCheck(cars.size());
 		
@@ -197,15 +196,23 @@ public class MovementBehaviour extends TickerBehaviour
 			return;
 		}
 		
-		ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-		
-		for (AID car : cars)
+		try
 		{
-			System.out.println("Checking " + car.getLocalName());
-			message.addReceiver(car);
+			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+			
+			for (AID car : cars)
+			{
+				message.addReceiver(car);
+			}
+			
+			message.setConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE);
+			message.setContentObject(getCarAgent().getNextCrossroadsLocation());
+			
+			myAgent.send(message);
 		}
-		
-		message.setConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE);
-		myAgent.send(message);
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
