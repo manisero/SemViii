@@ -49,23 +49,42 @@ public class MovementBehaviour extends TickerBehaviour
 		{
 			getCarAgent().setStatus(CarStatus.Driving);
 		}
-		else if (step == 7)
+		else if (step == 6)
 		{
-			getCarAgent().setStatus(CarStatus.NearCrossroads);
 			requestPossibleDirections();
 		}
-		else if (step == 8)
+		else if (step == 7)
 		{
 			if (getCarAgent().getNextDirection() == Direction.UNKNOWN)
 			{
 				return;
 			}
 			
-			if (!checkTrafficLight())
+			getCarAgent().setStatus(CarStatus.NearCrossroads);
+			
+			if (findTrafficLight())
 			{
-				return;
+				checkTrafficLight();
+			}
+		}
+		else if (step == 8)
+		{
+			if (getCarAgent().getNextTrafficLight() != null)
+			{
+				if (getCarAgent().getNextDirection() == null)
+				{
+					return;
+				}
+				
+				if (!getCarAgent().getNextTrafficLightAllowedDirection().hasPart(getCarAgent().getDirection()))
+				{
+					checkTrafficLight();
+					return;
+				}
 			}
 			
+			getCarAgent().setNextTrafficLight(null);
+			getCarAgent().setNextTrafficLightAllowedDirection(null);
 			getCarAgent().setStatus(CarStatus.OnCrossroads);
 		}
 		
@@ -89,39 +108,28 @@ public class MovementBehaviour extends TickerBehaviour
 		}
 	}
 	
-	private boolean checkTrafficLight()
+	private boolean findTrafficLight()
 	{
 		Location trafficLightLocation = getNextCrossroadsLocation();
-		
 		List<AID> trafficLights = AgentRegistrar.getInstance().getAgents(getCarAgent(), TrafficLightAgent.class, TrafficLightAgent.getTrafficLightServiceName(trafficLightLocation));
 		
 		if (trafficLights.size() > 0)
 		{
-			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-			message.addReceiver(trafficLights.get(0));
-			message.setConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
-			myAgent.send(message);
-			
-			MessageTemplate responseTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
-			ACLMessage response = myAgent.blockingReceive(responseTemplate); // TODO: remove blockingReceive usage
-			
-			try
-			{
-				Direction allowedDirections = (Direction) response.getContentObject();
-				
-				if (!allowedDirections.hasPart(getCarAgent().getDirection()))
-				{
-					return false;
-				}
-			}
-			catch (UnreadableException e)
-			{
-				e.printStackTrace();
-				return false;
-			}
+			getCarAgent().setNextTrafficLight(trafficLights.get(0));
+			return true;
 		}
 		
-		return true;
+		return false;
+	}
+	
+	private void checkTrafficLight()
+	{
+		getCarAgent().setNextTrafficLightAllowedDirection(null);
+		
+		ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+		message.addReceiver(getCarAgent().getNextTrafficLight());
+		message.setConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
+		myAgent.send(message);
 	}
 	
 	private Location getNextCrossroadsLocation()

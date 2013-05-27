@@ -7,12 +7,12 @@ import pl.edu.pw.elka.sag.entities.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
-public class ReceivePossibleDirectionBehaviour extends CyclicBehaviour
+public class ReceivePossibleDirectionsBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -6171122937430472879L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 	
-	public ReceivePossibleDirectionBehaviour(CarAgent agent)
+	public ReceivePossibleDirectionsBehaviour(CarAgent agent)
 	{
 		super(agent);
 	}

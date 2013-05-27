@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.sag.agents.car;
 
+import jade.core.*;
 import pl.edu.pw.elka.sag.agents.*;
 import pl.edu.pw.elka.sag.entities.*;
 import pl.edu.pw.elka.sag.exceptions.*;
@@ -8,8 +9,10 @@ public class CarAgent extends MovableTrafficAgent
 {
 	private static final long serialVersionUID = 258671427576035083L;
 	
-	private Direction nextDirection;
 	private CarStatus status;
+	private Direction nextDirection;
+	private AID nextTrafficLight;
+	private Direction nextTrafficLightAllowedDirection;
 	
 	@Override
 	protected void setup()
@@ -28,7 +31,18 @@ public class CarAgent extends MovableTrafficAgent
 		int speed = Integer.parseInt(arguments[3].toString());
 		
 		addBehaviour(new MovementBehaviour(this, speed));
-		addBehaviour(new ReceivePossibleDirectionBehaviour(this));
+		addBehaviour(new ReceivePossibleDirectionsBehaviour(this));
+		addBehaviour(new ReceiveAllowedDirectionBehaviour(this));
+	}
+	
+	public CarStatus getStatus()
+	{
+		return status;
+	}
+
+	public void setStatus(CarStatus status)
+	{
+		this.status = status;
 	}
 	
 	@Override
@@ -47,16 +61,26 @@ public class CarAgent extends MovableTrafficAgent
 		this.nextDirection = nextDirection;
 	}
 	
-	public CarStatus getStatus()
+	public AID getNextTrafficLight()
 	{
-		return status;
+		return nextTrafficLight;
 	}
 
-	public void setStatus(CarStatus status)
+	public void setNextTrafficLight(AID nextTrafficLight)
 	{
-		this.status = status;
+		this.nextTrafficLight = nextTrafficLight;
 	}
-	
+
+	public Direction getNextTrafficLightAllowedDirection()
+	{
+		return nextTrafficLightAllowedDirection;
+	}
+
+	public void setNextTrafficLightAllowedDirection(Direction nextTrafficLightAllowedDirection)
+	{
+		this.nextTrafficLightAllowedDirection = nextTrafficLightAllowedDirection;
+	}
+
 	public void move()
 	{
 		if (getDirection().equals(Direction.NORTH))
