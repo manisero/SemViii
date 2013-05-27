@@ -3,6 +3,7 @@ package pl.edu.pw.elka.sag.agents.car;
 import jade.core.*;
 import pl.edu.pw.elka.sag.agents.*;
 import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.exceptions.*;
 
 public class CarAgent extends MovableTrafficAgent
@@ -11,8 +12,11 @@ public class CarAgent extends MovableTrafficAgent
 	
 	private CarStatus status;
 	private Direction nextDirection;
+	private Location nextCrossroadsLocation;
 	private AID nextTrafficLight;
 	private Direction nextTrafficLightAllowedDirection;
+	private int otherCarsToCheck;
+	private int otherCarsChecked;
 	
 	@Override
 	protected void setup()
@@ -31,6 +35,7 @@ public class CarAgent extends MovableTrafficAgent
 		int speed = Integer.parseInt(arguments[3].toString());
 		
 		addBehaviour(new MovementBehaviour(this, speed));
+		addBehaviour(new ServeDestinationInfoBehaviour(this));
 		addBehaviour(new ReceivePossibleDirectionsBehaviour(this));
 		addBehaviour(new ReceiveAllowedDirectionBehaviour(this));
 	}
@@ -61,6 +66,16 @@ public class CarAgent extends MovableTrafficAgent
 		this.nextDirection = nextDirection;
 	}
 	
+	public Location getNextCrossroadsLocation()
+	{
+		return nextCrossroadsLocation;
+	}
+
+	public void setNextCrossroadsLocation(Location nextCrossroadsLocation)
+	{
+		this.nextCrossroadsLocation = nextCrossroadsLocation;
+	}
+
 	public AID getNextTrafficLight()
 	{
 		return nextTrafficLight;
@@ -79,6 +94,26 @@ public class CarAgent extends MovableTrafficAgent
 	public void setNextTrafficLightAllowedDirection(Direction nextTrafficLightAllowedDirection)
 	{
 		this.nextTrafficLightAllowedDirection = nextTrafficLightAllowedDirection;
+	}
+
+	public int getOtherCarsToCheck()
+	{
+		return otherCarsToCheck;
+	}
+
+	public void setOtherCarsToCheck(int otherCarsToCheck)
+	{
+		this.otherCarsToCheck = otherCarsToCheck;
+	}
+
+	public int getOtherCarsChecked()
+	{
+		return otherCarsChecked;
+	}
+
+	public void setOtherCarsChecked(int otherCarsChecked)
+	{
+		this.otherCarsChecked = otherCarsChecked;
 	}
 
 	public void move()

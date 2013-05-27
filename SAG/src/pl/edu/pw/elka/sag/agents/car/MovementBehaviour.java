@@ -43,6 +43,7 @@ public class MovementBehaviour extends TickerBehaviour
 		if (step == 0)
 		{
 			getCarAgent().setDirection(getCarAgent().getNextDirection());
+			getCarAgent().setNextCrossroadsLocation(getNextCrossroadsLocation());
 			getCarAgent().setNextDirection(Direction.UNKNOWN);
 		}
 		else if (step == 1)
@@ -91,6 +92,33 @@ public class MovementBehaviour extends TickerBehaviour
 		getCarAgent().move();
 	}
 	
+	private Location getNextCrossroadsLocation()
+	{
+		Location carLocation = getCarAgent().getLocation();
+		Direction carDirection = getCarAgent().getDirection();
+		
+		if (carDirection == Direction.NORTH)
+		{
+			return new Location(carLocation.getX(), carLocation.getY() + 10);
+		}
+		else if (carDirection == Direction.SOUTH)
+		{
+			return new Location(carLocation.getX(), carLocation.getY() - 10);
+		}
+		else if (carDirection == Direction.EAST)
+		{
+			return new Location(carLocation.getX() + 10, carLocation.getY());
+		}
+		else if (carDirection == Direction.WEST)
+		{
+			return new Location(carLocation.getX() - 10, carLocation.getY());
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 	private void requestPossibleDirections()
 	{
 		try
@@ -98,7 +126,7 @@ public class MovementBehaviour extends TickerBehaviour
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(getCarAgent().getCityAgentID());
 			message.setConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
-			message.setContentObject(getNextCrossroadsLocation());
+			message.setContentObject(getCarAgent().getNextCrossroadsLocation());
 			
 			myAgent.send(message);
 		}
@@ -110,8 +138,8 @@ public class MovementBehaviour extends TickerBehaviour
 	
 	private boolean findTrafficLight()
 	{
-		Location trafficLightLocation = getNextCrossroadsLocation();
-		List<AID> trafficLights = AgentRegistrar.getInstance().getAgents(getCarAgent(), TrafficLightAgent.class, TrafficLightAgent.getTrafficLightServiceName(trafficLightLocation));
+		String serviceName = TrafficLightAgent.getTrafficLightServiceName(getCarAgent().getNextCrossroadsLocation());
+		List<AID> trafficLights = AgentRegistrar.getInstance().getAgents(getCarAgent(), TrafficLightAgent.class, serviceName);
 		
 		if (trafficLights.size() > 0)
 		{
@@ -132,20 +160,26 @@ public class MovementBehaviour extends TickerBehaviour
 		myAgent.send(message);
 	}
 	
-	private Location getNextCrossroadsLocation()
+	private void checkOtherCars()
 	{
-		int x = (getCarAgent().getLocation().getX() / 10) * 10;
-		int y = (getCarAgent().getLocation().getY() / 10) * 10;
+		List<AID> cars = AgentRegistrar.getInstance().getAgents(getCarAgent(), CarAgent.class);
+		cars.remove(getCarAgent().getName());
 		
-		if (getCarAgent().getDirection() == Direction.EAST)
+		getCarAgent().setOtherCarsToCheck(cars.size());
+		
+		if (cars.size() == 0)
 		{
-			x += 10;
-		}
-		else if (getCarAgent().getDirection() == Direction.NORTH)
-		{
-			y += 10;
+			return;
 		}
 		
-		return new Location(x, y);
+		ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+		
+		for (AID car : cars)
+		{
+			message.addReceiver(car);
+		}
+		
+		message.setConversationId(ConversationTypes.DESTINATION_INFO_CONVERSATION_TYPE);
+		myAgent.send(message);
 	}
 }
