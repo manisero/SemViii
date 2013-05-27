@@ -1,15 +1,23 @@
 package pl.edu.pw.elka.sag.agents.car;
 
+import jade.core.*;
 import pl.edu.pw.elka.sag.agents.*;
 import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.exceptions.*;
 
 public class CarAgent extends MovableTrafficAgent
 {
 	private static final long serialVersionUID = 258671427576035083L;
 	
-	private Direction nextDirection;
 	private CarStatus status;
+	private Direction nextDirection;
+	private Location nextCrossroadsLocation;
+	private AID nextTrafficLight;
+	private Direction nextTrafficLightAllowedDirection;
+	private int otherCarsToCheck;
+	private int otherCarsChecked;
+	private boolean hasPriority;
 	
 	@Override
 	protected void setup()
@@ -28,7 +36,20 @@ public class CarAgent extends MovableTrafficAgent
 		int speed = Integer.parseInt(arguments[3].toString());
 		
 		addBehaviour(new MovementBehaviour(this, speed));
-		addBehaviour(new ReceivePossibleDirectionBehaviour(this));
+		addBehaviour(new ServeCarStatusInfoBehaviour(this));
+		addBehaviour(new ReceivePossibleDirectionsBehaviour(this));
+		addBehaviour(new ReceiveAllowedDirectionBehaviour(this));
+		addBehaviour(new ReceiveCarStatusInfoBehaviour(this));
+	}
+	
+	public CarStatus getStatus()
+	{
+		return status;
+	}
+
+	public void setStatus(CarStatus status)
+	{
+		this.status = status;
 	}
 	
 	@Override
@@ -47,16 +68,66 @@ public class CarAgent extends MovableTrafficAgent
 		this.nextDirection = nextDirection;
 	}
 	
-	public CarStatus getStatus()
+	public Location getNextCrossroadsLocation()
 	{
-		return status;
+		return nextCrossroadsLocation;
 	}
 
-	public void setStatus(CarStatus status)
+	public void setNextCrossroadsLocation(Location nextCrossroadsLocation)
 	{
-		this.status = status;
+		this.nextCrossroadsLocation = nextCrossroadsLocation;
 	}
-	
+
+	public AID getNextTrafficLight()
+	{
+		return nextTrafficLight;
+	}
+
+	public void setNextTrafficLight(AID nextTrafficLight)
+	{
+		this.nextTrafficLight = nextTrafficLight;
+	}
+
+	public Direction getNextTrafficLightAllowedDirection()
+	{
+		return nextTrafficLightAllowedDirection;
+	}
+
+	public void setNextTrafficLightAllowedDirection(Direction nextTrafficLightAllowedDirection)
+	{
+		this.nextTrafficLightAllowedDirection = nextTrafficLightAllowedDirection;
+	}
+
+	public int getOtherCarsToCheck()
+	{
+		return otherCarsToCheck;
+	}
+
+	public void setOtherCarsToCheck(int otherCarsToCheck)
+	{
+		this.otherCarsToCheck = otherCarsToCheck;
+	}
+
+	public int getOtherCarsChecked()
+	{
+		return otherCarsChecked;
+	}
+
+	public void setOtherCarsChecked(int otherCarsChecked)
+	{
+		this.otherCarsChecked = otherCarsChecked;
+	}
+
+	public boolean getHasPriority()
+	{
+		return hasPriority;
+	}
+
+	public void setHasPriority(boolean hasPriority)
+	{
+		this.hasPriority = hasPriority;
+	}
+
 	public void move()
 	{
 		if (getDirection().equals(Direction.NORTH))
