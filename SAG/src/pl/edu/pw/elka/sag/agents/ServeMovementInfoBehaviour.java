@@ -1,11 +1,11 @@
 package pl.edu.pw.elka.sag.agents;
 
+import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
 import java.io.*;
 
-import pl.edu.pw.elka.sag.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
 
@@ -16,9 +16,9 @@ public class ServeMovementInfoBehaviour extends CyclicBehaviour
 	
 	private final IMovable movable;
 
-	public ServeMovementInfoBehaviour(IMovable movable)
+	public ServeMovementInfoBehaviour(Agent agent, IMovable movable)
 	{
-		super();
+		super(agent);
 		this.movable = movable;
 	}
 	

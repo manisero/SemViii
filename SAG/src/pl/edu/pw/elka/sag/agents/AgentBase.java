@@ -12,13 +12,16 @@ public abstract class AgentBase extends Agent
 	{
 		super.setup();
 		System.out.println("Initializing " + this.getClass().getSimpleName() + " " + getLocalName());
-		
-		AgentRegistrar.getInstance().register(this, getServiceName());
 	}
 	
-	protected String getServiceName()
+	protected void register()
 	{
-		return null;
+		register(null);
+	}
+	
+	protected void register(String serviceName)
+	{
+		AgentRegistrar.getInstance().register(this, serviceName);
 	}
 	
 	@Override

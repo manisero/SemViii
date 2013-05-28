@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.sag.agents.car;
 
+import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 import pl.edu.pw.elka.sag.constants.*;
@@ -10,14 +11,12 @@ public class ReceiveAllowedDirectionBehaviour extends CyclicBehaviour
 	private static final long serialVersionUID = -5012994635276751890L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
 	
-	public ReceiveAllowedDirectionBehaviour(CarAgent agent)
+	private final Car car;
+	
+	public ReceiveAllowedDirectionBehaviour(Agent agent, Car car)
 	{
 		super(agent);
-	}
-	
-	private CarAgent getCarAgent()
-	{
-		return (CarAgent) myAgent;
+		this.car = car;
 	}
 	
 	@Override
@@ -30,7 +29,7 @@ public class ReceiveAllowedDirectionBehaviour extends CyclicBehaviour
 			try
 			{
 				Direction allowedDirection = (Direction) message.getContentObject();
-				getCarAgent().setNextTrafficLightAllowedDirection(allowedDirection);
+				car.setNextTrafficLightAllowedDirection(allowedDirection);
 			}
 			catch (UnreadableException e)
 			{

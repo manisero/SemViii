@@ -1,24 +1,24 @@
 package pl.edu.pw.elka.sag.agents.trafficlight;
 
+import pl.edu.pw.elka.sag.entities.*;
+import jade.core.*;
 import jade.core.behaviours.*;
 
 public class TrafficLightCycleBehavior extends TickerBehaviour
 {
 	private static final long serialVersionUID = -9007943623679750944L;
 
-	public TrafficLightCycleBehavior(TrafficLightAgent agent, long cyclePeriod)
+	private final TrafficLight trafficLight;
+	
+	public TrafficLightCycleBehavior(Agent agent, TrafficLight trafficLight)
 	{
-		super(agent, cyclePeriod);
-	}
-
-	private TrafficLightAgent getTrafficLightAgent()
-	{
-		return (TrafficLightAgent) myAgent;
+		super(agent, trafficLight.getCyclePeriod());
+		this.trafficLight = trafficLight; 
 	}
 
 	@Override
 	protected void onTick()
 	{
-		getTrafficLightAgent().switchAllowedDirection();
+		trafficLight.switchAllowedDirection();
 	}
 }

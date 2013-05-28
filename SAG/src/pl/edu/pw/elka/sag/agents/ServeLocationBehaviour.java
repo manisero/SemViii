@@ -1,12 +1,13 @@
 package pl.edu.pw.elka.sag.agents;
 
+import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
 import java.io.*;
 
-import pl.edu.pw.elka.sag.*;
 import pl.edu.pw.elka.sag.constants.*;
+import pl.edu.pw.elka.sag.entities.*;
 
 public class ServeLocationBehaviour extends CyclicBehaviour
 {
@@ -15,8 +16,9 @@ public class ServeLocationBehaviour extends CyclicBehaviour
 	
 	private final ILocatable locatable;
 
-	public ServeLocationBehaviour(ILocatable locatable)
+	public ServeLocationBehaviour(Agent agent, ILocatable locatable)
 	{
+		super(agent);
 		this.locatable = locatable;
 	}
 	

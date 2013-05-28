@@ -85,21 +85,24 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 		int xCorrection = 0;
 		int yCorrection = 0; 
 		
-		if (direction.equals(Direction.EAST))
+		if (direction != null)
 		{
-			yCorrection += (int) (getCarBoundingBoxSize() / 2.0); 
-		}
-		else if (direction.equals(Direction.WEST))
-		{
-			yCorrection -= (int) (getCarBoundingBoxSize() / 2.0);
-		}
-		else if (direction.equals(Direction.NORTH))
-		{
-			xCorrection += (int) (getCarBoundingBoxSize() / 2.0);
-		}
-		else if (direction.equals(Direction.SOUTH))
-		{
-			xCorrection -= (int) (getCarBoundingBoxSize() / 2.0);
+			if (direction.equals(Direction.EAST))
+			{
+				yCorrection += (int) (getCarBoundingBoxSize() / 2.0); 
+			}
+			else if (direction.equals(Direction.WEST))
+			{
+				yCorrection -= (int) (getCarBoundingBoxSize() / 2.0);
+			}
+			else if (direction.equals(Direction.NORTH))
+			{
+				xCorrection += (int) (getCarBoundingBoxSize() / 2.0);
+			}
+			else if (direction.equals(Direction.SOUTH))
+			{
+				xCorrection -= (int) (getCarBoundingBoxSize() / 2.0);
+			}
 		}
 		
 		return new Point(xCar + xCorrection, yCar + yCorrection);

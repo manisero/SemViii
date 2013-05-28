@@ -1,25 +1,27 @@
 package pl.edu.pw.elka.sag.agents.city;
 
-import jade.core.behaviours.CyclicBehaviour;
+import jade.core.*;
+import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.entities.Location;
 
-public class ServeDirectionBehaviour extends CyclicBehaviour
+public class ServePossibleDirectionsBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -5851725356214090232L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 	
-	private final int citySize;
+	private final City city;
 	
-	public ServeDirectionBehaviour(int blocksCount)
+	public ServePossibleDirectionsBehaviour(Agent agent, City city)
 	{
-		this.citySize = blocksCount * 10;
+		super(agent);
+		this.city = city;
 	}
 
 	@Override
@@ -32,7 +34,7 @@ public class ServeDirectionBehaviour extends CyclicBehaviour
 			try
 			{
 				Location location = (Location) message.getContentObject();
-				List<Direction> directions = getPossibleDirections(location);
+				List<Direction> directions = city.getPossibleDirections(location);
 				
 				ACLMessage reply = message.createReply();
 				reply.setContentObject(new DirectionsCollection(directions));
@@ -52,32 +54,5 @@ public class ServeDirectionBehaviour extends CyclicBehaviour
 		{
 			block();
 		}
-	}
-	
-	private List<Direction> getPossibleDirections(Location location)
-	{
-		List<Direction> directions = new LinkedList<Direction>();
-		
-		if (location.getX() > 0)
-		{
-			directions.add(Direction.WEST);
-		}
-		
-		if (location.getX() < citySize - 1)
-		{
-			directions.add(Direction.EAST);
-		}
-		
-		if (location.getY() > 0)
-		{
-			directions.add(Direction.SOUTH);
-		}
-		
-		if (location.getY() < citySize - 1)
-		{
-			directions.add(Direction.NORTH);
-		}
-		
-		return directions;
 	}
 }
