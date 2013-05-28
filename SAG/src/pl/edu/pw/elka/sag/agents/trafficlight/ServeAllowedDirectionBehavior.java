@@ -1,25 +1,25 @@
 package pl.edu.pw.elka.sag.agents.trafficlight;
 
+import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
 import java.io.*;
 
 import pl.edu.pw.elka.sag.constants.*;
+import pl.edu.pw.elka.sag.entities.*;
 
 public class ServeAllowedDirectionBehavior extends CyclicBehaviour
 {
 	private static final long serialVersionUID = 3479838088178976198L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
 	
-	public ServeAllowedDirectionBehavior(TrafficLightAgent agent)
+	private final TrafficLight trafficLight;
+	
+	public ServeAllowedDirectionBehavior(Agent agent, TrafficLight trafficLight)
 	{
 		super(agent);
-	}
-	
-	private TrafficLightAgent getTrafficLightAgent()
-	{
-		return (TrafficLightAgent) myAgent;
+		this.trafficLight = trafficLight;
 	}
 	
 	@Override
@@ -32,7 +32,7 @@ public class ServeAllowedDirectionBehavior extends CyclicBehaviour
 			try
 			{
 				ACLMessage reply = message.createReply();
-				reply.setContentObject(getTrafficLightAgent().getAllowedDirection());
+				reply.setContentObject(trafficLight.getAllowedDirection());
 				
 				myAgent.send(reply);
 			}

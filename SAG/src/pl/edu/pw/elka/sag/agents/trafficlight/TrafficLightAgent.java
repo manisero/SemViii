@@ -14,8 +14,6 @@ public class TrafficLightAgent extends LocatableTrafficAgent
 		return AgentTypes.TRAFFIC_LIGHT_AGENT_TYPE + location;
 	}
 	
-	private Direction allowedDirection = Direction.NORTH_SOUTH;
-	
 	@Override
 	protected void setup()
 	{
@@ -30,24 +28,16 @@ public class TrafficLightAgent extends LocatableTrafficAgent
 		
 		int cyclePeriod = Integer.parseInt(arguments[2].toString());
 		
-		addBehaviour(new TrafficLightCycleBehavior(this, cyclePeriod));
-		addBehaviour(new ServeAllowedDirectionBehavior(this));
-		addBehaviour(new ServeTrafficLightInfoBehaviour(this));
+		TrafficLight trafficLight = new TrafficLight(getLocation(), cyclePeriod, Direction.NORTH_SOUTH);
+		
+		addBehaviour(new TrafficLightCycleBehavior(this, trafficLight));
+		addBehaviour(new ServeAllowedDirectionBehavior(this, trafficLight));
+		addBehaviour(new ServeTrafficLightInfoBehaviour(this, trafficLight));
 	}
 	
 	@Override
 	protected String getServiceName()
 	{
 		return getTrafficLightServiceName(getLocation());
-	}
-	
-	public Direction getAllowedDirection()
-	{
-		return allowedDirection;
-	}
-	
-	public void switchAllowedDirection()
-	{
-		allowedDirection = allowedDirection.getOpposite();
 	}
 }

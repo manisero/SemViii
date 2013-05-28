@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.sag.agents.trafficlight;
 
+import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
@@ -13,14 +14,12 @@ public class ServeTrafficLightInfoBehaviour extends CyclicBehaviour
 	private static final long serialVersionUID = 4218338469897565395L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHT_INFO_CONVERSATION_TYPE);
 
-	public ServeTrafficLightInfoBehaviour(TrafficLightAgent agent)
+	private final TrafficLight trafficLight;
+	
+	public ServeTrafficLightInfoBehaviour(Agent agent, TrafficLight trafficLight)
 	{
 		super(agent);
-	}
-	
-	private TrafficLightAgent getTrafficLightAgent()
-	{
-		return (TrafficLightAgent) myAgent;
+		this.trafficLight = trafficLight;
 	}
 	
 	@Override
@@ -33,7 +32,7 @@ public class ServeTrafficLightInfoBehaviour extends CyclicBehaviour
 			try
 			{
 				ACLMessage reply = message.createReply();
-				reply.setContentObject(new TrafficLightInfo(getTrafficLightAgent().getLocation(), getTrafficLightAgent().getAllowedDirection()));
+				reply.setContentObject(new TrafficLightInfo(trafficLight.getLocation(), trafficLight.getAllowedDirection()));
 				
 				myAgent.send(reply);
 			}
