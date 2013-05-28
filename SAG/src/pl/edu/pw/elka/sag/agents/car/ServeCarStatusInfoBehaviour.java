@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.sag.agents.car;
 
+import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
@@ -7,6 +8,7 @@ import java.io.*;
 
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.entities.Location;
 
 public class ServeCarStatusInfoBehaviour extends CyclicBehaviour
 {
@@ -14,14 +16,12 @@ public class ServeCarStatusInfoBehaviour extends CyclicBehaviour
 	private static final MessageTemplate messageTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE),
 																			   MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
 	
-	public ServeCarStatusInfoBehaviour(CarAgent agent)
+	private final Car car;
+	
+	public ServeCarStatusInfoBehaviour(Agent agent, Car car)
 	{
 		super(agent);
-	}
-	
-	private CarAgent getCarAgent()
-	{
-		return (CarAgent) myAgent;
+		this.car = car;
 	}
 	
 	@Override
@@ -34,11 +34,11 @@ public class ServeCarStatusInfoBehaviour extends CyclicBehaviour
 			try
 			{
 				Location location = (Location) message.getContentObject();
-				Location nextCrossroadsLocation = getCarAgent().getNextCrossroadsLocation();
+				Location nextCrossroadsLocation = car.getNextCrossroadsLocation();
 				
 				ACLMessage reply = message.createReply();
 				
-				if (getCarAgent().getStatus() == CarStatus.Driving || nextCrossroadsLocation == null ||
+				if (car.getStatus() == CarStatus.Driving || nextCrossroadsLocation == null ||
 					nextCrossroadsLocation.getX() != location.getX() || nextCrossroadsLocation.getY() != location.getY())
 				{
 					reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
@@ -47,7 +47,7 @@ public class ServeCarStatusInfoBehaviour extends CyclicBehaviour
 				{
 					reply.setPerformative(ACLMessage.INFORM);
 					
-					CarStatusInfo info = new CarStatusInfo(getCarAgent().getStatus(), getCarAgent().getDirection(), getCarAgent().getNextDirection());
+					CarStatusInfo info = new CarStatusInfo(car.getStatus(), car.getDirection(), car.getNextDirection());
 					reply.setContentObject(info);
 				}
 				

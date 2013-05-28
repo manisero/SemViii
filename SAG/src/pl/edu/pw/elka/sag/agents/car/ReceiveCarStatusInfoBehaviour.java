@@ -2,6 +2,7 @@ package pl.edu.pw.elka.sag.agents.car;
 
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
+import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
@@ -11,14 +12,12 @@ public class ReceiveCarStatusInfoBehaviour extends CyclicBehaviour
 	private static final MessageTemplate messageTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE),
 			   																   MessageTemplate.not(MessageTemplate.MatchPerformative(ACLMessage.REQUEST)));
 	
-	public ReceiveCarStatusInfoBehaviour(CarAgent agent)
+	private final Car car;
+	
+	public ReceiveCarStatusInfoBehaviour(Agent agent, Car car)
 	{
 		super(agent);
-	}
-	
-	private CarAgent getCarAgent()
-	{
-		return (CarAgent) myAgent;
+		this.car = car;
 	}
 	
 	@Override
@@ -30,7 +29,7 @@ public class ReceiveCarStatusInfoBehaviour extends CyclicBehaviour
 		{
 			try
 			{
-				getCarAgent().setOtherCarsChecked(getCarAgent().getOtherCarsChecked() + 1);
+				car.setOtherCarsChecked(car.getOtherCarsChecked() + 1);
 				
 				if (message.getPerformative() != ACLMessage.INFORM)
 				{
@@ -41,11 +40,11 @@ public class ReceiveCarStatusInfoBehaviour extends CyclicBehaviour
 				
 				if (info.getStatus() == CarStatus.OnCrossroads)
 				{
-					getCarAgent().setHasPriority(false);
+					car.setHasPriority(false);
 					return;
 				}
 				
-				Direction carDirection = getCarAgent().getDirection();
+				Direction carDirection = car.getDirection();
 				Direction otherCarDirection = info.getFrom();
 				
 				if (carDirection == Direction.NORTH && otherCarDirection == Direction.WEST ||
@@ -53,7 +52,7 @@ public class ReceiveCarStatusInfoBehaviour extends CyclicBehaviour
 					carDirection == Direction.SOUTH && otherCarDirection == Direction.EAST ||
 					carDirection == Direction.EAST && otherCarDirection == Direction.NORTH)
 				{
-					getCarAgent().setHasPriority(false);
+					car.setHasPriority(false);
 				}
 			}
 			catch (UnreadableException e)

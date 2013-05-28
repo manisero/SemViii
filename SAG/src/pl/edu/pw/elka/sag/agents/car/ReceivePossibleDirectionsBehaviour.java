@@ -4,6 +4,7 @@ import java.util.*;
 
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
+import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
@@ -12,14 +13,12 @@ public class ReceivePossibleDirectionsBehaviour extends CyclicBehaviour
 	private static final long serialVersionUID = -6171122937430472879L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 	
-	public ReceivePossibleDirectionsBehaviour(CarAgent agent)
+	private final Car car;
+	
+	public ReceivePossibleDirectionsBehaviour(Agent agent, Car car)
 	{
 		super(agent);
-	}
-	
-	private CarAgent getCarAgent()
-	{
-		return (CarAgent) myAgent;
+		this.car = car;
 	}
 	
 	@Override
@@ -32,7 +31,7 @@ public class ReceivePossibleDirectionsBehaviour extends CyclicBehaviour
 			try
 			{
 				DirectionsCollection directions = (DirectionsCollection) message.getContentObject();
-				getCarAgent().setNextDirection(chooseDirection(directions));
+				car.setNextDirection(chooseDirection(directions));
 			}
 			catch (UnreadableException e)
 			{
@@ -49,7 +48,7 @@ public class ReceivePossibleDirectionsBehaviour extends CyclicBehaviour
 	{
 		List<Direction> directionsList = directions.getDirections();
 		
-		Direction currentCarDirection = getCarAgent().getDirection();
+		Direction currentCarDirection = car.getDirection();
 		
 		if (currentCarDirection != null)
 		{
