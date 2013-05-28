@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.sag.agents.map;
 
+import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 import pl.edu.pw.elka.sag.constants.*;
@@ -10,14 +11,12 @@ public class ReceiveCarMovementInfoBehaviour extends CyclicBehaviour
 	private static final long serialVersionUID = 6287244284419238340L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.MOVEMENT_INFO_CONVERSATION_TYPE);
 
-	public ReceiveCarMovementInfoBehaviour(MapAgent agent)
+	private final Map map;
+	
+	public ReceiveCarMovementInfoBehaviour(Agent agent, Map map)
 	{
 		super(agent);
-	}
-	
-	private MapAgent getMapAgent()
-	{
-		return (MapAgent) myAgent;
+		this.map = map;
 	}
 	
 	@Override
@@ -30,8 +29,7 @@ public class ReceiveCarMovementInfoBehaviour extends CyclicBehaviour
 			try
 			{
 				MovementInfo info = (MovementInfo) message.getContentObject();
-				getMapAgent().updateCarInfo(message.getSender(), info);
-								
+				map.updateCarInfo(message.getSender(), info);
 			}
 			catch (UnreadableException e)
 			{
