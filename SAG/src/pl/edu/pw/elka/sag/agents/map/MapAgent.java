@@ -22,6 +22,7 @@ public class MapAgent extends AgentBase
 	protected void setup()
 	{
 		super.setup();
+		register();
 		
 		gui = new TrafficSimulatorGUI(4);
 		

@@ -4,8 +4,9 @@ import pl.edu.pw.elka.sag.agents.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
 import pl.edu.pw.elka.sag.exceptions.*;
+import pl.edu.pw.elka.sag.util.*;
 
-public class TrafficLightAgent extends LocatableTrafficAgent
+public class TrafficLightAgent extends AgentBase
 {
 	private static final long serialVersionUID = 8004867227278039286L;
 	
@@ -26,18 +27,16 @@ public class TrafficLightAgent extends LocatableTrafficAgent
 			throw new InvalidAgentArgumentsException();
 		}
 		
-		int cyclePeriod = Integer.parseInt(arguments[2].toString());
+		Location trafficLightLocation = ArgumentsUtilities.getLocation(arguments, 0, 1);
+		int trafficLightCyclePeriod = ArgumentsUtilities.getInt(arguments, 2);
+		Direction trafficLightAllowedDirection = Direction.NORTH_SOUTH;
+		TrafficLight trafficLight = new TrafficLight(trafficLightLocation, trafficLightCyclePeriod, trafficLightAllowedDirection);
 		
-		TrafficLight trafficLight = new TrafficLight(getLocation(), cyclePeriod, Direction.NORTH_SOUTH);
+		register(getTrafficLightServiceName(trafficLightLocation));
 		
 		addBehaviour(new TrafficLightCycleBehavior(this, trafficLight));
+		addBehaviour(new ServeLocationBehaviour(this, trafficLight));
 		addBehaviour(new ServeAllowedDirectionBehavior(this, trafficLight));
 		addBehaviour(new ServeTrafficLightInfoBehaviour(this, trafficLight));
-	}
-	
-	@Override
-	protected String getServiceName()
-	{
-		return getTrafficLightServiceName(getLocation());
 	}
 }

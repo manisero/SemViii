@@ -4,7 +4,7 @@ import java.io.*;
 
 import jade.core.*;
 
-public class Car implements Serializable
+public class Car implements Serializable, IMovable
 {
 	private static final long serialVersionUID = 8098439117766827737L;
 	

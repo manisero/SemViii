@@ -12,6 +12,8 @@ public class CityAgent extends AgentBase
 	protected void setup()
 	{
 		super.setup();
-		addBehaviour(new ServeDirectionBehaviour(BLOCKS_COUNT));
+		register();
+		
+		addBehaviour(new ServePossibleDirectionsBehaviour(BLOCKS_COUNT));
 	}
 }

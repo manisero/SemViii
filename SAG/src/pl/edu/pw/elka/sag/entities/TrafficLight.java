@@ -2,7 +2,7 @@ package pl.edu.pw.elka.sag.entities;
 
 import java.io.*;
 
-public class TrafficLight implements Serializable
+public class TrafficLight implements Serializable, ILocatable
 {
 	private static final long serialVersionUID = -9183209183508669967L;
 

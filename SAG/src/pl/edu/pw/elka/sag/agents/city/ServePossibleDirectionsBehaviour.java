@@ -10,14 +10,14 @@ import java.util.List;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.entities.*;
 
-public class ServeDirectionBehaviour extends CyclicBehaviour
+public class ServePossibleDirectionsBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -5851725356214090232L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 	
 	private final int citySize;
 	
-	public ServeDirectionBehaviour(int blocksCount)
+	public ServePossibleDirectionsBehaviour(int blocksCount)
 	{
 		this.citySize = blocksCount * 10;
 	}

@@ -103,6 +103,11 @@ public class MovementBehaviour extends TickerBehaviour
 	
 	int getStep()
 	{
+		if (car.getDirection() == null || car.getDirection() == Direction.UNKNOWN)
+		{
+			return 0;
+		}
+		
 		int position = car.getDirection().hasAnyOfParts(Direction.EAST, Direction.WEST) 
 				? car.getLocation().getX()
 				: car.getLocation().getY();
