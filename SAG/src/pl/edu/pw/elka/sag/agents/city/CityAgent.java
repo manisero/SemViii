@@ -1,6 +1,7 @@
 package pl.edu.pw.elka.sag.agents.city;
 
 import pl.edu.pw.elka.sag.agents.*;
+import pl.edu.pw.elka.sag.entities.*;
 
 public class CityAgent extends AgentBase
 {
@@ -14,6 +15,7 @@ public class CityAgent extends AgentBase
 		super.setup();
 		register();
 		
-		addBehaviour(new ServePossibleDirectionsBehaviour(BLOCKS_COUNT));
+		City city = new City(BLOCKS_COUNT);
+		addBehaviour(new ServePossibleDirectionsBehaviour(this, city));
 	}
 }
