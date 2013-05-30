@@ -6,7 +6,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
+import pl.edu.pw.elka.sag.gui.constants.MapPaintSettings;
 import pl.edu.pw.elka.sag.gui.panels.CityMap;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 
@@ -46,7 +46,7 @@ public class TrafficSimulatorGUI extends JFrame
 		
 		int size = screenSize.height > screenSize.width ? screenSize.width : screenSize.height;
 		
-		size = (int) (size * PaintSettings.WINDOW_TO_SCREEN_SIZE_RATIO);
+		size = (int) (size * MapPaintSettings.WINDOW_TO_SCREEN_SIZE_RATIO);
 		
 		setSize(size, size);
 		

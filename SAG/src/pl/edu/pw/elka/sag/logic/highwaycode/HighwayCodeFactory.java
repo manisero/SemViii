@@ -35,4 +35,9 @@ public class HighwayCodeFactory
 			return null;
 		}
 	}
+	
+	public Collection<String> getHighwayCodes()
+	{
+		return highwayCodes.keySet();
+	}
 }

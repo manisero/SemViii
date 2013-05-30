@@ -1,8 +1,12 @@
 package pl.edu.pw.elka.sag.agents.highwaycode;
 
-import pl.edu.pw.elka.sag.agents.*;
-import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.logic.highwaycode.*;
+import java.awt.EventQueue;
+
+import pl.edu.pw.elka.sag.agents.AgentBase;
+import pl.edu.pw.elka.sag.constants.HighwayCodeTypes;
+import pl.edu.pw.elka.sag.gui.HighwayCodeAgentGUI;
+import pl.edu.pw.elka.sag.logic.highwaycode.HighwayCodeFactory;
+import pl.edu.pw.elka.sag.logic.highwaycode.IHighwayCode;
 
 public class HighwayCodeAgent extends AgentBase
 {
@@ -28,9 +32,27 @@ public class HighwayCodeAgent extends AgentBase
 		
 		System.out.println("Highway Code used: " + highwayCodeType);
 		
-		IHighwayCode highwayCode = new HighwayCodeFactory().createHighwayCode(highwayCodeType);
+		HighwayCodeFactory highwayCodeFactory = new HighwayCodeFactory();
 		
-		addBehaviour(new ServeRoadSideRuleBehaviour(this, highwayCode));
-		addBehaviour(new ServeTrafficLightRuleBehaviour(this, highwayCode));
+		final HighwayCodeAgentGUI gui = new HighwayCodeAgentGUI(highwayCodeFactory);
+		
+		EventQueue.invokeLater(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				gui.setVisible(true);
+			}
+		});
+		
+		IHighwayCode highwayCode = highwayCodeFactory.createHighwayCode(highwayCodeType);
+		
+		ServeRoadSideRuleBehaviour serveRoadSideRuleBehaviour = new ServeRoadSideRuleBehaviour(this, highwayCode);
+		addBehaviour(serveRoadSideRuleBehaviour);
+		gui.addListener(serveRoadSideRuleBehaviour);
+		
+		ServeTrafficLightRuleBehaviour serveTrafficLightRuleBehaviour = new ServeTrafficLightRuleBehaviour(this, highwayCode);
+		addBehaviour(serveTrafficLightRuleBehaviour);
+		gui.addListener(serveTrafficLightRuleBehaviour);
 	}
 }

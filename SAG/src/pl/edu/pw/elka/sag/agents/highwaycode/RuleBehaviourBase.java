@@ -7,12 +7,12 @@ import jade.core.behaviours.*;
 import jade.lang.acl.*;
 import pl.edu.pw.elka.sag.logic.highwaycode.*;
 
-public abstract class RuleBehaviourBase extends CyclicBehaviour
+public abstract class RuleBehaviourBase extends CyclicBehaviour implements IHighwayCodeChangeListener
 {
 	private static final long serialVersionUID = -1063042687412453068L;
 	
 	private final MessageTemplate messageTemplate;
-	protected final IHighwayCode highwayCode;
+	protected IHighwayCode highwayCode;
 	
 	protected RuleBehaviourBase(Agent agent, IHighwayCode highwayCode, String conversationType)
 	{
@@ -50,4 +50,10 @@ public abstract class RuleBehaviourBase extends CyclicBehaviour
 	}
 	
 	protected abstract void fillReply(ACLMessage message, ACLMessage reply) throws UnreadableException, IOException;
+	
+	@Override
+	public void onHighwayCodeChanged(IHighwayCode highwayCode)
+	{
+		this.highwayCode = highwayCode;
+	}
 }
