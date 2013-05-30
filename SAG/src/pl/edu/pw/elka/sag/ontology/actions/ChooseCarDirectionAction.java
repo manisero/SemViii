@@ -6,7 +6,7 @@ import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class ChooseCarDirectionAction
 {
-	public Direction Ececute(Car car, List<Direction> directions)
+	public Direction execute(Car car, List<Direction> directions)
 	{
 		Direction currentCarDirection = car.getDirection();
 		

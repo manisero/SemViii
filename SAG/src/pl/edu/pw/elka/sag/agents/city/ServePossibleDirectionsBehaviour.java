@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.*;
 
 import pl.edu.pw.elka.sag.constants.*;
+import pl.edu.pw.elka.sag.ontology.actions.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 import pl.edu.pw.elka.sag.ontology.concepts.Location;
 import pl.edu.pw.elka.sag.ontology.predicates.*;
@@ -36,7 +37,7 @@ public class ServePossibleDirectionsBehaviour extends CyclicBehaviour
 			{
 				CanTurnOnCrossroadsPredicate predicate = (CanTurnOnCrossroadsPredicate) message.getContentObject();
 				Location crossroadsLocation = predicate.getCrossroadsLocation();
-				List<Direction> directions = city.getPossibleDirections(crossroadsLocation);
+				Collection<Direction> directions = new GetCrossroadsDirectionsAction().execute(city, crossroadsLocation);
 				
 				ArrayList<CanTurnOnCrossroadsPredicate> result = new ArrayList<CanTurnOnCrossroadsPredicate>();
 				

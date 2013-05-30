@@ -41,7 +41,7 @@ public class ReceivePossibleDirectionsBehaviour extends CyclicBehaviour
 					directions.add(predicate.getTurnDirection());
 				}
 				
-				Direction direction = new ChooseCarDirectionAction().Ececute(car, directions);
+				Direction direction = new ChooseCarDirectionAction().execute(car, directions);
 				car.setNextDirection(direction);
 			}
 			catch (UnreadableException e)
