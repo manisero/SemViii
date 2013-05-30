@@ -9,8 +9,9 @@ import java.util.*;
 
 import pl.edu.pw.elka.sag.agents.trafficlight.*;
 import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.entities.*;
-import pl.edu.pw.elka.sag.entities.Location;
+import pl.edu.pw.elka.sag.ontology.actions.*;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.predicates.*;
 import pl.edu.pw.elka.sag.util.*;
 
 public class MovementBehaviour extends TickerBehaviour
@@ -35,7 +36,7 @@ public class MovementBehaviour extends TickerBehaviour
 		if (step == 0)
 		{
 			car.setDirection(car.getNextDirection());
-			car.setNextCrossroadsLocation(getNextCrossroadsLocation());
+			car.setNextCrossroadsLocation(new GetNextCrossroadsLocationAction().execute(car.getLocation(), car.getDirection()));
 			car.setNextDirection(Direction.UNKNOWN);
 			car.setNextTrafficLight(null);
 			car.setNextTrafficLightAllowedDirection(null);
@@ -122,33 +123,6 @@ public class MovementBehaviour extends TickerBehaviour
 		return step;
 	}
 	
-	private Location getNextCrossroadsLocation()
-	{
-		Location carLocation = car.getLocation();
-		Direction carDirection = car.getDirection();
-		
-		if (carDirection == Direction.NORTH)
-		{
-			return new Location(carLocation.getX(), carLocation.getY() + 10);
-		}
-		else if (carDirection == Direction.SOUTH)
-		{
-			return new Location(carLocation.getX(), carLocation.getY() - 10);
-		}
-		else if (carDirection == Direction.EAST)
-		{
-			return new Location(carLocation.getX() + 10, carLocation.getY());
-		}
-		else if (carDirection == Direction.WEST)
-		{
-			return new Location(carLocation.getX() - 10, carLocation.getY());
-		}
-		else
-		{
-			return null;
-		}
-	}
-	
 	private void requestPossibleDirections()
 	{
 		try
@@ -156,7 +130,7 @@ public class MovementBehaviour extends TickerBehaviour
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(cityAgentId);
 			message.setConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
-			message.setContentObject(car.getNextCrossroadsLocation());
+			message.setContentObject(new CanTurnOnCrossroadsPredicate(null, car.getNextCrossroadsLocation()));
 			
 			myAgent.send(message);
 		}

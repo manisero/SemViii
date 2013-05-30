@@ -2,8 +2,7 @@ package pl.edu.pw.elka.sag.gui.logic;
 
 import java.awt.Point;
 
-import pl.edu.pw.elka.sag.entities.Direction;
-import pl.edu.pw.elka.sag.entities.Location;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public interface IDrawablePropertyProvider
 {

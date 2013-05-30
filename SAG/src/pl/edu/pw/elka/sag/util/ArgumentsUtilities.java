@@ -1,6 +1,6 @@
 package pl.edu.pw.elka.sag.util;
 
-import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class ArgumentsUtilities
 {
