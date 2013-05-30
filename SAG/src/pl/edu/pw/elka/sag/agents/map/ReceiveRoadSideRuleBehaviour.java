@@ -2,6 +2,7 @@ package pl.edu.pw.elka.sag.agents.map;
 
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.predicates.*;
 import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
@@ -28,8 +29,8 @@ public class ReceiveRoadSideRuleBehaviour extends CyclicBehaviour
 		{
 			try
 			{
-				RoadSide roadSide = (RoadSide) message.getContentObject();
-				map.updateRoadSide(roadSide);			
+				ShouldDriveRoadSidePredicate predicate = (ShouldDriveRoadSidePredicate) message.getContentObject();
+				map.updateRoadSide(predicate.getRoadSide());
 			}
 			catch (UnreadableException e)
 			{

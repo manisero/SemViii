@@ -4,7 +4,7 @@ import jade.core.*;
 import jade.lang.acl.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.logic.highwaycode.*;
-import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.predicates.*;
 
 public class ServeTrafficLightRuleBehaviour extends RuleBehaviourBase
 {
@@ -18,9 +18,9 @@ public class ServeTrafficLightRuleBehaviour extends RuleBehaviourBase
 	@Override
 	protected void fillReply(ACLMessage message, ACLMessage reply) throws UnreadableException
 	{
-		TrafficLightStatus trafficLightStatus = (TrafficLightStatus) message.getContentObject();
+		CanPassTrafficLightPredicate predicate = (CanPassTrafficLightPredicate) message.getContentObject();
 		
-		if (highwayCode.getTrafficLightRule().evaluate(null, trafficLightStatus))
+		if (highwayCode.getTrafficLightRule().evaluate(null, predicate.getTrafficLightStatus()))
 		{
 			reply.setPerformative(ACLMessage.AGREE);
 		}

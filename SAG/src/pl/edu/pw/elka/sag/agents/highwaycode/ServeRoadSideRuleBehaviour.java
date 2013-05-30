@@ -7,6 +7,7 @@ import jade.lang.acl.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.logic.highwaycode.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.predicates.*;
 
 public class ServeRoadSideRuleBehaviour extends RuleBehaviourBase
 {
@@ -21,6 +22,6 @@ public class ServeRoadSideRuleBehaviour extends RuleBehaviourBase
 	protected void fillReply(ACLMessage message, ACLMessage reply) throws IOException
 	{
 		RoadSide roadSide = highwayCode.getRoadSideRule().evaluate();
-		reply.setContentObject(roadSide);
+		reply.setContentObject(new ShouldDriveRoadSidePredicate(roadSide));
 	}
 }
