@@ -5,18 +5,19 @@ import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
 import java.io.*;
+import java.util.Map;
 
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 
-public class ServeAllowedDirectionBehavior extends CyclicBehaviour
+public class ServeTrafficLightStatusDirectionBehavior extends CyclicBehaviour
 {
 	private static final long serialVersionUID = 3479838088178976198L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHT_STATUS_CONVERSATION_TYPE);
 	
 	private final TrafficLight trafficLight;
 	
-	public ServeAllowedDirectionBehavior(Agent agent, TrafficLight trafficLight)
+	public ServeTrafficLightStatusDirectionBehavior(Agent agent, TrafficLight trafficLight)
 	{
 		super(agent);
 		this.trafficLight = trafficLight;
@@ -31,10 +32,17 @@ public class ServeAllowedDirectionBehavior extends CyclicBehaviour
 		{
 			try
 			{
+				Direction direction = (Direction) message.getContentObject();
+				Map<Direction, TrafficLightStatus> status = trafficLight.getStatus();
+				
 				ACLMessage reply = message.createReply();
-				reply.setContentObject(trafficLight.getAllowedDirection());
+				reply.setContentObject(status.containsKey(direction) ? status.get(direction) : null);
 				
 				myAgent.send(reply);
+			}
+			catch (UnreadableException e)
+			{
+				e.printStackTrace();
 			}
 			catch (IOException e)
 			{

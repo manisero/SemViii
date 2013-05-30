@@ -29,7 +29,7 @@ public class ServeTrafficLightRuleBehaviour extends CyclicBehaviour
 				
 				ACLMessage reply = message.createReply();
 				
-				if (trafficLightStatus == TrafficLightStatus.Green)
+				if (trafficLightStatus == TrafficLightStatus.GREEN)
 				{
 					reply.setPerformative(ACLMessage.AGREE);
 				}

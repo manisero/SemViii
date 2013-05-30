@@ -14,7 +14,7 @@ public class Car implements Concept, IMovable
 	private Direction nextDirection;
 	private Location nextCrossroadsLocation;
 	private AID nextTrafficLight;
-	private Direction nextTrafficLightAllowedDirection;
+	private TrafficLightStatus nextTrafficLightStatus;
 	private int otherCarsToCheck;
 	private int otherCarsChecked;
 	private boolean hasPriority;
@@ -98,14 +98,14 @@ public class Car implements Concept, IMovable
 		this.nextTrafficLight = nextTrafficLight;
 	}
 
-	public Direction getNextTrafficLightAllowedDirection()
+	public TrafficLightStatus getNextTrafficLightStatus()
 	{
-		return nextTrafficLightAllowedDirection;
+		return nextTrafficLightStatus;
 	}
 
-	public void setNextTrafficLightAllowedDirection(Direction nextTrafficLightAllowedDirection)
+	public void setNextTrafficLightStatus(TrafficLightStatus nextTrafficLightStatus)
 	{
-		this.nextTrafficLightAllowedDirection = nextTrafficLightAllowedDirection;
+		this.nextTrafficLightStatus = nextTrafficLightStatus;
 	}
 
 	public int getOtherCarsToCheck()

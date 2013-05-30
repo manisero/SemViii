@@ -6,14 +6,14 @@ import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
-public class ReceiveTrafficLightInfoBehaviour extends CyclicBehaviour
+public class ReceiveTrafficLightBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = 2491042257718090661L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHT_INFO_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHT_CONVERSATION_TYPE);
 
 	private final Map map;
 	
-	public ReceiveTrafficLightInfoBehaviour(Agent agent, Map map)
+	public ReceiveTrafficLightBehaviour(Agent agent, Map map)
 	{
 		super(agent);
 		this.map = map;
@@ -28,7 +28,7 @@ public class ReceiveTrafficLightInfoBehaviour extends CyclicBehaviour
 		{
 			try
 			{
-				TrafficLightInfo info = (TrafficLightInfo) message.getContentObject();
+				TrafficLight info = (TrafficLight) message.getContentObject();
 				map.updateTrafficLightInfo(message.getSender(), info);			
 			}
 			catch (UnreadableException e)

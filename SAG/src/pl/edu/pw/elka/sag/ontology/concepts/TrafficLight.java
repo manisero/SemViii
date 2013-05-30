@@ -1,22 +1,37 @@
 package pl.edu.pw.elka.sag.ontology.concepts;
 
+import java.util.*;
+import java.util.Map;
+
 import jade.content.*;
 
 public class TrafficLight implements Concept, ILocatable
 {
 	private static final long serialVersionUID = -9183209183508669967L;
 
+	private final Map<Direction, TrafficLightStatus> status = new LinkedHashMap<Direction, TrafficLightStatus>();
+	
 	private Location location;
 	private int cyclePeriod;
-	private Direction allowedDirection;
 
 	public TrafficLight() { }
 	
-	public TrafficLight(Location location, int cyclePeriod, Direction allowedDirection)
+	public TrafficLight(Location location, int cyclePeriod,
+						TrafficLightStatus northStatus, TrafficLightStatus southStatus,
+						TrafficLightStatus eastStatus, TrafficLightStatus westStatus)
 	{
 		this.location = location;
 		this.cyclePeriod = cyclePeriod;
-		this.allowedDirection = allowedDirection;
+		
+		status.put(Direction.NORTH, northStatus);
+		status.put(Direction.SOUTH, southStatus);
+		status.put(Direction.EAST, eastStatus);
+		status.put(Direction.WEST, westStatus);
+	}
+	
+	public Map<Direction, TrafficLightStatus> getStatus()
+	{
+		return status;
 	}
 	
 	public Location getLocation()
@@ -37,20 +52,5 @@ public class TrafficLight implements Concept, ILocatable
 	public void setCyclePeriod(int cyclePeriod)
 	{
 		this.cyclePeriod = cyclePeriod;
-	}
-
-	public Direction getAllowedDirection()
-	{
-		return allowedDirection;
-	}
-
-	public void setAllowedDirection(Direction allowedDirection)
-	{
-		this.allowedDirection = allowedDirection;
-	}
-	
-	public void switchAllowedDirection()
-	{
-		allowedDirection = allowedDirection.getOpposite();
 	}
 }

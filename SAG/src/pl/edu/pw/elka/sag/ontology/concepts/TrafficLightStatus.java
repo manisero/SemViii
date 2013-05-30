@@ -2,6 +2,18 @@ package pl.edu.pw.elka.sag.ontology.concepts;
 
 public enum TrafficLightStatus
 {
-	Green,
-	Red
+	GREEN,
+	RED;
+	
+	public TrafficLightStatus getOpposite()
+	{
+		if (equals(TrafficLightStatus.GREEN))
+		{
+			return TrafficLightStatus.RED;
+		}
+		else
+		{
+			return TrafficLightStatus.GREEN;
+		}
+	}
 }

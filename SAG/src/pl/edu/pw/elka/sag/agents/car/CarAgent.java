@@ -37,7 +37,7 @@ public class CarAgent extends AgentBase
 		addBehaviour(new ServeMovementInfoBehaviour(this, car));
 		addBehaviour(new ServeCarStatusInfoBehaviour(this, car));
 		addBehaviour(new ReceivePossibleDirectionsBehaviour(this, car));
-		addBehaviour(new ReceiveAllowedDirectionBehaviour(this, car));
+		addBehaviour(new ReceiveTrafficLightStatusBehaviour(this, car));
 		addBehaviour(new ReceiveCarStatusInfoBehaviour(this, car));
 	}
 	

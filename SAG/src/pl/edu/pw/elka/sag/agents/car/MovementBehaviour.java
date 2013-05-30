@@ -39,7 +39,7 @@ public class MovementBehaviour extends TickerBehaviour
 			car.setNextCrossroadsLocation(new GetNextCrossroadsLocationAction().execute(car.getLocation(), car.getDirection()));
 			car.setNextDirection(Direction.UNKNOWN);
 			car.setNextTrafficLight(null);
-			car.setNextTrafficLightAllowedDirection(null);
+			car.setNextTrafficLightStatus(null);
 			car.setOtherCarsToCheck(0);
 			car.setOtherCarsChecked(0);
 			car.setHasPriority(true);
@@ -79,7 +79,7 @@ public class MovementBehaviour extends TickerBehaviour
 					return;
 				}
 				
-				if (!car.getNextTrafficLightAllowedDirection().hasPart(car.getDirection()))
+				if (car.getNextTrafficLightStatus() != TrafficLightStatus.GREEN)
 				{
 					checkTrafficLight();
 					return;
@@ -156,12 +156,21 @@ public class MovementBehaviour extends TickerBehaviour
 	
 	private void checkTrafficLight()
 	{
-		car.setNextTrafficLightAllowedDirection(null);
-		
-		ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-		message.addReceiver(car.getNextTrafficLight());
-		message.setConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
-		myAgent.send(message);
+		try
+		{
+			car.setNextTrafficLightStatus(null);
+			
+			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+			message.addReceiver(car.getNextTrafficLight());
+			message.setConversationId(ConversationTypes.TRAFFIC_LIGHT_STATUS_CONVERSATION_TYPE);
+			message.setContentObject(car.getDirection());
+			
+			myAgent.send(message);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	private void checkOtherCars()

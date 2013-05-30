@@ -6,14 +6,14 @@ import jade.lang.acl.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 
-public class ReceiveAllowedDirectionBehaviour extends CyclicBehaviour
+public class ReceiveTrafficLightStatusBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -5012994635276751890L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHT_STATUS_CONVERSATION_TYPE);
 	
 	private final Car car;
 	
-	public ReceiveAllowedDirectionBehaviour(Agent agent, Car car)
+	public ReceiveTrafficLightStatusBehaviour(Agent agent, Car car)
 	{
 		super(agent);
 		this.car = car;
@@ -28,8 +28,8 @@ public class ReceiveAllowedDirectionBehaviour extends CyclicBehaviour
 		{
 			try
 			{
-				Direction allowedDirection = (Direction) message.getContentObject();
-				car.setNextTrafficLightAllowedDirection(allowedDirection);
+				TrafficLightStatus status = (TrafficLightStatus) message.getContentObject();
+				car.setNextTrafficLightStatus(status);
 			}
 			catch (UnreadableException e)
 			{

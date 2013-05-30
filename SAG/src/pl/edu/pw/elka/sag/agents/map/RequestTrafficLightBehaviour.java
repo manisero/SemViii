@@ -10,11 +10,11 @@ import pl.edu.pw.elka.sag.agents.trafficlight.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.util.*;
 
-public class RequestTrafficLightInfoBehaviour extends TickerBehaviour
+public class RequestTrafficLightBehaviour extends TickerBehaviour
 {
 	private static final long serialVersionUID = -1109817226231701031L;
 
-	public RequestTrafficLightInfoBehaviour(Agent agent, long period)
+	public RequestTrafficLightBehaviour(Agent agent, long period)
 	{
 		super(agent, period);
 	}
@@ -35,7 +35,7 @@ public class RequestTrafficLightInfoBehaviour extends TickerBehaviour
 			message.addReceiver(trafficLightId);
 		}
 		
-		message.setConversationId(ConversationTypes.TRAFFIC_LIGHT_INFO_CONVERSATION_TYPE);
+		message.setConversationId(ConversationTypes.TRAFFIC_LIGHT_CONVERSATION_TYPE);
 		
 		myAgent.send(message);
 	}
