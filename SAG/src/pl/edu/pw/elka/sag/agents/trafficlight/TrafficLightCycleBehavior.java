@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.sag.agents.trafficlight;
 
+import pl.edu.pw.elka.sag.logic.actions.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 import jade.core.*;
 import jade.core.behaviours.*;
@@ -19,6 +20,6 @@ public class TrafficLightCycleBehavior extends TickerBehaviour
 	@Override
 	protected void onTick()
 	{
-		trafficLight.switchAllowedDirection();
+		new SwitchTrafficLightStatusAction().execute(trafficLight);
 	}
 }

@@ -9,14 +9,14 @@ import java.io.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 
-public class ServeTrafficLightInfoBehaviour extends CyclicBehaviour
+public class ServeTrafficLightBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = 4218338469897565395L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHT_INFO_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHT_CONVERSATION_TYPE);
 
 	private final TrafficLight trafficLight;
 	
-	public ServeTrafficLightInfoBehaviour(Agent agent, TrafficLight trafficLight)
+	public ServeTrafficLightBehaviour(Agent agent, TrafficLight trafficLight)
 	{
 		super(agent);
 		this.trafficLight = trafficLight;
@@ -32,8 +32,7 @@ public class ServeTrafficLightInfoBehaviour extends CyclicBehaviour
 			try
 			{
 				ACLMessage reply = message.createReply();
-				reply.setContentObject(new TrafficLightInfo(trafficLight.getLocation(), trafficLight.getAllowedDirection()));
-				
+				reply.setContentObject(trafficLight);
 				myAgent.send(reply);
 			}
 			catch (IOException e)

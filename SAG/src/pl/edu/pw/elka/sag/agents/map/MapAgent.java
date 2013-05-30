@@ -30,7 +30,7 @@ public class MapAgent extends AgentBase
 		
 		addBehaviour(new RequestCarMovementInfoBehaviour(this, 100));
 		addBehaviour(new ReceiveCarMovementInfoBehaviour(this, map));
-		addBehaviour(new RequestTrafficLightInfoBehaviour(this, 100));
-		addBehaviour(new ReceiveTrafficLightInfoBehaviour(this, map));
+		addBehaviour(new RequestTrafficLightBehaviour(this, 100));
+		addBehaviour(new ReceiveTrafficLightBehaviour(this, map));
 	}
 }

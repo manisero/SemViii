@@ -4,27 +4,29 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.*;
+import java.util.Map;
 
 import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyProvider;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyReceiver;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 
-public class DrawableTrafficLights extends Canvas implements IDrawablePropertyReceiver
+public class DrawableTrafficLight extends Canvas implements IDrawablePropertyReceiver
 {
 	private static final long serialVersionUID = 3470287423237683611L;
 	
-	private Location trafficLightsLocation;
-	private Direction allowedDirection;
+	private Location trafficLightLocation;
+	private Map<Direction, TrafficLightStatus> trafficLightStatus = new LinkedHashMap<Direction, TrafficLightStatus>();
 	
 	private IDrawablePropertyProvider propertyProvider;
 	
 	private Integer trafficLightsSize;
 
-	public DrawableTrafficLights(Location trafficLightsLocation, Direction allowedDirection)
+	public DrawableTrafficLight(Location trafficLightLocation, Map<Direction, TrafficLightStatus> trafficLightStatus)
 	{
-		this.trafficLightsLocation = trafficLightsLocation;
-		this.allowedDirection = allowedDirection;
+		this.trafficLightLocation = trafficLightLocation;
+		this.trafficLightStatus = trafficLightStatus;
 	}
 	
 	/**
@@ -43,9 +45,9 @@ public class DrawableTrafficLights extends Canvas implements IDrawablePropertyRe
 	 * 
 	 * @return {@link pl.edu.pw.elka.sag.ontology.concepts.Location} of traffic lights
 	 */
-	public Location getTrafficLightsLocation()
+	public Location getTrafficLightLocation()
 	{
-		return trafficLightsLocation;
+		return trafficLightLocation;
 	}
 
 	/**
@@ -53,29 +55,29 @@ public class DrawableTrafficLights extends Canvas implements IDrawablePropertyRe
 	 * 
 	 * @param trafficLightsLocation {@link pl.edu.pw.elka.sag.ontology.concepts.Location} of traffic lights to set
 	 */
-	public void setTrafficLightsLocation(Location trafficLightsLocation)
+	public void setTrafficLightLocation(Location trafficLightsLocation)
 	{
-		this.trafficLightsLocation = trafficLightsLocation;
+		this.trafficLightLocation = trafficLightsLocation;
 	}
 
 	/**
-	 * Returns allowed direction of traffic lights.
+	 * Returns status of traffic lights.
 	 * 
-	 * @return allowed {@link pl.edu.pw.elka.sag.ontology.concepts.Direction} of traffic lights
+	 * @return status of traffic lights
 	 */
-	public Direction getTrafficLightAllowedDirection()
+	public Map<Direction, TrafficLightStatus> getTrafficLightStatus()
 	{
-		return allowedDirection;
+		return trafficLightStatus;
 	}
 
 	/**
-	 * Sets allowed direction of traffic lights.
+	 * Sets status of traffic lights.
 	 * 
-	 * @param allowedDirection allowed {@link pl.edu.pw.elka.sag.ontology.concepts.Direction} of traffic lights to set
+	 * @param status of traffic lights to set
 	 */
-	public void setTrafficLightAllowedDirection(Direction allowedDirection)
+	public void setTrafficLightStatus(Map<Direction, TrafficLightStatus> status)
 	{
-		this.allowedDirection = allowedDirection;
+		this.trafficLightStatus = status;
 	}
 	
 	/**
@@ -119,15 +121,17 @@ public class DrawableTrafficLights extends Canvas implements IDrawablePropertyRe
 	 */
 	private void paintTrafficLights(Graphics2D graphics2D, Direction direction)
 	{
-		Point currentPosition = propertyProvider.getTrafficLightsScreenPosition(trafficLightsLocation, direction);
+		Point currentPosition = propertyProvider.getTrafficLightsScreenPosition(trafficLightLocation, direction);
 		
 		if (currentPosition == null)
 		{
 			return;
 		}
 		
-		graphics2D.setColor(allowedDirection.hasPart(direction) ? 
-				PaintSettings.LIGHTS_GREEN_COLOR : PaintSettings.LIGHTS_RED_COLOR);
+		TrafficLightStatus status = trafficLightStatus.get(direction);
+		graphics2D.setColor(status == TrafficLightStatus.GREEN
+								? PaintSettings.LIGHTS_GREEN_COLOR
+								: PaintSettings.LIGHTS_RED_COLOR);
 		
 		graphics2D.fillOval(currentPosition.x, currentPosition.y, getTrafficLightsSize(), getTrafficLightsSize());
 	}

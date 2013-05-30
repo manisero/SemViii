@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.*;
 
 import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.ontology.actions.*;
+import pl.edu.pw.elka.sag.logic.actions.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 import pl.edu.pw.elka.sag.ontology.concepts.Location;
 import pl.edu.pw.elka.sag.ontology.predicates.*;

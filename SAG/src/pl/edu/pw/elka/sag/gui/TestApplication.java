@@ -3,11 +3,12 @@ package pl.edu.pw.elka.sag.gui;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 import javax.swing.Timer;
 
 import pl.edu.pw.elka.sag.gui.objects.DrawableCar;
-import pl.edu.pw.elka.sag.gui.objects.DrawableTrafficLights;
+import pl.edu.pw.elka.sag.gui.objects.DrawableTrafficLight;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class TestApplication
@@ -26,12 +27,18 @@ public class TestApplication
 				final DrawableCar car = new DrawableCar(new Location(0, 10), Direction.NORTH);
 				gui.addDrawableObjectToCityMap(car);
 				
-				final DrawableTrafficLights trafficLights = 
-						new DrawableTrafficLights(new Location(0, 0), Direction.NORTH_SOUTH);
+				LinkedHashMap<Direction, TrafficLightStatus> trafficLightStatus = new LinkedHashMap<Direction, TrafficLightStatus>();
+				trafficLightStatus.put(Direction.NORTH, TrafficLightStatus.GREEN);
+				trafficLightStatus.put(Direction.SOUTH, TrafficLightStatus.GREEN);
+				trafficLightStatus.put(Direction.EAST, TrafficLightStatus.RED);
+				trafficLightStatus.put(Direction.WEST, TrafficLightStatus.RED);
+				
+				final DrawableTrafficLight trafficLights = 
+						new DrawableTrafficLight(new Location(0, 0), trafficLightStatus);
 				gui.addDrawableObjectToCityMap(trafficLights);
 				
-				final DrawableTrafficLights otherTrafficLights = 
-						new DrawableTrafficLights(new Location(20, 20), Direction.EAST_WEST);
+				final DrawableTrafficLight otherTrafficLights = 
+						new DrawableTrafficLight(new Location(20, 20), trafficLightStatus);
 				gui.addDrawableObjectToCityMap(otherTrafficLights);
 				
 				gui.setVisible(true);

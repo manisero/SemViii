@@ -29,14 +29,15 @@ public class TrafficLightAgent extends AgentBase
 		
 		Location trafficLightLocation = ArgumentsUtilities.getLocation(arguments, 0, 1);
 		int trafficLightCyclePeriod = ArgumentsUtilities.getInt(arguments, 2);
-		Direction trafficLightAllowedDirection = Direction.NORTH_SOUTH;
-		TrafficLight trafficLight = new TrafficLight(trafficLightLocation, trafficLightCyclePeriod, trafficLightAllowedDirection);
+		TrafficLight trafficLight = new TrafficLight(trafficLightLocation, trafficLightCyclePeriod,
+													 TrafficLightStatus.GREEN, TrafficLightStatus.GREEN,
+													 TrafficLightStatus.RED, TrafficLightStatus.RED);
 		
 		register(getTrafficLightServiceName(trafficLightLocation));
 		
 		addBehaviour(new TrafficLightCycleBehavior(this, trafficLight));
 		addBehaviour(new ServeLocationBehaviour(this, trafficLight));
-		addBehaviour(new ServeAllowedDirectionBehavior(this, trafficLight));
-		addBehaviour(new ServeTrafficLightInfoBehaviour(this, trafficLight));
+		addBehaviour(new ServeTrafficLightStatusDirectionBehavior(this, trafficLight));
+		addBehaviour(new ServeTrafficLightBehaviour(this, trafficLight));
 	}
 }

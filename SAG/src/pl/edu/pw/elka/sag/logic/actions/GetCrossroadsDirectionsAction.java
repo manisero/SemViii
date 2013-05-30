@@ -1,4 +1,4 @@
-package pl.edu.pw.elka.sag.ontology.actions;
+package pl.edu.pw.elka.sag.logic.actions;
 
 import java.util.*;
 

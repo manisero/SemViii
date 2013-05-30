@@ -23,7 +23,7 @@ public class RequestCarMovementInfoBehaviour extends TickerBehaviour
 	protected void onTick()
 	{
 		ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-		List<AID> carIds = AgentRegistrar.getInstance().getAgents(myAgent, CarAgent.class);
+		List<AID> carIds = AgentRegistry.getInstance().getAgents(myAgent, CarAgent.class);
 		
 		if (carIds.size() == 0)
 		{

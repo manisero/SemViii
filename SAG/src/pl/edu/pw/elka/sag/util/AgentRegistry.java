@@ -8,25 +8,27 @@ import java.util.*;
 
 import pl.edu.pw.elka.sag.agents.car.*;
 import pl.edu.pw.elka.sag.agents.city.*;
+import pl.edu.pw.elka.sag.agents.highwaycode.*;
 import pl.edu.pw.elka.sag.agents.map.*;
 import pl.edu.pw.elka.sag.agents.trafficlight.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.exceptions.*;
 
-public class AgentRegistrar
+public class AgentRegistry
 {
-	private static AgentRegistrar instance = new AgentRegistrar();
+	private static AgentRegistry instance = new AgentRegistry();
 	
-	public static AgentRegistrar getInstance()
+	public static AgentRegistry getInstance()
 	{
 		return instance;
 	}
 	
 	private Map<Class<?>, String> agentTypes = new LinkedHashMap<Class<?>, String>();
 	
-	private AgentRegistrar()
+	private AgentRegistry()
 	{
 		agentTypes.put(CityAgent.class, AgentTypes.CITY_AGENT_TYPE);
+		agentTypes.put(HighwayCodeAgent.class, AgentTypes.HIGHWAY_CODE_AGENT_TYPE);
 		agentTypes.put(MapAgent.class, AgentTypes.MAP_AGENT_TYPE);
 		agentTypes.put(CarAgent.class, AgentTypes.CAR_AGENT_TYPE);
 		agentTypes.put(TrafficLightAgent.class, AgentTypes.TRAFFIC_LIGHT_AGENT_TYPE);
@@ -122,5 +124,29 @@ public class AgentRegistrar
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public AID getCityAgentID(Agent agent)
+	{
+		List<AID> agents = getAgents(agent, CityAgent.class);
+		
+		if (agents.size() == 0)
+		{
+			throw new NoCityAgentFoundException();
+		}
+		
+		return agents.get(0);
+	}
+	
+	public AID getHighwayCodeAgentID(Agent agent)
+	{
+		List<AID> agents = getAgents(agent, HighwayCodeAgent.class);
+		
+		if (agents.size() == 0)
+		{
+			throw new NoHighwayCodeAgentFoundException();
+		}
+		
+		return agents.get(0);
 	}
 }

@@ -14,7 +14,7 @@ public class Map implements Concept
 	
 	private TrafficSimulatorGUI gui;
 	private java.util.Map<AID, DrawableCar> cars = new LinkedHashMap<AID, DrawableCar>();
-	private java.util.Map<AID, DrawableTrafficLights> trafficLights = new LinkedHashMap<AID, DrawableTrafficLights>();
+	private java.util.Map<AID, DrawableTrafficLight> trafficLights = new LinkedHashMap<AID, DrawableTrafficLight>();
 	
 	public Map() { }
 	
@@ -43,12 +43,12 @@ public class Map implements Concept
 		this.cars = cars;
 	}
 
-	public java.util.Map<AID, DrawableTrafficLights> getTrafficLights()
+	public java.util.Map<AID, DrawableTrafficLight> getTrafficLights()
 	{
 		return trafficLights;
 	}
 
-	public void setTrafficLights(java.util.Map<AID, DrawableTrafficLights> trafficLights)
+	public void setTrafficLights(java.util.Map<AID, DrawableTrafficLight> trafficLights)
 	{
 		this.trafficLights = trafficLights;
 	}
@@ -69,19 +69,19 @@ public class Map implements Concept
 		}
 	}
 	
-	public void updateTrafficLightInfo(AID trafficLightId, TrafficLightInfo info)
+	public void updateTrafficLightInfo(AID trafficLightId, TrafficLight trafficLight)
 	{
 		if (!trafficLights.containsKey(trafficLightId))
 		{
-			DrawableTrafficLights trafficLight = new DrawableTrafficLights(info.getLocation(), info.getAllowedDirection());
-			trafficLights.put(trafficLightId, trafficLight);
-			gui.addDrawableObjectToCityMap(trafficLight);
+			DrawableTrafficLight drawableTrafficLight = new DrawableTrafficLight(trafficLight.getLocation(), trafficLight.getStatus());
+			trafficLights.put(trafficLightId, drawableTrafficLight);
+			gui.addDrawableObjectToCityMap(drawableTrafficLight);
 		}
 		else
 		{
-			DrawableTrafficLights trafficLight = trafficLights.get(trafficLightId);
-			trafficLight.setTrafficLightsLocation(info.getLocation());
-			trafficLight.setTrafficLightAllowedDirection(info.getAllowedDirection());
+			DrawableTrafficLight drawableTrafficLight = trafficLights.get(trafficLightId);
+			drawableTrafficLight.setTrafficLightLocation(trafficLight.getLocation());
+			drawableTrafficLight.setTrafficLightStatus(trafficLight.getStatus());
 		}
 	}
 }

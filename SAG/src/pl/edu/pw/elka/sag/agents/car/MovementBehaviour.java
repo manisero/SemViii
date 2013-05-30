@@ -9,7 +9,7 @@ import java.util.*;
 
 import pl.edu.pw.elka.sag.agents.trafficlight.*;
 import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.ontology.actions.*;
+import pl.edu.pw.elka.sag.logic.actions.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 import pl.edu.pw.elka.sag.ontology.predicates.*;
 import pl.edu.pw.elka.sag.util.*;
@@ -19,13 +19,11 @@ public class MovementBehaviour extends TickerBehaviour
 	private static final long serialVersionUID = -5290333473439069526L;
 	
 	private final Car car;
-	private final AID cityAgentId;
 	
-	public MovementBehaviour(Agent agent, Car car, AID cityAgentId)
+	public MovementBehaviour(Agent agent, Car car)
 	{
 		super(agent, car.getSpeed() / 10);
 		this.car = car;
-		this.cityAgentId = cityAgentId;
 	}
 	
 	@Override
@@ -39,7 +37,7 @@ public class MovementBehaviour extends TickerBehaviour
 			car.setNextCrossroadsLocation(new GetNextCrossroadsLocationAction().execute(car.getLocation(), car.getDirection()));
 			car.setNextDirection(Direction.UNKNOWN);
 			car.setNextTrafficLight(null);
-			car.setNextTrafficLightAllowedDirection(null);
+			car.setNextTrafficLightRuleResult(false);
 			car.setOtherCarsToCheck(0);
 			car.setOtherCarsChecked(0);
 			car.setHasPriority(true);
@@ -79,7 +77,7 @@ public class MovementBehaviour extends TickerBehaviour
 					return;
 				}
 				
-				if (!car.getNextTrafficLightAllowedDirection().hasPart(car.getDirection()))
+				if (!car.getNextTrafficLightRuleResult())
 				{
 					checkTrafficLight();
 					return;
@@ -128,7 +126,7 @@ public class MovementBehaviour extends TickerBehaviour
 		try
 		{
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-			message.addReceiver(cityAgentId);
+			message.addReceiver(AgentRegistry.getInstance().getCityAgentID(myAgent));
 			message.setConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 			message.setContentObject(new CanTurnOnCrossroadsPredicate(null, car.getNextCrossroadsLocation()));
 			
@@ -143,7 +141,7 @@ public class MovementBehaviour extends TickerBehaviour
 	private boolean findTrafficLight()
 	{
 		String serviceName = TrafficLightAgent.getTrafficLightServiceName(car.getNextCrossroadsLocation());
-		List<AID> trafficLights = AgentRegistrar.getInstance().getAgents(myAgent, TrafficLightAgent.class, serviceName, true);
+		List<AID> trafficLights = AgentRegistry.getInstance().getAgents(myAgent, TrafficLightAgent.class, serviceName, true);
 		
 		if (trafficLights.size() > 0)
 		{
@@ -156,17 +154,26 @@ public class MovementBehaviour extends TickerBehaviour
 	
 	private void checkTrafficLight()
 	{
-		car.setNextTrafficLightAllowedDirection(null);
-		
-		ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-		message.addReceiver(car.getNextTrafficLight());
-		message.setConversationId(ConversationTypes.TRAFFIC_LIGHTS_CONVERSATION_TYPE);
-		myAgent.send(message);
+		try
+		{
+			car.setNextTrafficLightRuleResult(false);
+			
+			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+			message.addReceiver(car.getNextTrafficLight());
+			message.setConversationId(ConversationTypes.TRAFFIC_LIGHT_STATUS_CONVERSATION_TYPE);
+			message.setContentObject(car.getDirection());
+			
+			myAgent.send(message);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	private void checkOtherCars()
 	{
-		List<AID> cars = AgentRegistrar.getInstance().getAgents(myAgent, CarAgent.class);
+		List<AID> cars = AgentRegistry.getInstance().getAgents(myAgent, CarAgent.class);
 		
 		car.setOtherCarsToCheck(cars.size());
 		
