@@ -2,9 +2,7 @@ package pl.edu.pw.elka.sag.ontology.concepts;
 
 import jade.content.*;
 
-import java.io.*;
-
-public class TrafficLightInfo implements Serializable, Concept
+public class TrafficLightInfo implements Concept
 {
 	private static final long serialVersionUID = -3408982378321530210L;
 	

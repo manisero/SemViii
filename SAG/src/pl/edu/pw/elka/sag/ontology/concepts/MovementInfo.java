@@ -2,9 +2,7 @@ package pl.edu.pw.elka.sag.ontology.concepts;
 
 import jade.content.*;
 
-import java.io.*;
-
-public class MovementInfo implements Serializable, Concept
+public class MovementInfo implements Concept
 {
 	private static final long serialVersionUID = 1911875956344622762L;
 

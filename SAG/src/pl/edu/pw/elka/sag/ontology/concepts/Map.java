@@ -3,13 +3,12 @@ package pl.edu.pw.elka.sag.ontology.concepts;
 import jade.content.*;
 import jade.core.*;
 
-import java.io.*;
 import java.util.*;
 
 import pl.edu.pw.elka.sag.gui.*;
 import pl.edu.pw.elka.sag.gui.objects.*;
 
-public class Map implements Serializable, Concept
+public class Map implements Concept
 {
 	private static final long serialVersionUID = 4727355406265129148L;
 	

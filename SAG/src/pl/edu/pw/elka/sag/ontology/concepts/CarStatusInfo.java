@@ -2,9 +2,7 @@ package pl.edu.pw.elka.sag.ontology.concepts;
 
 import jade.content.*;
 
-import java.io.*;
-
-public class CarStatusInfo implements Serializable, Concept
+public class CarStatusInfo implements Concept
 {
 	private static final long serialVersionUID = -3899690705742612607L;
 	

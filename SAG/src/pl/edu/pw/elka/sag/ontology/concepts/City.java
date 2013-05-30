@@ -2,10 +2,9 @@ package pl.edu.pw.elka.sag.ontology.concepts;
 
 import jade.content.*;
 
-import java.io.*;
 import java.util.*;
 
-public class City implements Serializable, Concept
+public class City implements Concept
 {
 	private static final long serialVersionUID = 2996419799607017320L;
 	private int blocksCount;
