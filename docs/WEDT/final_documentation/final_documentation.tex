@@ -315,4 +315,45 @@ Tabela \ref{tab:reduced_set_accuracy} przedstawia wynik działania algorytmu dla
 
 Widać, że zaimplementowany algorytm zapewnia bardzo wysoką skuteczność. Wyróżnia się zwłaszcza skuteczność klasyfikacji blogów, dla której najgorszy z~wymienionych wskaźników ma rozrzut $\pm 9\%$ względem doskonałości. Licząc średnie odchylenie wskaźników od doskonałości można wywnioskować, że  algorytm jest miarodajny w~$92,125\%$ przypadków.
 
+\subsection{Pełne dane testowe}
+
+Algorytm był testowany dla następującej ilości danych:
+
+\begin{itemize}
+    \item 108 stron z~kategorii blog,
+    \item 83 strony z~kategorii kwejki,
+    \item 67 stron z~kategorii serwisy informacyjne,
+    \item 72 strony z~kategorii sklepy internetowe,
+    \item 39 stron nie należących do żadnej z~powyższych kategorii.
+\end{itemize}
+
+Wynik testów został przedstawiony w~tabeli \ref{tab:full_set_accuracy}.
+
+\begin{table}[ht!]
+\centering
+    \begin{tabular}{| c | c | c | c | c | c |}
+        \hline
+        \multicolumn{2}{|c|}{} & \multicolumn{4}{c|}{Wskaźniki} \\
+        \cline{3-6}
+        \multicolumn{2}{|c|}{} & Dokładność & Szczegółowość & Rozrzut & Precyzja \\
+        \hline
+        \multirow{7}{*}{\begin{sideways}Kategorie \end{sideways}} & Blogi & 96,75\% & 92,59\% & 1,53\% & 96,15\% \\
+        \cline{2-6}
+        & Kwejki & 95,12\% & 86,75\% & 2,79\% & 90\% \\
+        \cline{2-6}
+        & Serwisy & \multirow{2}{*}{97,29\%} & \multirow{2}{*}{92,54\%} & \multirow{2}{*}{2,30\%} & \multirow{2}{*}{89,86\%} \\
+        & informacyjne & & & & \\
+        \cline{2-6}
+        & Sklepy & \multirow{2}{*}{94,85\%} & \multirow{2}{*}{83,33\%} & \multirow{2}{*}{3,33\%} & \multirow{2}{*}{85,71\%} \\
+        & internetowe & & & & \\
+        \cline{2-6}
+        & Inne & 96,48\% & 89,74\% & 3,31\% & 76,09\% \\
+        \hline
+    \end{tabular}
+    \caption{Skuteczność algorytmu dla pełnego zestawu danych testowych.}
+    \label{tab:full_set_accuracy}
+\end{table}
+
+Ponownie najlepiej wykrywaną kategorią są blogi. Licząc średnie odchylenie wskaźników od doskonałości można wywnioskować, że algorytm jest miarodajny w~$\approx 92\%$ przypadków. Dowodzi to, że możliwe jest systematyczne kategoryzowanie stron WWW na podstawie ich struktury.
+
 \end{document}
