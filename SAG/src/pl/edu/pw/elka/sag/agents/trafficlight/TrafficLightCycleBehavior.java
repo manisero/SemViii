@@ -1,6 +1,6 @@
 package pl.edu.pw.elka.sag.agents.trafficlight;
 
-import pl.edu.pw.elka.sag.ontology.actions.*;
+import pl.edu.pw.elka.sag.logic.actions.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 import jade.core.*;
 import jade.core.behaviours.*;

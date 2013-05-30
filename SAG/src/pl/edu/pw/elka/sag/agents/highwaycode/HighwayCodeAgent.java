@@ -1,6 +1,8 @@
 package pl.edu.pw.elka.sag.agents.highwaycode;
 
 import pl.edu.pw.elka.sag.agents.*;
+import pl.edu.pw.elka.sag.constants.*;
+import pl.edu.pw.elka.sag.logic.highwaycode.*;
 
 public class HighwayCodeAgent extends AgentBase
 {
@@ -12,6 +14,22 @@ public class HighwayCodeAgent extends AgentBase
 		super.setup();
 		register();
 		
-		addBehaviour(new ServeTrafficLightRuleBehaviour(this));
+		Object[] arguments = getArguments();
+		String highwayCodeType;
+		
+		if (arguments == null || arguments.length < 1)
+		{
+			 highwayCodeType = HighwayCodeTypes.POLISH_HIGHWAY_CODE_TYPE;
+		}
+		else
+		{
+			highwayCodeType = arguments[0].toString();
+		}
+		
+		System.out.println("Highway Code used: " + highwayCodeType);
+		
+		IHighwayCode highwayCode = new HighwayCodeFactory().createHighwayCode(highwayCodeType);
+		
+		addBehaviour(new ServeTrafficLightRuleBehaviour(this, highwayCode));
 	}
 }

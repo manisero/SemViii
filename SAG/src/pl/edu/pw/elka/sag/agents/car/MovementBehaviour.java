@@ -9,7 +9,7 @@ import java.util.*;
 
 import pl.edu.pw.elka.sag.agents.trafficlight.*;
 import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.ontology.actions.*;
+import pl.edu.pw.elka.sag.logic.actions.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 import pl.edu.pw.elka.sag.ontology.predicates.*;
 import pl.edu.pw.elka.sag.util.*;

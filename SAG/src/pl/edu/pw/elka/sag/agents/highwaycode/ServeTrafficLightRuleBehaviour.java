@@ -4,6 +4,7 @@ import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 import pl.edu.pw.elka.sag.constants.*;
+import pl.edu.pw.elka.sag.logic.highwaycode.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class ServeTrafficLightRuleBehaviour extends CyclicBehaviour
@@ -11,9 +12,12 @@ public class ServeTrafficLightRuleBehaviour extends CyclicBehaviour
 	private static final long serialVersionUID = -8705231544834694720L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHT_RULE_CONVERSATION_TYPE);
 	
-	public ServeTrafficLightRuleBehaviour(Agent agent)
+	private final IHighwayCode highwayCode;
+	
+	public ServeTrafficLightRuleBehaviour(Agent agent, IHighwayCode highwayCode)
 	{
 		super(agent);
+		this.highwayCode = highwayCode;
 	}
 	
 	@Override
@@ -29,7 +33,7 @@ public class ServeTrafficLightRuleBehaviour extends CyclicBehaviour
 				
 				ACLMessage reply = message.createReply();
 				
-				if (trafficLightStatus == TrafficLightStatus.GREEN)
+				if (highwayCode.getTrafficLightRule().evaluate(null, trafficLightStatus))
 				{
 					reply.setPerformative(ACLMessage.AGREE);
 				}
