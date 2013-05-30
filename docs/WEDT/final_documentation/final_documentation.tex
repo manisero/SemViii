@@ -6,6 +6,8 @@
 \usepackage{pdfpages}
 \usepackage{tikz}
 \usepackage{fancyvrb}
+\usepackage{rotating}
+\usepackage{multirow}
 \usetikzlibrary{positioning,shapes,shadows,arrows}
 
 \author{Michał Aniserowicz \href{mailto:michalaniserowicz@gmail.com}{{\small \nolinkurl{<michalaniserowicz@gmail.com>}}} \\ Jakub Turek \href{mailto:jkbturek@gmail.com}{{\small \nolinkurl{jkbturek@gmail.com}}}}
@@ -243,10 +245,74 @@ Na dane wyjściowe składają się zarówno pliki, jak również wyjście standa
     \item[podsumowanie] Wyprowadzane na wyjście standardowe. Przedstawia skuteczności algorytmu dla każdej kategorii, mierzone w~czterech własnościach:
         \begin{itemize}
             \item dokładność,
-            \item szczegółowość,
-            \item rozrzut,
+            \item zupełność,
+            \item zaszumienie,
             \item precyzja.
         \end{itemize}
 \end{description}
+
+\section{Skuteczność algorytmu}
+
+Skuteczność algorytmu mierzona jest przy pomocy czterech wskaźników. Zakładając, że:
+ 
+\begin{itemize}
+ \item $|TP|$ to liczba poprawnych przydzieleń dokumentu do danej kategorii, 
+ \item $|FP|$ to liczba niepoprawnych przydzieleń dokumentu do danej kategorii,
+ \item $|TN|$ to liczba poprawnych nieprzydzieleń dokumentu do danej kategorii,
+ \item $|FN|$ to liczba niepoprawnych nieprzydzieleń dokumentu do danej kategorii,
+\end{itemize}
+
+wtedy wskaźniki te wyrażają się następującymi wzorami:
+
+\begin{description}
+    \item[dokładność] $\frac{|TP| + |TN|}{|TP| + |TN| + |FP| + |FN|}$,
+    \item[zupełność] $\frac{|TP|}{|TP| + |FN|}$,
+    \item[zaszumienie] $\frac{|FP|}{|FP| + |TN|}$,
+    \item[precyzja] $\frac{|TP|}{|TP| + |FP|}$.
+\end{description}
+
+Wskaźniki te można odczytywać następująco:
+
+\begin{description}
+    \item[dokładność] opisuje procent poprawnych wskazań algorytmu ogółem.
+    \item[zupełność] opisuje procent pokrycia wejściowego zbioru danych poprawnymi wskazaniami.
+    \item[zaszumienie] opisuje procent właściwości wskazań negatywnych.
+    \item[precyzja] opisuje procent właściwości wskazań pozytywnych.
+\end{description}
+
+\subsection{Okrojone dane testowe}
+
+Tabela \ref{tab:reduced_set_accuracy} przedstawia wynik działania algorytmu dla okrojonych danych testowych, przygotowanych na potrzeby prezentacji. Okrojone dane testowe obejmują:
+
+\begin{itemize}
+    \item po trzy przykłady trenujące z~każdej z~czterech kategorii,
+    \item po dziesięć przykładów stron do sklasyfikowania z~każdej z~czterech kategorii,
+    \item pięć stron, które nie należą do żadnej z~czterech kategorii.
+\end{itemize}
+
+\begin{table}[ht!]
+\centering
+    \begin{tabular}{| c | c | c | c | c | c |}
+        \hline
+        \multicolumn{2}{|c|}{} & \multicolumn{4}{c|}{Wskaźniki} \\
+        \cline{3-6}
+        \multicolumn{2}{|c|}{} & Dokładność & Szczegółowość & Rozrzut & Precyzja \\
+        \hline
+        \multirow{6}{*}{\begin{sideways}Kategorie \end{sideways}} & Blogi & 98\% & 100\% & 3\% & 91\% \\
+        \cline{2-6}
+        & Kwejki & 95\% & 100\% & 6\% & 83\% \\
+        \cline{2-6}
+        & Serwisy & \multirow{2}{*}{93\%} & \multirow{2}{*}{88\%} & \multirow{2}{*}{6\%} & \multirow{2}{*}{78\%} \\
+        & informacyjne & & & & \\
+        \cline{2-6}
+        & Sklepy & \multirow{2}{*}{93\%} & \multirow{2}{*}{70\%} & \multirow{2}{*}{0\%} & \multirow{2}{*}{100\%} \\
+        & internetowe & & & & \\
+        \hline
+    \end{tabular}
+    \caption{Skuteczność algorytmu dla okrojonego zestawu danych testowych.}
+    \label{tab:reduced_set_accuracy}
+\end{table}
+
+Widać, że zaimplementowany algorytm zapewnia bardzo wysoką skuteczność. Wyróżnia się zwłaszcza skuteczność klasyfikacji blogów, dla której najgorszy z~wymienionych wskaźników ma rozrzut $\pm 9\%$ względem doskonałości. Licząc średnie odchylenie wskaźników od doskonałości można wywnioskować, że  algorytm jest miarodajny w~$92,125\%$ przypadków.
 
 \end{document}
