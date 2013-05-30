@@ -13,11 +13,10 @@ import java.util.LinkedHashSet;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import pl.edu.pw.elka.sag.entities.Direction;
-import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyProvider;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyReceiver;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class CityMap extends JPanel implements IDrawablePropertyProvider
 {
@@ -122,8 +121,8 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	/**
 	 * Returns on screen position of traffic lights.
 	 * 
-	 * @param location {@link pl.edu.pw.elka.sag.entities.Location} of traffic lights
-	 * @param direction {@link pl.edu.pw.elka.sag.entities.Direction} of traffic lights
+	 * @param location {@link pl.edu.pw.elka.sag.ontology.concepts.Location} of traffic lights
+	 * @param direction {@link pl.edu.pw.elka.sag.ontology.concepts.Direction} of traffic lights
 	 * 
 	 * @return on screen position of traffic lights, null if lights should not be drawn.
 	 */

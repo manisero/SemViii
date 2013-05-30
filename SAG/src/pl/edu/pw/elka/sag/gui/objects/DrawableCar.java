@@ -5,11 +5,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import pl.edu.pw.elka.sag.entities.Direction;
-import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyProvider;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyReceiver;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 {
@@ -25,8 +24,8 @@ public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 	/**
 	 * Constructs animated car.
 	 * 
-	 * @param carLocation heading {@link pl.edu.pw.elka.sag.entities.Location}
-	 * @param previousLocation starting {@link pl.edu.pw.elka.sag.entities.Location}
+	 * @param carLocation heading {@link pl.edu.pw.elka.sag.ontology.concepts.Location}
+	 * @param previousLocation starting {@link pl.edu.pw.elka.sag.ontology.concepts.Location}
 	 */
 	public DrawableCar(Location carLocation, Direction carDirection)
 	{
@@ -63,7 +62,7 @@ public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 	/**
 	 * Returns current car location.
 	 * 
-	 * @return current {@link pl.edu.pw.elka.sag.entities.Location}
+	 * @return current {@link pl.edu.pw.elka.sag.ontology.concepts.Location}
 	 */
 	public Location getCarLocation()
 	{
@@ -73,7 +72,7 @@ public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 	/**
 	 * Sets current car location.
 	 * 
-	 * @param carLocation {@link pl.edu.pw.elka.sag.entities.Location} to set
+	 * @param carLocation {@link pl.edu.pw.elka.sag.ontology.concepts.Location} to set
 	 */
 	public void setCarLocation(Location carLocation)
 	{
@@ -83,7 +82,7 @@ public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 	/**
 	 * Returns current car direction.
 	 * 
-	 * @return current {@link pl.edu.pw.elka.sag.entities.Direction}
+	 * @return current {@link pl.edu.pw.elka.sag.ontology.concepts.Direction}
 	 */
 	public Direction getCarDirection()
 	{
@@ -93,7 +92,7 @@ public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 	/**
 	 * Sets current car direction.
 	 * 
-	 * @param carDirection {@link pl.edu.pw.elka.sag.entities.Direction} to set
+	 * @param carDirection {@link pl.edu.pw.elka.sag.ontology.concepts.Direction} to set
 	 */
 	public void setCarDirection(Direction carDirection)
 	{

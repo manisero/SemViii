@@ -1,10 +1,11 @@
-package pl.edu.pw.elka.sag.entities;
+package pl.edu.pw.elka.sag.ontology.concepts;
 
 import java.io.*;
 
+import jade.content.*;
 import jade.core.*;
 
-public class Car implements Serializable, IMovable
+public class Car implements Serializable, Concept, IMovable
 {
 	private static final long serialVersionUID = 8098439117766827737L;
 	

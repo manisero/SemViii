@@ -1,4 +1,4 @@
-package pl.edu.pw.elka.sag.entities;
+package pl.edu.pw.elka.sag.ontology.concepts;
 
 public enum CarStatus
 {

@@ -9,8 +9,8 @@ import java.util.*;
 
 import pl.edu.pw.elka.sag.agents.trafficlight.*;
 import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.entities.*;
-import pl.edu.pw.elka.sag.entities.Location;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.concepts.Location;
 import pl.edu.pw.elka.sag.util.*;
 
 public class MovementBehaviour extends TickerBehaviour

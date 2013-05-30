@@ -1,7 +1,7 @@
 package pl.edu.pw.elka.sag.agents.city;
 
 import pl.edu.pw.elka.sag.agents.*;
-import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class CityAgent extends AgentBase
 {

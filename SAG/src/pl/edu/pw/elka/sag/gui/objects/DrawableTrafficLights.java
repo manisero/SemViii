@@ -5,11 +5,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import pl.edu.pw.elka.sag.entities.Direction;
-import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyProvider;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyReceiver;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class DrawableTrafficLights extends Canvas implements IDrawablePropertyReceiver
 {
@@ -42,7 +41,7 @@ public class DrawableTrafficLights extends Canvas implements IDrawablePropertyRe
 	/**
 	 * Returns traffic lights location.
 	 * 
-	 * @return {@link pl.edu.pw.elka.sag.entities.Location} of traffic lights
+	 * @return {@link pl.edu.pw.elka.sag.ontology.concepts.Location} of traffic lights
 	 */
 	public Location getTrafficLightsLocation()
 	{
@@ -52,7 +51,7 @@ public class DrawableTrafficLights extends Canvas implements IDrawablePropertyRe
 	/**
 	 * Sets traffic lights location.
 	 * 
-	 * @param trafficLightsLocation {@link pl.edu.pw.elka.sag.entities.Location} of traffic lights to set
+	 * @param trafficLightsLocation {@link pl.edu.pw.elka.sag.ontology.concepts.Location} of traffic lights to set
 	 */
 	public void setTrafficLightsLocation(Location trafficLightsLocation)
 	{
@@ -62,7 +61,7 @@ public class DrawableTrafficLights extends Canvas implements IDrawablePropertyRe
 	/**
 	 * Returns allowed direction of traffic lights.
 	 * 
-	 * @return allowed {@link pl.edu.pw.elka.sag.entities.Direction} of traffic lights
+	 * @return allowed {@link pl.edu.pw.elka.sag.ontology.concepts.Direction} of traffic lights
 	 */
 	public Direction getTrafficLightAllowedDirection()
 	{
@@ -72,7 +71,7 @@ public class DrawableTrafficLights extends Canvas implements IDrawablePropertyRe
 	/**
 	 * Sets allowed direction of traffic lights.
 	 * 
-	 * @param allowedDirection allowed {@link pl.edu.pw.elka.sag.entities.Direction} of traffic lights to set
+	 * @param allowedDirection allowed {@link pl.edu.pw.elka.sag.ontology.concepts.Direction} of traffic lights to set
 	 */
 	public void setTrafficLightAllowedDirection(Direction allowedDirection)
 	{
@@ -116,7 +115,7 @@ public class DrawableTrafficLights extends Canvas implements IDrawablePropertyRe
 	 * Paints traffic light for given direction.
 	 * 
 	 * @param graphics2D {@link java.awt.Graphics2D} instance
-	 * @param direction {@link pl.edu.pw.elka.sag.entities.Direction} of traffic lights to paint
+	 * @param direction {@link pl.edu.pw.elka.sag.ontology.concepts.Direction} of traffic lights to paint
 	 */
 	private void paintTrafficLights(Graphics2D graphics2D, Direction direction)
 	{

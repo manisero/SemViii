@@ -1,8 +1,10 @@
-package pl.edu.pw.elka.sag.entities;
+package pl.edu.pw.elka.sag.ontology.concepts;
+
+import jade.content.*;
 
 import java.io.Serializable;
 
-public class Location implements Serializable
+public class Location implements Serializable, Concept
 {
 	private static final long serialVersionUID = -3851200930745256723L;
 	
