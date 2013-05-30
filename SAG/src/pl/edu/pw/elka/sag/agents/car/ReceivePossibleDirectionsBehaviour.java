@@ -3,6 +3,7 @@ package pl.edu.pw.elka.sag.agents.car;
 import java.util.*;
 
 import pl.edu.pw.elka.sag.constants.*;
+import pl.edu.pw.elka.sag.ontology.actions.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 import pl.edu.pw.elka.sag.ontology.predicates.*;
 import jade.core.*;
@@ -40,7 +41,8 @@ public class ReceivePossibleDirectionsBehaviour extends CyclicBehaviour
 					directions.add(predicate.getTurnDirection());
 				}
 				
-				car.setNextDirection(chooseDirection(directions));
+				Direction direction = new ChooseCarDirectionAction().Ececute(car, directions);
+				car.setNextDirection(direction);
 			}
 			catch (UnreadableException e)
 			{
@@ -51,17 +53,5 @@ public class ReceivePossibleDirectionsBehaviour extends CyclicBehaviour
 		{
 			block();
 		}
-	}
-	
-	private Direction chooseDirection(List<Direction> directions)
-	{
-		Direction currentCarDirection = car.getDirection();
-		
-		if (currentCarDirection != null)
-		{
-			directions.remove(currentCarDirection.getOpposite());
-		}
-		
-		return directions.get(new Random().nextInt(directions.size()));
 	}
 }
