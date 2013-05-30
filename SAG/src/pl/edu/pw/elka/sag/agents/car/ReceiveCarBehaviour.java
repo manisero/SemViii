@@ -11,7 +11,8 @@ public class ReceiveCarBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -1841154680537589138L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId(ConversationTypes.CAR_CONVERSATION_TYPE),
-			   																   MessageTemplate.not(MessageTemplate.MatchPerformative(ACLMessage.REQUEST)));
+																			   MessageTemplate.and(MessageTemplate.not(MessageTemplate.MatchPerformative(ACLMessage.REQUEST)),
+																					   			   MessageTemplate.not(MessageTemplate.MatchPerformative(ACLMessage.REQUEST_WHEN))));
 	
 	private final Car car;
 	
