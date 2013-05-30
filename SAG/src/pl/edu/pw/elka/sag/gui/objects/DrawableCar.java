@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
+import pl.edu.pw.elka.sag.gui.constants.MapPaintSettings;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyProvider;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyReceiver;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
@@ -112,7 +112,7 @@ public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 		Point currentPosition = propertiesProvider.getCarScreenPosition(carLocation, carDirection);
 		
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		graphics2D.setColor(PaintSettings.CAR_COLOR);
+		graphics2D.setColor(MapPaintSettings.CAR_COLOR);
 		graphics2D.fillOval(currentPosition.x, currentPosition.y, getCarRadius(), getCarRadius());
 	}
 }

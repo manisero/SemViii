@@ -2,7 +2,7 @@ package pl.edu.pw.elka.sag.gui.constants;
 
 import java.awt.Color;
 
-public interface PaintSettings
+public interface MapPaintSettings
 {
 	public static final int FPS = 25;
 	

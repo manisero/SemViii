@@ -7,7 +7,7 @@ import java.awt.Point;
 import java.util.*;
 import java.util.Map;
 
-import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
+import pl.edu.pw.elka.sag.gui.constants.MapPaintSettings;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyProvider;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyReceiver;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
@@ -130,8 +130,8 @@ public class DrawableTrafficLight extends Canvas implements IDrawablePropertyRec
 		
 		TrafficLightStatus status = trafficLightStatus.get(direction);
 		graphics2D.setColor(status == TrafficLightStatus.GREEN
-								? PaintSettings.LIGHTS_GREEN_COLOR
-								: PaintSettings.LIGHTS_RED_COLOR);
+								? MapPaintSettings.LIGHTS_GREEN_COLOR
+								: MapPaintSettings.LIGHTS_RED_COLOR);
 		
 		graphics2D.fillOval(currentPosition.x, currentPosition.y, getTrafficLightsSize(), getTrafficLightsSize());
 	}

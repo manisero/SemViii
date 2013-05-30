@@ -13,7 +13,7 @@ import java.util.LinkedHashSet;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
+import pl.edu.pw.elka.sag.gui.constants.MapPaintSettings;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyProvider;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyReceiver;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
@@ -46,7 +46,7 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	 */
 	private void animate()
 	{
-		new Timer(1000 / PaintSettings.FPS, new ActionListener()
+		new Timer(1000 / MapPaintSettings.FPS, new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -115,7 +115,7 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	@Override
 	public int getTrafficLightsBoundingBoxSize()
 	{
-		return (int) (PaintSettings.LIGHTS_TO_LANE_WIDTH_RATIO * getLaneOffset());
+		return (int) (MapPaintSettings.LIGHTS_TO_LANE_WIDTH_RATIO * getLaneOffset());
 	}
 
 	/**
@@ -212,7 +212,7 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	 */
 	private int getViewportSize()
 	{
-		return (int) (screenSize * PaintSettings.PANEL_TO_WINDOW_SIZE_RATIO);
+		return (int) (screenSize * MapPaintSettings.PANEL_TO_WINDOW_SIZE_RATIO);
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	 */
 	private int getMarginSize()
 	{
-		return (int) (screenSize * ((1.0 - PaintSettings.PANEL_TO_WINDOW_SIZE_RATIO) / 2.0));
+		return (int) (screenSize * ((1.0 - MapPaintSettings.PANEL_TO_WINDOW_SIZE_RATIO) / 2.0));
 	}
 	
 	/**
@@ -230,7 +230,7 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	 */
 	private int getStreetLength()
 	{
-		double streetLength = getViewportSize() / ((PaintSettings.STREET_WIDTH_TO_LENGTH_RATIO + 1) * citySize - 1);
+		double streetLength = getViewportSize() / ((MapPaintSettings.STREET_WIDTH_TO_LENGTH_RATIO + 1) * citySize - 1);
 		
 		return (int) Math.floor(streetLength);
 	}
@@ -242,7 +242,7 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	 */
 	private int getStreetWidth()
 	{
-		double streetWidth = getStreetLength() * PaintSettings.STREET_WIDTH_TO_LENGTH_RATIO; 
+		double streetWidth = getStreetLength() * MapPaintSettings.STREET_WIDTH_TO_LENGTH_RATIO; 
 		
 		return (int) Math.floor(streetWidth);
 	}
@@ -256,8 +256,8 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	{
 		int streetLength = getStreetLength() - getStreetWidth();
 		
-		double laneLength = streetLength / (PaintSettings.LANES_PER_STREET * 
-				(1 + PaintSettings.LANE_TO_SPACE_LENGTH_RATIO) + PaintSettings.LANE_TO_SPACE_LENGTH_RATIO);
+		double laneLength = streetLength / (MapPaintSettings.LANES_PER_STREET * 
+				(1 + MapPaintSettings.LANE_TO_SPACE_LENGTH_RATIO) + MapPaintSettings.LANE_TO_SPACE_LENGTH_RATIO);
 		
 		return (int) laneLength;
 	}
@@ -269,7 +269,7 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 	 */
 	private int getLaneSpaceLength()
 	{
-		double laneSpaceLength = getLaneLength() * PaintSettings.LANE_TO_SPACE_LENGTH_RATIO;
+		double laneSpaceLength = getLaneLength() * MapPaintSettings.LANE_TO_SPACE_LENGTH_RATIO;
 		
 		return (int) laneSpaceLength;
 	}
@@ -375,7 +375,7 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 		
 		for (int i = 0; i < citySize; ++i)
 		{
-			drawFilledRectangle(graphics, PaintSettings.STREET_COLOR, currentWidth, currentHeight, baseLength, 
+			drawFilledRectangle(graphics, MapPaintSettings.STREET_COLOR, currentWidth, currentHeight, baseLength, 
 					streetWidth, verticalGrid);
 			
 			int laneOffset = getLaneOffset();
@@ -386,9 +386,9 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 				int xLane = currentWidth + streetWidth + getLaneSpaceLength() + j * streetLength; 
 				int yLane = currentHeight + laneOffset;
 				
-				for (int k = 0; k < PaintSettings.LANES_PER_STREET; ++k)
+				for (int k = 0; k < MapPaintSettings.LANES_PER_STREET; ++k)
 				{
-					drawFilledRectangle(graphics, PaintSettings.LANE_COLOR, xLane, yLane, getLaneLength(),
+					drawFilledRectangle(graphics, MapPaintSettings.LANE_COLOR, xLane, yLane, getLaneLength(),
 							laneThickness, verticalGrid);
 					
 					xLane += getLaneLength() + getLaneSpaceLength();
