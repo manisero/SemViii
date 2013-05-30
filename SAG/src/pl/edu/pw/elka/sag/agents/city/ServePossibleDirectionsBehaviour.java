@@ -10,6 +10,7 @@ import java.util.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 import pl.edu.pw.elka.sag.ontology.concepts.Location;
+import pl.edu.pw.elka.sag.ontology.predicates.*;
 
 public class ServePossibleDirectionsBehaviour extends CyclicBehaviour
 {
@@ -33,12 +34,19 @@ public class ServePossibleDirectionsBehaviour extends CyclicBehaviour
 		{
 			try
 			{
-				Location location = (Location) message.getContentObject();
-				List<Direction> directions = city.getPossibleDirections(location);
+				CanTurnOnCrossroadsPredicate predicate = (CanTurnOnCrossroadsPredicate) message.getContentObject();
+				Location crossroadsLocation = predicate.getCrossroadsLocation();
+				List<Direction> directions = city.getPossibleDirections(crossroadsLocation);
+				
+				ArrayList<CanTurnOnCrossroadsPredicate> result = new ArrayList<CanTurnOnCrossroadsPredicate>();
+				
+				for (Direction direction : directions)
+				{
+					result.add(new CanTurnOnCrossroadsPredicate(direction, crossroadsLocation));
+				}
 				
 				ACLMessage reply = message.createReply();
-				reply.setContentObject(new DirectionsCollection(directions));
-				
+				reply.setContentObject(result);
 				myAgent.send(reply);
 			}
 			catch (UnreadableException e)

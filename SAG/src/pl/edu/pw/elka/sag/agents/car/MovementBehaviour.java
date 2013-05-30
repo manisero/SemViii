@@ -11,6 +11,7 @@ import pl.edu.pw.elka.sag.agents.trafficlight.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 import pl.edu.pw.elka.sag.ontology.concepts.Location;
+import pl.edu.pw.elka.sag.ontology.predicates.*;
 import pl.edu.pw.elka.sag.util.*;
 
 public class MovementBehaviour extends TickerBehaviour
@@ -156,7 +157,7 @@ public class MovementBehaviour extends TickerBehaviour
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(cityAgentId);
 			message.setConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
-			message.setContentObject(car.getNextCrossroadsLocation());
+			message.setContentObject(new CanTurnOnCrossroadsPredicate(null, car.getNextCrossroadsLocation()));
 			
 			myAgent.send(message);
 		}
