@@ -30,6 +30,7 @@ public class HighwayCodeAgent extends AgentBase
 		
 		IHighwayCode highwayCode = new HighwayCodeFactory().createHighwayCode(highwayCodeType);
 		
+		addBehaviour(new ServeRoadSideRuleBehaviour(this, highwayCode));
 		addBehaviour(new ServeTrafficLightRuleBehaviour(this, highwayCode));
 	}
 }

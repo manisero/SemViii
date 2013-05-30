@@ -1,4 +1,4 @@
-package pl.edu.pw.elka.sag.logic.highwaycode.rules.trafficlight;
+package pl.edu.pw.elka.sag.logic.highwaycode.rules;
 
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 
