@@ -174,14 +174,14 @@ public class MovementBehaviour extends TickerBehaviour
 		
 		try
 		{
-			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+			ACLMessage message = new ACLMessage(ACLMessage.REQUEST_WHEN);
 			
 			for (AID car : cars)
 			{
 				message.addReceiver(car);
 			}
 			
-			message.setConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE);
+			message.setConversationId(ConversationTypes.CAR_CONVERSATION_TYPE);
 			message.setContentObject(car.getNextCrossroadsLocation());
 			
 			myAgent.send(message);

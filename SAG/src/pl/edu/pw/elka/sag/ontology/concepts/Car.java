@@ -10,8 +10,9 @@ public class Car implements Concept
 	private int speed;
 	private Location location;
 	private Direction direction;
-	private CarStatus status;
 	private Direction nextDirection;
+	private CarStatus status;
+	
 	private Location nextCrossroadsLocation;
 	private AID nextTrafficLight;
 	private boolean nextTrafficLightRuleResult;

@@ -7,15 +7,15 @@ import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
-public class ReceiveCarStatusInfoBehaviour extends CyclicBehaviour
+public class ReceiveCarBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -1841154680537589138L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId(ConversationTypes.CAR_STATUS_INFO_CONVERSATION_TYPE),
+	private static final MessageTemplate messageTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId(ConversationTypes.CAR_CONVERSATION_TYPE),
 			   																   MessageTemplate.not(MessageTemplate.MatchPerformative(ACLMessage.REQUEST)));
 	
 	private final Car car;
 	
-	public ReceiveCarStatusInfoBehaviour(Agent agent, Car car)
+	public ReceiveCarBehaviour(Agent agent, Car car)
 	{
 		super(agent);
 		this.car = car;
@@ -32,14 +32,14 @@ public class ReceiveCarStatusInfoBehaviour extends CyclicBehaviour
 			{
 				car.setOtherCarsChecked(car.getOtherCarsChecked() + 1);
 				
-				if (message.getPerformative() != ACLMessage.INFORM)
+				if (message.getPerformative() == ACLMessage.NOT_UNDERSTOOD)
 				{
 					return;
 				}
 				
-				CarStatusInfo info = (CarStatusInfo) message.getContentObject();
+				Car otherCar = (Car) message.getContentObject();
 				
-				if (!new CheckCarPriorityAction().execute(car, info))
+				if (!new CheckCarPriorityAction().execute(car, otherCar))
 				{
 					car.setHasPriority(false);
 				}
