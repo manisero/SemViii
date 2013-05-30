@@ -3,7 +3,7 @@ package pl.edu.pw.elka.sag.ontology.concepts;
 import jade.content.*;
 import jade.core.*;
 
-public class Car implements Concept, IMovable
+public class Car implements Concept
 {
 	private static final long serialVersionUID = 8098439117766827737L;
 	

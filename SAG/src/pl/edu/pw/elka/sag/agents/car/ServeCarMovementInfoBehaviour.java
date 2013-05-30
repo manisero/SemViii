@@ -1,4 +1,4 @@
-package pl.edu.pw.elka.sag.agents;
+package pl.edu.pw.elka.sag.agents.car;
 
 import jade.core.*;
 import jade.core.behaviours.*;
@@ -9,17 +9,17 @@ import java.io.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 
-public class ServeMovementInfoBehaviour extends CyclicBehaviour
+public class ServeCarMovementInfoBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -7164928311123018886L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.MOVEMENT_INFO_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.CAR_MOVEMENT_INFO_CONVERSATION_TYPE);
 	
-	private final IMovable movable;
+	private final Car car;
 
-	public ServeMovementInfoBehaviour(Agent agent, IMovable movable)
+	public ServeCarMovementInfoBehaviour(Agent agent, Car car)
 	{
 		super(agent);
-		this.movable = movable;
+		this.car = car;
 	}
 	
 	@Override
@@ -32,7 +32,7 @@ public class ServeMovementInfoBehaviour extends CyclicBehaviour
 			try
 			{
 				ACLMessage reply = message.createReply();
-				reply.setContentObject(new MovementInfo(movable.getLocation(), movable.getDirection()));
+				reply.setContentObject(new MovementInfo(car.getLocation(), car.getDirection()));
 				
 				myAgent.send(reply);
 			}
