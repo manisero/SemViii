@@ -1,6 +1,7 @@
 package pl.edu.pw.elka.sag.agents.car;
 
 import pl.edu.pw.elka.sag.constants.*;
+import pl.edu.pw.elka.sag.ontology.actions.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 import jade.core.*;
 import jade.core.behaviours.*;
@@ -38,19 +39,7 @@ public class ReceiveCarStatusInfoBehaviour extends CyclicBehaviour
 				
 				CarStatusInfo info = (CarStatusInfo) message.getContentObject();
 				
-				if (info.getStatus() == CarStatus.OnCrossroads)
-				{
-					car.setHasPriority(false);
-					return;
-				}
-				
-				Direction carDirection = car.getDirection();
-				Direction otherCarDirection = info.getFrom();
-				
-				if (carDirection == Direction.NORTH && otherCarDirection == Direction.WEST ||
-					carDirection == Direction.WEST && otherCarDirection == Direction.SOUTH ||
-					carDirection == Direction.SOUTH && otherCarDirection == Direction.EAST ||
-					carDirection == Direction.EAST && otherCarDirection == Direction.NORTH)
+				if (!new CheckCarPriorityAction().execute(car, info))
 				{
 					car.setHasPriority(false);
 				}
