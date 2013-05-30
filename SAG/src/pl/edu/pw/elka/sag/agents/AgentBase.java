@@ -21,12 +21,12 @@ public abstract class AgentBase extends Agent
 	
 	protected void register(String serviceName)
 	{
-		AgentRegistrar.getInstance().register(this, serviceName);
+		AgentRegistry.getInstance().register(this, serviceName);
 	}
 	
 	@Override
 	protected void takeDown()
 	{
-		AgentRegistrar.getInstance().unregister(this);
+		AgentRegistry.getInstance().unregister(this);
 	}
 }

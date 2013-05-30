@@ -23,7 +23,7 @@ public class RequestTrafficLightBehaviour extends TickerBehaviour
 	protected void onTick()
 	{
 		ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-		List<AID> trafficLightIds = AgentRegistrar.getInstance().getAgents(myAgent, TrafficLightAgent.class);
+		List<AID> trafficLightIds = AgentRegistry.getInstance().getAgents(myAgent, TrafficLightAgent.class);
 		
 		if (trafficLightIds.size() == 0)
 		{

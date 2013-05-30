@@ -1,1 +1,1 @@
-java -cp lib\jade.jar;bin jade.Boot -gui -agents city:pl.edu.pw.elka.sag.agents.city.CityAgent;map:pl.edu.pw.elka.sag.agents.map.MapAgent
+java -cp lib\jade.jar;bin jade.Boot -gui -agents city:pl.edu.pw.elka.sag.agents.city.CityAgent;highwayCode:pl.edu.pw.elka.sag.agents.highwaycode.HighwayCodeAgent;map:pl.edu.pw.elka.sag.agents.map.MapAgent
