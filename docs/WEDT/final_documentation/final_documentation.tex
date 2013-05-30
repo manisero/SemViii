@@ -8,11 +8,15 @@
 \usepackage{fancyvrb}
 \usepackage{rotating}
 \usepackage{multirow}
+\usepackage{amsmath}
 \usetikzlibrary{positioning,shapes,shadows,arrows}
 
 \author{Michał Aniserowicz \href{mailto:michalaniserowicz@gmail.com}{{\small \nolinkurl{<michalaniserowicz@gmail.com>}}} \\ Jakub Turek \href{mailto:jkbturek@gmail.com}{{\small \nolinkurl{jkbturek@gmail.com}}}}
 \title{{\Large [WEDT.A] Dokumentacja końcowa projektu} \\ Klasyfikacja stron WWW na podstawie struktury}
 \date{30 maja 2013r.}
+
+\newenvironment{definition}[1][Definicja]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 
 \begin{document}
 
@@ -206,6 +210,63 @@ Na etapie uczenia się oraz klasyfikacji brane są pod uwagę, między innymi, n
 \end{itemize}
 
 Cechy te dobrze różnicują cztery zadane kategorie stron internetowych. Przykładowo serwisy informacyjne charakteryzują się wysokim współczynnikiem długości tekstu w~odnośnikach do całkowitej długości tekstów, długimi odnośnikami lokalnymi, dużą ilością obrazów na stronie oraz częstym występowaniem tagów w~specyfikacji HTML5. Dla kontrastu blogi charakteryzują się niewielkim stosunkiem liczby odnośników do długości tekstu, niewielką liczbą obrazków, dużą koncentracją tekstu w~głównej strukturze oraz większą niż dla serwisów informacyjnych liczbą elementów w~głównej strukturze strony.
+
+\subsection{Algorytm klasyfikacji}
+
+Każda z~cech opisana jest dwoma wartościami liczbowymi: najniższą oraz najwyższą dla danej kategorii wartością tej cechy wśród danych trenujących. Aby wygenerować te wartości używany jest następujący algorytm:
+
+\begin{enumerate}
+    \item Oblicz wartość cechy dla danej strony WWW i~kategorii.
+    \item Pobierz minimalną oraz maksymalną wartość cechy dla tej kategorii.
+    \item Jeżeli wartość minimalna jest większa od obecnej lub jeżeli nie jest jeszcze obliczona, ustaw wartość obecną jako minimalną.
+    \item Jeżeli wartość maksymalna jest mniejsza od obecnej lub jeżeli nie jest jeszcze obliczona, ustaw wartość obecną jako maksymalną.
+\end{enumerate}
+
+Następnie, dla każdego adresu strony z~danych testowych wykonywana jest klasyfikacja:
+
+\begin{enumerate}
+    \item Dla danej kategorii i~danej cechy, oblicz wartość współczynnika korelacji\footnote{Współczynnik ten jest omówiony w~sekcji \ref{sec:correlation_index}.}.
+    \item Dodaj wartość współczynnika do sumy wartości współczynników dla danej kategorii.
+    \item Powtarzaj punkty 1. oraz 2. aż do pokrycia wszystkich permutacji cech i~kategorii.
+    \item Sprawdź, czy istnieje kategoria, dla której suma jest o~$k \%$ wyższa niż dla pozostałych kategorii, gdzie $k$ to współczynnik definiowany w~ustawieniach aplikacji.
+    \item Jeżeli taka kategoria istnieje to znaczy, że stronę można zakwalifikować. Jeżeli nie, zakwalifikuj stronę jako inna.
+\end{enumerate}
+
+\subsection{Współczynnik korelacji cechy}
+\label{sec:correlation_index}
+
+Na potrzeby kategoryzacji, wprowadzono robocze pojęcie współczynnika korelacji cechy.
+
+\begin{definition}
+    Niech $a$ i $b$ oznaczają odpowiednio początek i~koniec przedziału wartości danej cechy w~zbiorze trenującym, a~$x$ oznacza wartość cechy wyznaczoną dla przykładu testowego. Wtedy wartość współczynnika korelacji wynosi:
+    
+    \begin{equation}
+        \begin{cases}
+            0 & x < a \quad \bigvee \quad x > b \\
+            1 - \frac{|{x - \frac{a+b}{2}}|}{|{b - a}|} & a <= x <= b \\
+        \end{cases}
+    \end{equation}
+\end{definition}
+
+Jest to stosunek długości przedziału oznaczonego kolorem czerwonym na rysunku \ref{fig:correlation_index} do długości całego przedziału.
+
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}[node distance=4cm]
+    \draw[->, >=open triangle 90]   (0,0) -- (10,0);
+    \draw (3,0.25) -- (3,-0.25);
+    \draw (3,-0.5) node {a};
+    \draw (7,0.25) -- (7,-0.25);
+    \draw (7,-0.5) node {b};
+    \draw (5,0.125) -- (5,-0.125);
+    \draw (5,-0.375) node {średnia};
+    \draw (6.33, 0.125) -- (6.33, -0.125);
+    \draw (6.33,-0.4) node {x};
+    \draw[red, ultra thick] (5,0.0) -- (6.33, 0.0);
+\end{tikzpicture}
+    \caption{Współczynnik korelacji cechy - ilustracja.}
+    \label{fig:correlation_index}
+\end{figure}
 
 \section{Dane}
 
