@@ -33,8 +33,10 @@ public class MovementBehaviour extends TickerBehaviour
 		if (step == 0)
 		{
 			car.setDirection(car.getNextDirection());
-			car.setNextCrossroadsLocation(new GetNextCrossroadsLocationAction().execute(car.getLocation(), car.getDirection()));
 			car.setNextDirection(Direction.UNKNOWN);
+			
+			car.setNextCrossroadsLocation(new GetNextCrossroadsLocationAction().execute(car.getLocation(), car.getDirection()));
+			
 			car.setNextTrafficLight(null);
 			car.setNextTrafficLightRuleResult(false);
 			car.setOtherCarsToCheck(0);

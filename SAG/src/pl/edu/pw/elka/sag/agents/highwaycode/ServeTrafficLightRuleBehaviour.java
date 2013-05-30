@@ -20,7 +20,7 @@ public class ServeTrafficLightRuleBehaviour extends RuleBehaviourBase
 	{
 		CanPassTrafficLightPredicate predicate = (CanPassTrafficLightPredicate) message.getContentObject();
 		
-		if (highwayCode.getTrafficLightRule().evaluate(null, predicate.getTrafficLightStatus()))
+		if (highwayCode.getTrafficLightRule().evaluate(predicate))
 		{
 			reply.setPerformative(ACLMessage.AGREE);
 		}
