@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{tikz}
+\usepackage{fancyvrb}
 \usetikzlibrary{positioning,shapes,shadows,arrows}
 
 \author{Michał Aniserowicz \href{mailto:michalaniserowicz@gmail.com}{{\small \nolinkurl{<michalaniserowicz@gmail.com>}}} \\ Jakub Turek \href{mailto:jkbturek@gmail.com}{{\small \nolinkurl{jkbturek@gmail.com}}}}
@@ -122,6 +123,8 @@ Etap budowy drzewa jest w~pełni konfigurowalny, dzięki użyciu następujących
     \item[zakazane tagi] Lista tagów, które zawierają tekst nie włączany do pierwszego dozwolonego rodzica. Umożliwia to odfiltrowywanie m.in. skryptów.
 \end{description}
 
+Do budowy drzewa została wykorzystana wewnętrzna biblioteka języka Python - \verb+HTMLParser+\footnote{Dokumentacja biblioteki jest dostępna pod \href{http://docs.python.org/2/library/htmlparser.html}{tym adresem}.}.
+
 \subsection{Główna struktura strony}
 \label{sec:main_structure}
 
@@ -201,5 +204,49 @@ Na etapie uczenia się oraz klasyfikacji brane są pod uwagę, między innymi, n
 \end{itemize}
 
 Cechy te dobrze różnicują cztery zadane kategorie stron internetowych. Przykładowo serwisy informacyjne charakteryzują się wysokim współczynnikiem długości tekstu w~odnośnikach do całkowitej długości tekstów, długimi odnośnikami lokalnymi, dużą ilością obrazów na stronie oraz częstym występowaniem tagów w~specyfikacji HTML5. Dla kontrastu blogi charakteryzują się niewielkim stosunkiem liczby odnośników do długości tekstu, niewielką liczbą obrazków, dużą koncentracją tekstu w~głównej strukturze oraz większą niż dla serwisów informacyjnych liczbą elementów w~głównej strukturze strony.
+
+\section{Dane}
+
+Dane wejściowe/wyjściowe są umieszczane w~plikach o~strukturze wewnętrznej \verb+<adres URL>_<kategoria>+. Kolejne dokumenty są rozdzielone znakami nowej linii. Przykład struktury został zaprezentowany poniżej:
+
+\begin{figure}[ht!]
+    \begin{Verbatim}[frame=single]
+    http://kwejk.pl kwejk
+    http://atakklonow.pl kwejk
+    http://rafalstec.blox.pl blog
+    http://webitect.net blog
+    http://onet.pl serwis informacyjny
+    http://wp.pl serwis informacyjny
+    http://wicomp.pl sklep internetowy
+    http://morele.net sklep internetowy
+    \end{Verbatim}
+    \caption{Struktura danych wejściowych/wyjściowych.}
+    \label{fig:input_output_structure}
+\end{figure}
+
+\subsection{Dane wejściowe}
+
+Dane wejściowe składają się z~dwóch plików\footnote{Nazwy plików są konfigurowalne, podobnie jak inne ustawienia aplikacji, w~pliku config.ini.}:
+
+\begin{description}
+    \item[input\_classified.txt] Dane trenujące dla algorytmu. Na ich podstawie budowana jest lista kategorii stron rozpoznawanych przez system.
+    \item[input\_unclassified.txt] Dane testowe dla algorytmu. Strony umieszczone na liście poddawane są klasyfikacji na podstawie wartości parametrów wyznaczonych przez dane trenujące. Wstępna klasyfikacja stron jest niezbędna do obliczenia skuteczności algorytmu i~nie jest brana pod uwagę przez właściwy algorytm.
+\end{description}
+
+\subsection{Dane wyjściowe}
+
+Na dane wyjściowe składają się zarówno pliki, jak również wyjście standardowe (konsola):
+
+\begin{description}
+    \item[plik output.txt] Wynik działania algorytmu. Zawiera adresy analizowanych stron i~przyporządkowaną im przez algorytm klasyfikację.
+    \item[wynik konfiguracji] Wyprowadzany na wyjście standardowe. Przedstawia wartości dozwolonych przedziałów cech, w~ramach kategorii, wyznaczone na podstawie danych testowych.
+    \item[podsumowanie] Wyprowadzane na wyjście standardowe. Przedstawia skuteczności algorytmu dla każdej kategorii, mierzone w~czterech własnościach:
+        \begin{itemize}
+            \item dokładność,
+            \item szczegółowość,
+            \item rozrzut,
+            \item precyzja.
+        \end{itemize}
+\end{description}
 
 \end{document}
