@@ -9,7 +9,7 @@ import pl.edu.pw.elka.sag.ontology.concepts.*;
 public class ReceiveCarMovementInfoBehaviour extends CyclicBehaviour
 {
 	private static final long serialVersionUID = 6287244284419238340L;
-	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.MOVEMENT_INFO_CONVERSATION_TYPE);
+	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.CAR_MOVEMENT_INFO_CONVERSATION_TYPE);
 
 	private final Map map;
 	

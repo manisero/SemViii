@@ -35,7 +35,7 @@ public class RequestCarMovementInfoBehaviour extends TickerBehaviour
 			message.addReceiver(carId);
 		}
 		
-		message.setConversationId(ConversationTypes.MOVEMENT_INFO_CONVERSATION_TYPE);
+		message.setConversationId(ConversationTypes.CAR_MOVEMENT_INFO_CONVERSATION_TYPE);
 		
 		myAgent.send(message);
 	}

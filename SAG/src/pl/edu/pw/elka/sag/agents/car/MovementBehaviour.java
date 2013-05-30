@@ -7,7 +7,6 @@ import jade.lang.acl.*;
 import java.io.*;
 import java.util.*;
 
-import pl.edu.pw.elka.sag.agents.trafficlight.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.logic.actions.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
@@ -59,8 +58,11 @@ public class MovementBehaviour extends TickerBehaviour
 			
 			car.setStatus(CarStatus.NearCrossroads);
 			
-			if (findTrafficLight())
+			AID trafficLightId = AgentSearchUtilities.findTrafficLight(myAgent, car.getNextCrossroadsLocation());
+			
+			if (trafficLightId != null)
 			{
+				car.setNextTrafficLight(trafficLightId);
 				checkTrafficLight();
 			}
 			else
@@ -126,7 +128,7 @@ public class MovementBehaviour extends TickerBehaviour
 		try
 		{
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-			message.addReceiver(AgentRegistry.getInstance().getCityAgentID(myAgent));
+			message.addReceiver(AgentSearchUtilities.findCityAgent(myAgent));
 			message.setConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 			message.setContentObject(new CanTurnOnCrossroadsPredicate(null, car.getNextCrossroadsLocation()));
 			
@@ -136,20 +138,6 @@ public class MovementBehaviour extends TickerBehaviour
 		{
 			e.printStackTrace();
 		}
-	}
-	
-	private boolean findTrafficLight()
-	{
-		String serviceName = TrafficLightAgent.getTrafficLightServiceName(car.getNextCrossroadsLocation());
-		List<AID> trafficLights = AgentRegistry.getInstance().getAgents(myAgent, TrafficLightAgent.class, serviceName, true);
-		
-		if (trafficLights.size() > 0)
-		{
-			car.setNextTrafficLight(trafficLights.get(0));
-			return true;
-		}
-		
-		return false;
 	}
 	
 	private void checkTrafficLight()

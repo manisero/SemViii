@@ -7,6 +7,7 @@ import jade.core.behaviours.*;
 import jade.lang.acl.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.predicates.*;
 import pl.edu.pw.elka.sag.util.*;
 
 public class ReceiveTrafficLightStatusBehaviour extends CyclicBehaviour
@@ -31,9 +32,9 @@ public class ReceiveTrafficLightStatusBehaviour extends CyclicBehaviour
 				TrafficLightStatus status = (TrafficLightStatus) message.getContentObject();
 
 				ACLMessage trafficRuleRequest = new ACLMessage(ACLMessage.REQUEST);
-				trafficRuleRequest.addReceiver(AgentRegistry.getInstance().getHighwayCodeAgentID(myAgent));
+				trafficRuleRequest.addReceiver(AgentSearchUtilities.findHighwayCodeAgent(myAgent));
 				trafficRuleRequest.setConversationId(ConversationTypes.TRAFFIC_LIGHT_RULE_CONVERSATION_TYPE);
-				trafficRuleRequest.setContentObject(status);
+				trafficRuleRequest.setContentObject(new CanPassTrafficLightPredicate(status));
 				
 				myAgent.send(trafficRuleRequest);
 			}

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import jade.content.*;
 
-public class TrafficLight implements Concept, ILocatable
+public class TrafficLight implements Concept
 {
 	private static final long serialVersionUID = -9183209183508669967L;
 

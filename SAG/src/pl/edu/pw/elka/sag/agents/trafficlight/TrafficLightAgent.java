@@ -36,7 +36,6 @@ public class TrafficLightAgent extends AgentBase
 		register(getTrafficLightServiceName(trafficLightLocation));
 		
 		addBehaviour(new TrafficLightCycleBehavior(this, trafficLight));
-		addBehaviour(new ServeLocationBehaviour(this, trafficLight));
 		addBehaviour(new ServeTrafficLightStatusDirectionBehavior(this, trafficLight));
 		addBehaviour(new ServeTrafficLightBehaviour(this, trafficLight));
 	}
