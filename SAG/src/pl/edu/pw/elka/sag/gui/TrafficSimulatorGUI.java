@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import pl.edu.pw.elka.sag.gui.constants.PaintSettings;
 import pl.edu.pw.elka.sag.gui.panels.CityMap;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class TrafficSimulatorGUI extends JFrame
 {
@@ -19,6 +20,11 @@ public class TrafficSimulatorGUI extends JFrame
 	{
 		initializeComponents(citySize);
 		setShutdownApplicationOnClose();
+	}
+	
+	public void setCityMapRoadSide(RoadSide roadSide)
+	{
+		cityMap.setRoadSide(roadSide);
 	}
 	
 	/**

@@ -24,6 +24,7 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 
 	private int citySize;
 	private int screenSize;
+	private RoadSide roadSide;
 	
 	private Collection<Canvas> drawableObjects = new LinkedHashSet<Canvas>();
 	
@@ -41,6 +42,16 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 		animate();
 	}
 	
+	public RoadSide getRoadSide()
+	{
+		return roadSide;
+	}
+	
+	public void setRoadSide(RoadSide roadSide)
+	{
+		this.roadSide = roadSide;
+	}
+
 	/**
 	 * Animates the city map.
 	 */
@@ -82,25 +93,26 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 				+ (int) (1.5 * getCarBoundingBoxSize())) + 3 * getStreetLength();
 		
 		int xCorrection = 0;
-		int yCorrection = 0; 
+		int yCorrection = 0;
+		double roadSideCorrection = roadSide == RoadSide.Right ? 1.0 : -1.0;
 		
 		if (direction != null)
 		{
 			if (direction.equals(Direction.EAST))
 			{
-				yCorrection += (int) (getCarBoundingBoxSize() / 2.0); 
+				yCorrection += (int) (getCarBoundingBoxSize() / 2.0 * roadSideCorrection);
 			}
 			else if (direction.equals(Direction.WEST))
 			{
-				yCorrection -= (int) (getCarBoundingBoxSize() / 2.0);
+				yCorrection -= (int) (getCarBoundingBoxSize() / 2.0 * roadSideCorrection);
 			}
 			else if (direction.equals(Direction.NORTH))
 			{
-				xCorrection += (int) (getCarBoundingBoxSize() / 2.0);
+				xCorrection += (int) (getCarBoundingBoxSize() / 2.0 * roadSideCorrection);
 			}
 			else if (direction.equals(Direction.SOUTH))
 			{
-				xCorrection -= (int) (getCarBoundingBoxSize() / 2.0);
+				xCorrection -= (int) (getCarBoundingBoxSize() / 2.0 * roadSideCorrection);
 			}
 		}
 		
@@ -157,26 +169,27 @@ public class CityMap extends JPanel implements IDrawablePropertyProvider
 		
 		int xCorrection = 0;
 		int yCorrection = 0;
+		double roadSideCorrection = roadSide == RoadSide.Right ? 1.0 : -1.0;
 		
 		if (direction.equals(Direction.NORTH))
 		{
-			xCorrection += (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+			xCorrection += (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()) * roadSideCorrection);
 			yCorrection += (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
 		}
 		else if (direction.equals(Direction.SOUTH))
 		{
-			xCorrection -= (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+			xCorrection -= (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()) * roadSideCorrection);
 			yCorrection -= (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
 		}
 		else if (direction.equals(Direction.EAST))
 		{
 			xCorrection -= (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
-			yCorrection += (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+			yCorrection += (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()) * roadSideCorrection);
 		}
 		else if (direction.equals(Direction.WEST))
 		{
 			xCorrection += (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
-			yCorrection -= (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()));
+			yCorrection -= (int) (0.5 * (getStreetWidth() + getTrafficLightsBoundingBoxSize()) * roadSideCorrection);
 		}
 		
 		return new Point(xTrafficLights + xCorrection, yTrafficLights + yCorrection);

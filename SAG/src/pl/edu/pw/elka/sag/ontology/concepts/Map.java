@@ -53,6 +53,11 @@ public class Map implements Concept
 		this.trafficLights = trafficLights;
 	}
 	
+	public void updateRoadSide(RoadSide roadSide)
+	{
+		gui.setCityMapRoadSide(roadSide);
+	}
+	
 	public void updateCarInfo(AID carId, MovementInfo info)
 	{
 		if (!cars.containsKey(carId))
