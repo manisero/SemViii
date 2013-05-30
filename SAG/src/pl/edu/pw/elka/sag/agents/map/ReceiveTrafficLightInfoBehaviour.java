@@ -1,7 +1,7 @@
 package pl.edu.pw.elka.sag.agents.map;
 
 import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;

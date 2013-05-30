@@ -3,7 +3,9 @@ package pl.edu.pw.elka.sag.agents.car;
 import java.util.*;
 
 import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.ontology.actions.*;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.predicates.*;
 import jade.core.*;
 import jade.core.behaviours.*;
 import jade.lang.acl.*;
@@ -21,6 +23,7 @@ public class ReceivePossibleDirectionsBehaviour extends CyclicBehaviour
 		this.car = car;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void action()
 	{
@@ -30,8 +33,16 @@ public class ReceivePossibleDirectionsBehaviour extends CyclicBehaviour
 		{
 			try
 			{
-				DirectionsCollection directions = (DirectionsCollection) message.getContentObject();
-				car.setNextDirection(chooseDirection(directions));
+				ArrayList<CanTurnOnCrossroadsPredicate> predicates = (ArrayList<CanTurnOnCrossroadsPredicate>) message.getContentObject();
+				List<Direction> directions = new ArrayList<Direction>();
+				
+				for (CanTurnOnCrossroadsPredicate predicate : predicates)
+				{
+					directions.add(predicate.getTurnDirection());
+				}
+				
+				Direction direction = new ChooseCarDirectionAction().execute(car, directions);
+				car.setNextDirection(direction);
 			}
 			catch (UnreadableException e)
 			{
@@ -42,19 +53,5 @@ public class ReceivePossibleDirectionsBehaviour extends CyclicBehaviour
 		{
 			block();
 		}
-	}
-	
-	private Direction chooseDirection(DirectionsCollection directions)
-	{
-		List<Direction> directionsList = directions.getDirections();
-		
-		Direction currentCarDirection = car.getDirection();
-		
-		if (currentCarDirection != null)
-		{
-			directionsList.remove(currentCarDirection.getOpposite());
-		}
-		
-		return directionsList.get(new Random().nextInt(directionsList.size()));
 	}
 }

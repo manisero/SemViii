@@ -7,7 +7,7 @@ import jade.lang.acl.*;
 import java.io.*;
 
 import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.entities.*;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class ServeMovementInfoBehaviour extends CyclicBehaviour
 {

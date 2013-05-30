@@ -3,8 +3,8 @@ package pl.edu.pw.elka.sag.agents.map;
 import java.awt.*;
 
 import pl.edu.pw.elka.sag.agents.*;
-import pl.edu.pw.elka.sag.entities.*;
 import pl.edu.pw.elka.sag.gui.*;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class MapAgent extends AgentBase
 {

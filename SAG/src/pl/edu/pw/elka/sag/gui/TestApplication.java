@@ -6,10 +6,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import pl.edu.pw.elka.sag.entities.Direction;
-import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.gui.objects.DrawableCar;
 import pl.edu.pw.elka.sag.gui.objects.DrawableTrafficLights;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class TestApplication
 {

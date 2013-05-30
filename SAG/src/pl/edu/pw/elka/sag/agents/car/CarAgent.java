@@ -6,9 +6,9 @@ import java.util.*;
 
 import pl.edu.pw.elka.sag.agents.*;
 import pl.edu.pw.elka.sag.agents.city.*;
-import pl.edu.pw.elka.sag.entities.*;
-import pl.edu.pw.elka.sag.entities.Location;
 import pl.edu.pw.elka.sag.exceptions.*;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.concepts.Location;
 import pl.edu.pw.elka.sag.util.*;
 
 public class CarAgent extends AgentBase

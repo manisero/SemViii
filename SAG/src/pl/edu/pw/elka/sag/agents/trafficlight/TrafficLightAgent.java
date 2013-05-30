@@ -2,8 +2,8 @@ package pl.edu.pw.elka.sag.agents.trafficlight;
 
 import pl.edu.pw.elka.sag.agents.*;
 import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.entities.*;
 import pl.edu.pw.elka.sag.exceptions.*;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
 import pl.edu.pw.elka.sag.util.*;
 
 public class TrafficLightAgent extends AgentBase
