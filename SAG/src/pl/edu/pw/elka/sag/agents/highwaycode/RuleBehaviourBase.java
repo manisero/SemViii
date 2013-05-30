@@ -1,24 +1,23 @@
 package pl.edu.pw.elka.sag.agents.highwaycode;
 
-import java.io.*;
+import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
+import jade.lang.acl.UnreadableException;
 
-import jade.core.*;
-import jade.core.behaviours.*;
-import jade.lang.acl.*;
-import pl.edu.pw.elka.sag.logic.highwaycode.*;
+import java.io.IOException;
 
-public abstract class RuleBehaviourBase extends CyclicBehaviour implements IHighwayCodeChangeListener
+public abstract class RuleBehaviourBase extends CyclicBehaviour
 {
 	private static final long serialVersionUID = -1063042687412453068L;
 	
 	private final MessageTemplate messageTemplate;
-	protected IHighwayCode highwayCode;
 	
-	protected RuleBehaviourBase(Agent agent, IHighwayCode highwayCode, String conversationType)
+	protected RuleBehaviourBase(Agent agent, String conversationType)
 	{
 		super(agent);
 		messageTemplate = MessageTemplate.MatchConversationId(conversationType);
-		this.highwayCode = highwayCode;
 	}
 	
 	@Override
@@ -49,11 +48,10 @@ public abstract class RuleBehaviourBase extends CyclicBehaviour implements IHigh
 		}
 	}
 	
-	protected abstract void fillReply(ACLMessage message, ACLMessage reply) throws UnreadableException, IOException;
-	
-	@Override
-	public void onHighwayCodeChanged(IHighwayCode highwayCode)
+	protected HighwayCodeAgent getHighwayCodeAgent()
 	{
-		this.highwayCode = highwayCode;
+		return (HighwayCodeAgent) myAgent;
 	}
+	
+	protected abstract void fillReply(ACLMessage message, ACLMessage reply) throws UnreadableException, IOException;
 }

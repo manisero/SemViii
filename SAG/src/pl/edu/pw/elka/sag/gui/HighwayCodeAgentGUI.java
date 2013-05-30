@@ -3,6 +3,7 @@ package pl.edu.pw.elka.sag.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -12,24 +13,19 @@ import javax.swing.JFrame;
 import pl.edu.pw.elka.sag.agents.highwaycode.IHighwayCodeChangeListener;
 import pl.edu.pw.elka.sag.gui.constants.HighwayCodeGUIPaintSettings;
 import pl.edu.pw.elka.sag.gui.panels.HighwayCodeSelector;
-import pl.edu.pw.elka.sag.logic.highwaycode.HighwayCodeFactory;
-import pl.edu.pw.elka.sag.logic.highwaycode.IHighwayCode;
 
 public class HighwayCodeAgentGUI extends JFrame
 {
 	private static final long serialVersionUID = -4799963876349719507L;
 	
 	private Set<IHighwayCodeChangeListener> listeners = new LinkedHashSet<IHighwayCodeChangeListener>();
-	private HighwayCodeFactory highwayCodeFactory;
 	private HighwayCodeSelector highwayCodeSelector;
 	
-	public HighwayCodeAgentGUI(HighwayCodeFactory highwayCodeFactory)
+	public HighwayCodeAgentGUI(Collection<?> highwayCodes)
 	{
-		this.highwayCodeFactory = highwayCodeFactory;
-		
 		setupFrame();
 		setLayoutManager();
-		addHighwayCodeSelector();
+		addHighwayCodeSelector(highwayCodes);
 		addAcceptButton();
 	}
 	
@@ -53,9 +49,9 @@ public class HighwayCodeAgentGUI extends JFrame
 		setLayout(new BorderLayout());
 	}
 	
-	private void addHighwayCodeSelector()
+	private void addHighwayCodeSelector(Collection<?> highwayCodes)
 	{
-		add(highwayCodeSelector = new HighwayCodeSelector(highwayCodeFactory.getHighwayCodes()), BorderLayout.CENTER);
+		add(highwayCodeSelector = new HighwayCodeSelector(highwayCodes), BorderLayout.CENTER);
 	}
 	
 	private void addAcceptButton()
@@ -66,14 +62,9 @@ public class HighwayCodeAgentGUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				IHighwayCode highwayCode = highwayCodeFactory.createHighwayCode(highwayCodeSelector.getSelectedItem().toString());
-				
-				if (highwayCode != null)
+				for (IHighwayCodeChangeListener listener : listeners)
 				{
-					for (IHighwayCodeChangeListener listener : listeners)
-					{
-						listener.onHighwayCodeChanged(highwayCode);
-					}
+					listener.onHighwayCodeChanged(highwayCodeSelector.getSelectedItem().toString());
 				}
 			}
 		});

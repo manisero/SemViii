@@ -8,9 +8,12 @@ import pl.edu.pw.elka.sag.gui.HighwayCodeAgentGUI;
 import pl.edu.pw.elka.sag.logic.highwaycode.HighwayCodeFactory;
 import pl.edu.pw.elka.sag.logic.highwaycode.IHighwayCode;
 
-public class HighwayCodeAgent extends AgentBase
+public class HighwayCodeAgent extends AgentBase implements IHighwayCodeChangeListener
 {
 	private static final long serialVersionUID = 1567080874884137549L;
+	
+	private HighwayCodeFactory highwayCodeFactory = new HighwayCodeFactory();
+	private IHighwayCode highwayCode;
 
 	@Override
 	protected void setup()
@@ -32,9 +35,10 @@ public class HighwayCodeAgent extends AgentBase
 		
 		System.out.println("Highway Code used: " + highwayCodeType);
 		
-		HighwayCodeFactory highwayCodeFactory = new HighwayCodeFactory();
+		highwayCode = highwayCodeFactory.createHighwayCode(highwayCodeType);
 		
-		final HighwayCodeAgentGUI gui = new HighwayCodeAgentGUI(highwayCodeFactory);
+		final HighwayCodeAgentGUI gui = new HighwayCodeAgentGUI(highwayCodeFactory.getHighwayCodes());
+		gui.addListener(this);
 		
 		EventQueue.invokeLater(new Runnable()
 		{
@@ -45,14 +49,23 @@ public class HighwayCodeAgent extends AgentBase
 			}
 		});
 		
+		addBehaviour(new ServeRoadSideRuleBehaviour(this));
+		addBehaviour(new ServeTrafficLightRuleBehaviour(this));
+	}
+
+	@Override
+	public void onHighwayCodeChanged(String highwayCodeType)
+	{
 		IHighwayCode highwayCode = highwayCodeFactory.createHighwayCode(highwayCodeType);
 		
-		ServeRoadSideRuleBehaviour serveRoadSideRuleBehaviour = new ServeRoadSideRuleBehaviour(this, highwayCode);
-		addBehaviour(serveRoadSideRuleBehaviour);
-		gui.addListener(serveRoadSideRuleBehaviour);
-		
-		ServeTrafficLightRuleBehaviour serveTrafficLightRuleBehaviour = new ServeTrafficLightRuleBehaviour(this, highwayCode);
-		addBehaviour(serveTrafficLightRuleBehaviour);
-		gui.addListener(serveTrafficLightRuleBehaviour);
+		if (highwayCode != null)
+		{
+			this.highwayCode = highwayCode;
+		}
+	}
+	
+	public IHighwayCode getHighwayCode()
+	{
+		return highwayCode;
 	}
 }
