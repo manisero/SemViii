@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows}
 
 \author{Michał Aniserowicz \href{mailto:michalaniserowicz@gmail.com}{{\small \nolinkurl{<michalaniserowicz@gmail.com>}}} \\ Jakub Turek \href{mailto:jkbturek@gmail.com}{{\small \nolinkurl{jkbturek@gmail.com}}}}
 \title{{\Large [WEDT.A] Dokumentacja końcowa projektu} \\ Klasyfikacja stron WWW na podstawie struktury}
@@ -40,6 +41,87 @@ Na następnej stronie przedstawiony został ogólny schemat działania programu.
 
 \includepdf[angle=90]{program_schema.pdf}
 
+\subsection{Drzewo HTML}
+
+Strony WWW są wewnętrznie reprezentowane przez drzewo HTML. Każdy korzeń drzewa posiada następujące atrybuty:
+
+\begin{itemize}
+    \item tag,
+    \item słownik atrybutów (np. \verb+class="main-img", src="image.jpg"+),
+    \item tekst wewnątrz taga,
+    \item wysokość elementu,
+    \item szerokość elementu.
+\end{itemize}
+
+Ponadto od dowolnego korzenia można dojść do jego rodzica, a~także wszystkich jego dzieci. Rysunek \ref{fig:html_tree} przedstawia schemat wykorzystywanego drzewa HTML.
+
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}[node distance=4cm]
+    \node (Parent) [draw=black, rectangle split, rectangle split parts=2, rounded corners, top color=gray, bottom color=cyan, drop shadow]
+    {
+        {\Large\textbf{Parent}}
+        \nodepart{second}
+        {\small
+        \begin{tabular}{l}
+        tag: div \\
+        attrs: class=content \\
+        text: Wpisy
+        \end{tabular}
+        }
+    };
+    \node (Link) [draw=black, rectangle split, rectangle split parts=2, rounded corners, top color=gray, bottom color=red, drop shadow, below of=Parent]
+    {
+        {\Large\textbf{Link}}
+        \nodepart{second}
+        {\small
+        \begin{tabular}{l}
+        tag: a \\
+        attrs: href=onet.pl \\
+        text: Onet
+        \end{tabular}
+        }
+    };
+    \node (Text) [draw=black, rectangle split, rectangle split parts=2, rounded corners, top color=gray, bottom color=lime, drop shadow, left of=Link]
+    {
+        {\Large\textbf{Text}}
+        \nodepart{second}
+        {\small
+        \begin{tabular}{l}
+        tag: p \\
+        text: Fajna strona
+        \end{tabular}
+        }
+    };
+    \node (Image) [draw=black, rectangle split, rectangle split parts=2, rounded corners, top color=gray, bottom color=yellow, drop shadow, right of=Link]
+    {
+        {\Large\textbf{Image}}
+        \nodepart{second}
+        {\small
+        \begin{tabular}{l}
+        tag: a \\
+        attrs: src=img.jpg \\
+        height: 120px \\
+        width: 320px \\
+        \end{tabular}
+        }
+    };
+    \draw[->, >=open triangle 90]   (Parent.south) -- (Image.north);
+    \draw[->, >=open triangle 90]   (Parent.south) -- (Text.north);
+    \draw[->, >=open triangle 90]   (Parent.south) -- (Link.north);
+\end{tikzpicture}
+    \caption{Poglądowy schemat drzewa HTML.}
+    \label{fig:html_tree}
+\end{figure}
+
+Etap budowy drzewa jest w~pełni konfigurowalny, dzięki użyciu następujących atrybutów:
+
+\begin{description}
+    \item[dozwolone tagi] Lista tagów, z~których mogą powstawać liście drzewa. Jeżeli tag nie znajduje się na dozwolonej liście, tekst znajdujacy się w~jego środku jest konkatenowany z~tekstem jego pierwszego dozwolonego rodzica.
+    \item[dozwolone atrybuty] Lista atrybutów, które są włączane do słownika w~liściach drzewa. Pozostałe atrybuty i~ich wartości są pomijane.
+    \item[zakazane tagi] Lista tagów, które zawierają tekst nie włączany do pierwszego dozwolonego rodzica. Umożliwia to odfiltrowywanie m.in. skryptów.
+\end{description}
+
 \subsection{Główna struktura strony}
 \label{sec:main_structure}
 
@@ -54,7 +136,7 @@ Przed omówieniem zestawu cech badanych przez aplikację, należy wprowadzić po
 
 Główna struktura jest zaprezentowana na rysunku \ref{fig:structure}.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
 \begin{tikzpicture}
     \shade[rounded corners, top color=blue,bottom color=gray] (0,-1) rectangle (2,0);
     \shade[rounded corners, top color=green,bottom color=gray] (5,0) rectangle (7,-1);
