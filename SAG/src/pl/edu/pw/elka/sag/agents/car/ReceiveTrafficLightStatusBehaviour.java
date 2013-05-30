@@ -32,7 +32,7 @@ public class ReceiveTrafficLightStatusBehaviour extends CyclicBehaviour
 				TrafficLightStatus status = (TrafficLightStatus) message.getContentObject();
 
 				ACLMessage trafficRuleRequest = new ACLMessage(ACLMessage.REQUEST);
-				trafficRuleRequest.addReceiver(AgentRegistry.getInstance().getHighwayCodeAgentID(myAgent));
+				trafficRuleRequest.addReceiver(AgentSearchUtilities.findHighwayCodeAgent(myAgent));
 				trafficRuleRequest.setConversationId(ConversationTypes.TRAFFIC_LIGHT_RULE_CONVERSATION_TYPE);
 				trafficRuleRequest.setContentObject(new CanPassTrafficLightPredicate(status));
 				

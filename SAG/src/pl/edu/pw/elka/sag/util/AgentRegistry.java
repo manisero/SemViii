@@ -125,28 +125,4 @@ public class AgentRegistry
 			e.printStackTrace();
 		}
 	}
-	
-	public AID getCityAgentID(Agent agent)
-	{
-		List<AID> agents = getAgents(agent, CityAgent.class);
-		
-		if (agents.size() == 0)
-		{
-			throw new NoCityAgentFoundException();
-		}
-		
-		return agents.get(0);
-	}
-	
-	public AID getHighwayCodeAgentID(Agent agent)
-	{
-		List<AID> agents = getAgents(agent, HighwayCodeAgent.class);
-		
-		if (agents.size() == 0)
-		{
-			throw new NoHighwayCodeAgentFoundException();
-		}
-		
-		return agents.get(0);
-	}
 }

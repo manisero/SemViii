@@ -24,7 +24,7 @@ public class RequestRoadSideRuleBehaviour extends TickerBehaviour
 		try
 		{
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-			message.addReceiver(AgentRegistry.getInstance().getHighwayCodeAgentID(myAgent));
+			message.addReceiver(AgentSearchUtilities.findHighwayCodeAgent(myAgent));
 			message.setConversationId(ConversationTypes.ROAD_SIDE_RULE_CONVERSATION_TYPE);
 			message.setContentObject(new ShouldDriveRoadSidePredicate());
 			
