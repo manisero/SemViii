@@ -8,4 +8,6 @@ public interface ConversationTypes
 	public static final String TRAFFIC_LIGHTS_CONVERSATION_TYPE = "traffic-lights";
 	public static final String CAR_STATUS_INFO_CONVERSATION_TYPE = "car-status-info";
 	public static final String POSSIBLE_DIRECTIONS_CONVERSATION_TYPE = "possible-directions";
+	
+	public static final String TRAFFIC_LIGHT_RULE_CONVERSATION_TYPE = "traffic-light-rule";
 }
