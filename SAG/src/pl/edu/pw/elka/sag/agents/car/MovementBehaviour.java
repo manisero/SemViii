@@ -43,6 +43,7 @@ public class MovementBehaviour extends TickerBehaviour
 			movementInfo.setOtherCarsToCheck(0);
 			movementInfo.setOtherCarsChecked(0);
 			movementInfo.setHasPriority(true);
+			movementInfo.setHasTypePriority(false);
 		}
 		else if (step == 1)
 		{
@@ -74,31 +75,36 @@ public class MovementBehaviour extends TickerBehaviour
 			{
 				checkOtherCars();
 			}
+			
+			checkTypePriority();
 		}
 		else if (step == 8)
 		{
-			if (movementInfo.getNextTrafficLight() != null)
+			if (!movementInfo.getHasTypePriority())
 			{
-				if (car.getNextDirection() == null)
+				if (movementInfo.getNextTrafficLight() != null)
+				{
+					if (car.getNextDirection() == null)
+					{
+						return;
+					}
+
+					if (!movementInfo.getNextTrafficLightRuleResult())
+					{
+						checkTrafficLight();
+						return;
+					}
+				}
+				else if (movementInfo.getOtherCarsChecked() < movementInfo.getOtherCarsToCheck())
 				{
 					return;
 				}
-				
-				if (!movementInfo.getNextTrafficLightRuleResult())
+				else if (!movementInfo.getHasPriority())
 				{
-					checkTrafficLight();
+					movementInfo.setHasPriority(true);
+					checkOtherCars();
 					return;
 				}
-			}
-			else if (movementInfo.getOtherCarsChecked() < movementInfo.getOtherCarsToCheck())
-			{
-				return;
-			}
-			else if (!movementInfo.getHasPriority())
-			{
-				movementInfo.setHasPriority(true);
-				checkOtherCars();
-				return;
 			}
 			
 			car.setStatus(CarStatus.OnCrossroads);
@@ -136,6 +142,25 @@ public class MovementBehaviour extends TickerBehaviour
 			message.addReceiver(AgentSearchUtilities.findCityAgent(myAgent));
 			message.setConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
 			message.setContentObject(new CanTurnOnCrossroadsPredicate(null, movementInfo.getNextCrossroadsLocation()));
+			
+			myAgent.send(message);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private void checkTypePriority()
+	{
+		try
+		{
+			movementInfo.setHasTypePriority(false);
+			
+			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+			message.addReceiver(AgentSearchUtilities.findHighwayCodeAgent(myAgent));
+			message.setConversationId(ConversationTypes.TYPE_PRIORITY_RULE_CONVERSATION_TYPE);
+			message.setContentObject(new HasCarTypePriorityPredicate(car));
 			
 			myAgent.send(message);
 		}

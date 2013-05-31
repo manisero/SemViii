@@ -10,6 +10,7 @@ public class CarMovementInfo
 	private int otherCarsToCheck;
 	private int otherCarsChecked;
 	private boolean hasPriority;
+	private boolean hasTypePriority;
 	
 	public Location getNextCrossroadsLocation()
 	{
@@ -69,5 +70,15 @@ public class CarMovementInfo
 	public void setHasPriority(boolean hasPriority)
 	{
 		this.hasPriority = hasPriority;
+	}
+
+	public boolean getHasTypePriority()
+	{
+		return hasTypePriority;
+	}
+
+	public void setHasTypePriority(boolean hasTypePriority)
+	{
+		this.hasTypePriority = hasTypePriority;
 	}
 }

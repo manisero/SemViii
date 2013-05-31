@@ -7,34 +7,22 @@ public class HasCarTypePriorityPredicate implements Predicate
 {
 	private static final long serialVersionUID = 8061245910350339156L;
 
-	private Car higherPriorityCar;
-	private Car lowerPriorityCar;
+	private Car car;
 	
 	public HasCarTypePriorityPredicate() { }
 	
-	public HasCarTypePriorityPredicate(Car higherPriorityCar, Car lowerPriorityCar)
+	public HasCarTypePriorityPredicate(Car car)
 	{
-		this.higherPriorityCar = higherPriorityCar;
-		this.lowerPriorityCar = lowerPriorityCar;
+		this.setCar(car);
 	}
 
-	public Car getHigherPriorityCar()
+	public Car getCar()
 	{
-		return higherPriorityCar;
+		return car;
 	}
 
-	public void setHigherPriorityCar(Car higherPriorityCar)
+	public void setCar(Car car)
 	{
-		this.higherPriorityCar = higherPriorityCar;
-	}
-
-	public Car getLowerPriorityCar()
-	{
-		return lowerPriorityCar;
-	}
-
-	public void setLowerPriorityCar(Car lowerPriorityCar)
-	{
-		this.lowerPriorityCar = lowerPriorityCar;
+		this.car = car;
 	}
 }
