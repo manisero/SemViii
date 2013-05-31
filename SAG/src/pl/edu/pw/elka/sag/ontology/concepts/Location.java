@@ -39,6 +39,11 @@ public class Location implements Concept
 	
 	public boolean equals(Location location)
 	{
+		if (location == null)
+		{
+			return false;
+		}
+		
 		return x == location.x && y == location.y;
 	}
 	

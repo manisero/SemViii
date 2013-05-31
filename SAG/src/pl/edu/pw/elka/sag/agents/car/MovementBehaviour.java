@@ -18,11 +18,13 @@ public class MovementBehaviour extends TickerBehaviour
 	private static final long serialVersionUID = -5290333473439069526L;
 	
 	private final Car car;
+	private final CarMovementInfo movementInfo;
 	
-	public MovementBehaviour(Agent agent, Car car)
+	public MovementBehaviour(Agent agent, Car car, CarMovementInfo movementInfo)
 	{
 		super(agent, car.getSpeed() / 10);
 		this.car = car;
+		this.movementInfo = movementInfo;
 	}
 	
 	@Override
@@ -35,13 +37,12 @@ public class MovementBehaviour extends TickerBehaviour
 			car.setDirection(car.getNextDirection());
 			car.setNextDirection(Direction.UNKNOWN);
 			
-			car.setNextCrossroadsLocation(new GetNextCrossroadsLocationAction().execute(car.getLocation(), car.getDirection()));
-			
-			car.setNextTrafficLight(null);
-			car.setNextTrafficLightRuleResult(false);
-			car.setOtherCarsToCheck(0);
-			car.setOtherCarsChecked(0);
-			car.setHasPriority(true);
+			movementInfo.setNextCrossroadsLocation(new GetNextCrossroadsLocationAction().execute(car.getLocation(), car.getDirection()));
+			movementInfo.setNextTrafficLight(null);
+			movementInfo.setNextTrafficLightRuleResult(false);
+			movementInfo.setOtherCarsToCheck(0);
+			movementInfo.setOtherCarsChecked(0);
+			movementInfo.setHasPriority(true);
 		}
 		else if (step == 1)
 		{
@@ -60,11 +61,11 @@ public class MovementBehaviour extends TickerBehaviour
 			
 			car.setStatus(CarStatus.NearCrossroads);
 			
-			AID trafficLightId = AgentSearchUtilities.findTrafficLight(myAgent, car.getNextCrossroadsLocation());
+			AID trafficLightId = AgentSearchUtilities.findTrafficLight(myAgent, movementInfo.getNextCrossroadsLocation());
 			
 			if (trafficLightId != null)
 			{
-				car.setNextTrafficLight(trafficLightId);
+				movementInfo.setNextTrafficLight(trafficLightId);
 				checkTrafficLight();
 			}
 			else
@@ -74,26 +75,26 @@ public class MovementBehaviour extends TickerBehaviour
 		}
 		else if (step == 8)
 		{
-			if (car.getNextTrafficLight() != null)
+			if (movementInfo.getNextTrafficLight() != null)
 			{
 				if (car.getNextDirection() == null)
 				{
 					return;
 				}
 				
-				if (!car.getNextTrafficLightRuleResult())
+				if (!movementInfo.getNextTrafficLightRuleResult())
 				{
 					checkTrafficLight();
 					return;
 				}
 			}
-			else if (car.getOtherCarsChecked() < car.getOtherCarsToCheck())
+			else if (movementInfo.getOtherCarsChecked() < movementInfo.getOtherCarsToCheck())
 			{
 				return;
 			}
-			else if (!car.getHasPriority())
+			else if (!movementInfo.getHasPriority())
 			{
-				car.setHasPriority(true);
+				movementInfo.setHasPriority(true);
 				checkOtherCars();
 				return;
 			}
@@ -101,7 +102,7 @@ public class MovementBehaviour extends TickerBehaviour
 			car.setStatus(CarStatus.OnCrossroads);
 		}
 		
-		car.move();
+		new MoveCarAction().execute(car);
 	}
 	
 	int getStep()
@@ -132,7 +133,7 @@ public class MovementBehaviour extends TickerBehaviour
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(AgentSearchUtilities.findCityAgent(myAgent));
 			message.setConversationId(ConversationTypes.POSSIBLE_DIRECTIONS_CONVERSATION_TYPE);
-			message.setContentObject(new CanTurnOnCrossroadsPredicate(null, car.getNextCrossroadsLocation()));
+			message.setContentObject(new CanTurnOnCrossroadsPredicate(null, movementInfo.getNextCrossroadsLocation()));
 			
 			myAgent.send(message);
 		}
@@ -146,10 +147,10 @@ public class MovementBehaviour extends TickerBehaviour
 	{
 		try
 		{
-			car.setNextTrafficLightRuleResult(false);
+			movementInfo.setNextTrafficLightRuleResult(false);
 			
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-			message.addReceiver(car.getNextTrafficLight());
+			message.addReceiver(movementInfo.getNextTrafficLight());
 			message.setConversationId(ConversationTypes.TRAFFIC_LIGHT_STATUS_CONVERSATION_TYPE);
 			message.setContentObject(car.getDirection());
 			
@@ -165,7 +166,7 @@ public class MovementBehaviour extends TickerBehaviour
 	{
 		List<AID> cars = AgentRegistry.getInstance().getAgents(myAgent, CarAgent.class);
 		
-		car.setOtherCarsToCheck(cars.size());
+		movementInfo.setOtherCarsToCheck(cars.size());
 		
 		if (cars.size() == 0)
 		{
@@ -182,7 +183,7 @@ public class MovementBehaviour extends TickerBehaviour
 			}
 			
 			message.setConversationId(ConversationTypes.CAR_CONVERSATION_TYPE);
-			message.setContentObject(car.getNextCrossroadsLocation());
+			message.setContentObject(movementInfo.getNextCrossroadsLocation());
 			
 			myAgent.send(message);
 		}

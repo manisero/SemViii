@@ -15,11 +15,13 @@ public class ReceiveCarBehaviour extends CyclicBehaviour
 																					   			   MessageTemplate.not(MessageTemplate.MatchPerformative(ACLMessage.REQUEST_WHEN))));
 	
 	private final Car car;
+	private final CarMovementInfo movementInfo;
 	
-	public ReceiveCarBehaviour(Agent agent, Car car)
+	public ReceiveCarBehaviour(Agent agent, Car car, CarMovementInfo movementInfo)
 	{
 		super(agent);
 		this.car = car;
+		this.movementInfo = movementInfo;
 	}
 	
 	@Override
@@ -31,7 +33,7 @@ public class ReceiveCarBehaviour extends CyclicBehaviour
 		{
 			try
 			{
-				car.setOtherCarsChecked(car.getOtherCarsChecked() + 1);
+				movementInfo.setOtherCarsChecked(movementInfo.getOtherCarsChecked() + 1);
 				
 				if (message.getPerformative() == ACLMessage.NOT_UNDERSTOOD)
 				{
@@ -42,7 +44,7 @@ public class ReceiveCarBehaviour extends CyclicBehaviour
 				
 				if (!new CheckCarPriorityAction().execute(car, otherCar))
 				{
-					car.setHasPriority(false);
+					movementInfo.setHasPriority(false);
 				}
 			}
 			catch (UnreadableException e)

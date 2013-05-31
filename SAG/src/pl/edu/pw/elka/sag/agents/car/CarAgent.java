@@ -26,12 +26,13 @@ public class CarAgent extends AgentBase
 		int carSpeed = ArgumentsUtilities.getInt(arguments, 2);
 		Direction carDirection = ArgumentsUtilities.getDirection(arguments, 3);
 		Car car = new Car(carLocation, carSpeed, carDirection);
+		CarMovementInfo movementInfo = new CarMovementInfo();
 		
-		addBehaviour(new MovementBehaviour(this, car));
-		addBehaviour(new ServeCarBehaviour(this, car));
+		addBehaviour(new MovementBehaviour(this, car, movementInfo));
+		addBehaviour(new ServeCarBehaviour(this, car, movementInfo));
 		addBehaviour(new ReceivePossibleDirectionsBehaviour(this, car));
 		addBehaviour(new ReceiveTrafficLightStatusBehaviour(this));
-		addBehaviour(new ReceiveTrafficLightRuleBehaviour(this, car));
-		addBehaviour(new ReceiveCarBehaviour(this, car));
+		addBehaviour(new ReceiveTrafficLightRuleBehaviour(this, movementInfo));
+		addBehaviour(new ReceiveCarBehaviour(this, car, movementInfo));
 	}
 }

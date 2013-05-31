@@ -18,11 +18,13 @@ public class ServeCarBehaviour extends CyclicBehaviour
 																					   			  MessageTemplate.MatchPerformative(ACLMessage.REQUEST_WHEN)));
 	
 	private final Car car;
+	private final CarMovementInfo movementInfo;
 
-	public ServeCarBehaviour(Agent agent, Car car)
+	public ServeCarBehaviour(Agent agent, Car car, CarMovementInfo movementInfo)
 	{
 		super(agent);
 		this.car = car;
+		this.movementInfo = movementInfo;
 	}
 	
 	@Override
@@ -71,9 +73,9 @@ public class ServeCarBehaviour extends CyclicBehaviour
 	private void handleRequestWhen(ACLMessage message, ACLMessage reply) throws UnreadableException, IOException
 	{
 		Location location = (Location) message.getContentObject();
-		Location nextCrossroadsLocation = car.getNextCrossroadsLocation();
+		Location nextCrossroadsLocation = movementInfo.getNextCrossroadsLocation();
 		
-		if (car.getStatus() == CarStatus.Driving || nextCrossroadsLocation == null || location.equals(nextCrossroadsLocation))
+		if (car.getStatus() == CarStatus.Driving || nextCrossroadsLocation == null || !location.equals(nextCrossroadsLocation))
 		{
 			reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
 		}

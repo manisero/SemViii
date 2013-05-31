@@ -11,12 +11,12 @@ public class ReceiveTrafficLightRuleBehaviour extends CyclicBehaviour
 	private static final long serialVersionUID = -5550191432247487437L;
 	private static final MessageTemplate messageTemplate = MessageTemplate.MatchConversationId(ConversationTypes.TRAFFIC_LIGHT_RULE_CONVERSATION_TYPE);
 	
-	private final Car car;
+	private final CarMovementInfo movementInfo;
 	
-	public ReceiveTrafficLightRuleBehaviour(Agent agent, Car car)
+	public ReceiveTrafficLightRuleBehaviour(Agent agent, CarMovementInfo movementInfo)
 	{
 		super(agent);
-		this.car = car;
+		this.movementInfo = movementInfo;
 	}
 	
 	@Override
@@ -26,7 +26,7 @@ public class ReceiveTrafficLightRuleBehaviour extends CyclicBehaviour
 		
 		if (message != null)
 		{
-			car.setNextTrafficLightRuleResult(message.getPerformative() == ACLMessage.AGREE);				
+			movementInfo.setNextTrafficLightRuleResult(message.getPerformative() == ACLMessage.AGREE);				
 		}
 		else
 		{
