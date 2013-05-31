@@ -15,7 +15,7 @@ public interface MapPaintSettings
 	
 	public static final Color STREET_COLOR = Color.BLACK;
 	public static final Color LANE_COLOR = Color.YELLOW;
-	public static final Color CAR_COLOR = Color.WHITE;
+	public static final Color DEFAULT_CAR_COLOR = Color.WHITE;
 	public static final Color LIGHTS_RED_COLOR = Color.RED;
 	public static final Color LIGHTS_YELLOW_COLOR = Color.YELLOW;
 	public static final Color LIGHTS_GREEN_COLOR = Color.GREEN;

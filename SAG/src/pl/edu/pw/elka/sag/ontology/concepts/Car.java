@@ -1,5 +1,7 @@
 package pl.edu.pw.elka.sag.ontology.concepts;
 
+import java.awt.Color;
+
 import jade.content.*;
 
 public class Car implements Concept
@@ -12,14 +14,16 @@ public class Car implements Concept
 	private Direction nextDirection;
 	private CarStatus status;
 	private CarType type;
+	private Color color;
 	
 	public Car() { }
 	
-	public Car(Location location, int speed, Direction nextDirection)
+	public Car(Location location, int speed, Direction nextDirection, Color color)
 	{
 		this.location = location;
 		this.speed = speed;
 		this.nextDirection = nextDirection;
+		this.setColor(color);
 	}
 	
 	public int getSpeed()
@@ -80,5 +84,15 @@ public class Car implements Concept
 	public void setType(CarType type)
 	{
 		this.type = type;
+	}
+
+	public Color getColor()
+	{
+		return color;
+	}
+
+	public void setColor(Color color)
+	{
+		this.color = color;
 	}
 }
