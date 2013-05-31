@@ -9,4 +9,6 @@ public interface IHighwayCode
 	public ITrafficLightRule getTrafficLightRule();
 	
 	public IPriorityRule getPriorityRule();
+	
+	public ICarTypePriorityRule getCarTypePriorityRule();
 }

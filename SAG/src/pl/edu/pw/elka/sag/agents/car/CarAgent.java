@@ -1,5 +1,7 @@
 package pl.edu.pw.elka.sag.agents.car;
 
+import java.awt.Color;
+
 import pl.edu.pw.elka.sag.agents.*;
 import pl.edu.pw.elka.sag.exceptions.*;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
@@ -17,7 +19,7 @@ public class CarAgent extends AgentBase
 		
 		Object[] arguments = getArguments();
 		
-		if (arguments == null || arguments.length < 4)
+		if (arguments == null || arguments.length < 5)
 		{
 			throw new InvalidAgentArgumentsException();
 		}
@@ -25,7 +27,9 @@ public class CarAgent extends AgentBase
 		Location carLocation = ArgumentsUtilities.getLocation(arguments, 0, 1);
 		int carSpeed = ArgumentsUtilities.getInt(arguments, 2);
 		Direction carDirection = ArgumentsUtilities.getDirection(arguments, 3);
-		Car car = new Car(carLocation, carSpeed, carDirection);
+		CarType type = ArgumentsUtilities.getCarType(arguments, 4);
+		Color color = arguments.length > 5 ? ArgumentsUtilities.getColor(arguments, 5) : type.getDefaultTypeColor();
+		Car car = new Car(carLocation, carSpeed, carDirection, type, color);
 		CarMovementInfo movementInfo = new CarMovementInfo();
 		
 		addBehaviour(new MovementBehaviour(this, car, movementInfo));
@@ -35,5 +39,6 @@ public class CarAgent extends AgentBase
 		addBehaviour(new ReceiveTrafficLightRuleBehaviour(this, movementInfo));
 		addBehaviour(new ReceiveCarBehaviour(this, car, movementInfo));
 		addBehaviour(new ReceivePriorityRuleBehaviour(this, movementInfo));
+		addBehaviour(new ReceiveTypePriorityRuleBehaviour(this, movementInfo));
 	}
 }

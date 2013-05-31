@@ -1,6 +1,7 @@
 package pl.edu.pw.elka.sag.gui.objects;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -8,7 +9,8 @@ import java.awt.Point;
 import pl.edu.pw.elka.sag.gui.constants.MapPaintSettings;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyProvider;
 import pl.edu.pw.elka.sag.gui.logic.IDrawablePropertyReceiver;
-import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.concepts.Direction;
+import pl.edu.pw.elka.sag.ontology.concepts.Location;
 
 public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 {
@@ -16,6 +18,7 @@ public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 	
 	private Location carLocation;
 	private Direction carDirection;
+	private Color color;
 
 	private IDrawablePropertyProvider propertiesProvider;
 	
@@ -29,8 +32,21 @@ public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 	 */
 	public DrawableCar(Location carLocation, Direction carDirection)
 	{
+		this(carLocation, carDirection, MapPaintSettings.DEFAULT_CAR_COLOR);
+	}
+	
+	/**
+	 * Constructs animated car.
+	 * 
+	 * @param carLocation heading {@link pl.edu.pw.elka.sag.ontology.concepts.Location}
+	 * @param previousLocation starting {@link pl.edu.pw.elka.sag.ontology.concepts.Location}
+	 * @param color {@link java.awt.Color} of the car
+	 */
+	public DrawableCar(Location carLocation, Direction carDirection, Color color)
+	{
 		this.carLocation = carLocation;
 		this.carDirection = carDirection;
+		this.setColor(color);
 	}
 
 	/**
@@ -100,6 +116,33 @@ public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 	}
 	
 	/**
+	 * Returns current car color.
+	 * 
+	 * @return current {@link java.awt.Color}
+	 */
+	public Color getColor()
+	{
+		return color;
+	}
+
+	/**
+	 * Sets car color.
+	 * 
+	 * @param color {@link java.awt.Color} to set
+	 */
+	public void setColor(Color color)
+	{
+		if (color != null)
+		{
+			this.color = color;
+		}
+		else
+		{
+			this.color = MapPaintSettings.DEFAULT_CAR_COLOR;
+		}
+	}
+
+	/**
 	 * Paints car.
 	 * 
 	 * @param graphics {@link java.awt.Graphics} instance
@@ -112,7 +155,7 @@ public class DrawableCar extends Canvas implements IDrawablePropertyReceiver
 		Point currentPosition = propertiesProvider.getCarScreenPosition(carLocation, carDirection);
 		
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		graphics2D.setColor(MapPaintSettings.CAR_COLOR);
+		graphics2D.setColor(color);
 		graphics2D.fillOval(currentPosition.x, currentPosition.y, getCarRadius(), getCarRadius());
 	}
 }

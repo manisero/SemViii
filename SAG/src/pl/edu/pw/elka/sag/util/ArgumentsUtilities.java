@@ -1,5 +1,8 @@
 package pl.edu.pw.elka.sag.util;
 
+import java.awt.Color;
+
+import pl.edu.pw.elka.sag.exceptions.InvalidAgentArgumentsException;
 import pl.edu.pw.elka.sag.ontology.concepts.*;
 
 public class ArgumentsUtilities
@@ -20,5 +23,22 @@ public class ArgumentsUtilities
 		int locationY = Integer.parseInt(arguments[yIndex].toString()) * 10;
 		
 		return new Location(locationX, locationY);
+	}
+	
+	public static CarType getCarType(Object[] arguments, int index)
+	{
+		return CarType.valueOf(arguments[index].toString());
+	}
+	
+	public static Color getColor(Object[] arguments, int index) throws InvalidAgentArgumentsException
+	{
+		try
+		{
+			return (Color) Class.forName("java.awt.Color").getField(arguments[index].toString()).get("");
+		}
+		catch (Exception e)
+		{
+			throw new InvalidAgentArgumentsException();
+		}
 	}
 }

@@ -62,7 +62,7 @@ public class Map implements Concept
 	{
 		if (!cars.containsKey(carId))
 		{
-			 DrawableCar drawable = new DrawableCar(car.getLocation(), car.getDirection());
+			 DrawableCar drawable = new DrawableCar(car.getLocation(), car.getDirection(), car.getColor());
 			 cars.put(carId, drawable);
 			 gui.addDrawableObjectToCityMap(drawable);
 		}
