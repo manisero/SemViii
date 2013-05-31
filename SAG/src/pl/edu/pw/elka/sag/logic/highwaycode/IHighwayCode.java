@@ -7,4 +7,6 @@ public interface IHighwayCode
 	public IRoadSideRule getRoadSideRule();
 	
 	public ITrafficLightRule getTrafficLightRule();
+	
+	public IPriorityRule getPriorityRule();
 }

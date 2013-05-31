@@ -4,6 +4,7 @@ public interface ConversationTypes
 {
 	public static final String ROAD_SIDE_RULE_CONVERSATION_TYPE = "road-side-rule";
 	public static final String TRAFFIC_LIGHT_RULE_CONVERSATION_TYPE = "traffic-light-rule";
+	public static final String PRIORITY_RULE_CONVERSATION_TYPE = "priority-rule";
 	
 	public static final String POSSIBLE_DIRECTIONS_CONVERSATION_TYPE = "possible-directions";
 	

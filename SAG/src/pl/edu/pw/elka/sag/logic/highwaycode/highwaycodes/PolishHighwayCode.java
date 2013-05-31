@@ -2,6 +2,7 @@ package pl.edu.pw.elka.sag.logic.highwaycode.highwaycodes;
 
 import pl.edu.pw.elka.sag.logic.highwaycode.*;
 import pl.edu.pw.elka.sag.logic.highwaycode.rules.*;
+import pl.edu.pw.elka.sag.logic.highwaycode.rules.priority.RightHandPriorityRule;
 import pl.edu.pw.elka.sag.logic.highwaycode.rules.roadside.*;
 import pl.edu.pw.elka.sag.logic.highwaycode.rules.trafficlight.*;
 
@@ -17,5 +18,11 @@ public class PolishHighwayCode implements IHighwayCode
 	public ITrafficLightRule getTrafficLightRule()
 	{
 		return new GreenLightTrafficLightRule();
+	}
+
+	@Override
+	public IPriorityRule getPriorityRule()
+	{
+		return new RightHandPriorityRule();
 	}
 }
