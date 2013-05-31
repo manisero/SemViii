@@ -34,5 +34,6 @@ public class CarAgent extends AgentBase
 		addBehaviour(new ReceiveTrafficLightStatusBehaviour(this));
 		addBehaviour(new ReceiveTrafficLightRuleBehaviour(this, movementInfo));
 		addBehaviour(new ReceiveCarBehaviour(this, car, movementInfo));
+		addBehaviour(new ReceivePriorityRuleBehaviour(this, movementInfo));
 	}
 }

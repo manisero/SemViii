@@ -1,11 +1,18 @@
 package pl.edu.pw.elka.sag.agents.car;
 
-import pl.edu.pw.elka.sag.constants.*;
-import pl.edu.pw.elka.sag.logic.actions.*;
-import pl.edu.pw.elka.sag.ontology.concepts.*;
-import jade.core.*;
-import jade.core.behaviours.*;
-import jade.lang.acl.*;
+import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
+import jade.lang.acl.UnreadableException;
+
+import java.io.IOException;
+
+import pl.edu.pw.elka.sag.constants.ConversationTypes;
+import pl.edu.pw.elka.sag.ontology.concepts.Car;
+import pl.edu.pw.elka.sag.ontology.concepts.CarMovementInfo;
+import pl.edu.pw.elka.sag.ontology.predicates.HasPriorityPredicate;
+import pl.edu.pw.elka.sag.util.AgentSearchUtilities;
 
 public class ReceiveCarBehaviour extends CyclicBehaviour
 {
@@ -40,12 +47,7 @@ public class ReceiveCarBehaviour extends CyclicBehaviour
 					return;
 				}
 				
-				Car otherCar = (Car) message.getContentObject();
-				
-				if (!new CheckCarPriorityAction().execute(car, otherCar))
-				{
-					movementInfo.setHasPriority(false);
-				}
+				checkPriority((Car) message.getContentObject());
 			}
 			catch (UnreadableException e)
 			{
@@ -55,6 +57,23 @@ public class ReceiveCarBehaviour extends CyclicBehaviour
 		else
 		{
 			block();
+		}
+	}
+	
+	private void checkPriority(Car otherCar)
+	{
+		try
+		{
+			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+			message.addReceiver(AgentSearchUtilities.findHighwayCodeAgent(myAgent));
+			message.setConversationId(ConversationTypes.PRIORITY_RULE_CONVERSATION_TYPE);
+			message.setContentObject(new HasPriorityPredicate(car, otherCar));
+			
+			myAgent.send(message);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }

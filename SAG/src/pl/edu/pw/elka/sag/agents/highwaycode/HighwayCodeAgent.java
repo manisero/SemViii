@@ -51,6 +51,7 @@ public class HighwayCodeAgent extends AgentBase implements IHighwayCodeChangeLis
 		
 		addBehaviour(new ServeRoadSideRuleBehaviour(this));
 		addBehaviour(new ServeTrafficLightRuleBehaviour(this));
+		addBehaviour(new ServePriorityRuleBehaviour(this));
 	}
 
 	@Override
