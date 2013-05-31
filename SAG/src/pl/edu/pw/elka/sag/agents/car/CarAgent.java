@@ -19,7 +19,7 @@ public class CarAgent extends AgentBase
 		
 		Object[] arguments = getArguments();
 		
-		if (arguments == null || arguments.length < 4)
+		if (arguments == null || arguments.length < 5)
 		{
 			throw new InvalidAgentArgumentsException();
 		}
@@ -27,8 +27,9 @@ public class CarAgent extends AgentBase
 		Location carLocation = ArgumentsUtilities.getLocation(arguments, 0, 1);
 		int carSpeed = ArgumentsUtilities.getInt(arguments, 2);
 		Direction carDirection = ArgumentsUtilities.getDirection(arguments, 3);
-		Color color = arguments.length > 4 ? ArgumentsUtilities.getColor(arguments, 4) : null;
-		Car car = new Car(carLocation, carSpeed, carDirection, color);
+		CarType type = ArgumentsUtilities.getCarType(arguments, 4);
+		Color color = arguments.length > 5 ? ArgumentsUtilities.getColor(arguments, 5) : type.getDefaultTypeColor();
+		Car car = new Car(carLocation, carSpeed, carDirection, type, color);
 		CarMovementInfo movementInfo = new CarMovementInfo();
 		
 		addBehaviour(new MovementBehaviour(this, car, movementInfo));

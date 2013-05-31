@@ -1,5 +1,7 @@
 package pl.edu.pw.elka.sag.ontology.concepts;
 
+import java.awt.Color;
+
 public enum CarType
 {
 	STANDARD(0),
@@ -16,5 +18,20 @@ public enum CarType
 	public int getValue()
 	{
 		return value;
+	}
+	
+	public Color getDefaultTypeColor()
+	{
+		switch (value)
+		{
+			case 1:
+				return Color.BLUE;
+				
+			case 2:
+				return Color.RED;
+				
+			default:
+				return Color.WHITE;
+		}
 	}
 }

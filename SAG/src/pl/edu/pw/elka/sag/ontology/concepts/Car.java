@@ -18,12 +18,13 @@ public class Car implements Concept
 	
 	public Car() { }
 	
-	public Car(Location location, int speed, Direction nextDirection, Color color)
+	public Car(Location location, int speed, Direction nextDirection, CarType type, Color color)
 	{
 		this.location = location;
 		this.speed = speed;
 		this.nextDirection = nextDirection;
-		this.setColor(color);
+		this.type = type;
+		this.color = color;
 	}
 	
 	public int getSpeed()

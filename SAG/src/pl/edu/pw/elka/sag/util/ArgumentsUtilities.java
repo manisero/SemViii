@@ -25,6 +25,11 @@ public class ArgumentsUtilities
 		return new Location(locationX, locationY);
 	}
 	
+	public static CarType getCarType(Object[] arguments, int index)
+	{
+		return CarType.valueOf(arguments[index].toString());
+	}
+	
 	public static Color getColor(Object[] arguments, int index) throws InvalidAgentArgumentsException
 	{
 		try
