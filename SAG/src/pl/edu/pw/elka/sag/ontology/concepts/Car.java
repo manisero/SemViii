@@ -11,6 +11,7 @@ public class Car implements Concept
 	private Direction direction;
 	private Direction nextDirection;
 	private CarStatus status;
+	private CarType type;
 	
 	public Car() { }
 	
@@ -69,5 +70,15 @@ public class Car implements Concept
 	public void setNextDirection(Direction nextDirection)
 	{
 		this.nextDirection = nextDirection;
+	}
+
+	public CarType getType()
+	{
+		return type;
+	}
+
+	public void setType(CarType type)
+	{
+		this.type = type;
 	}
 }
