@@ -48,19 +48,21 @@ public class MovementBehaviour extends TickerBehaviour
 		{
 			car.setStatus(CarStatus.Driving);
 		}
-		else if (step == 6)
+		else if (step == 4)
 		{
 			requestPossibleDirections();
 		}
-		else if (step == 7)
+		else if (step == 5)
 		{
 			if (car.getNextDirection() == Direction.UNKNOWN)
 			{
 				return;
 			}
 			
-			car.setStatus(CarStatus.NearCrossroads);
-			
+			car.setStatus(CarStatus.NearCrossroads);			
+		}
+		else if (step == 6)
+		{
 			AID trafficLightId = AgentSearchUtilities.findTrafficLight(myAgent, movementInfo.getNextCrossroadsLocation());
 			
 			if (trafficLightId != null)

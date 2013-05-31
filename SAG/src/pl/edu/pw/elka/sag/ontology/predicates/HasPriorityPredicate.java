@@ -1,40 +1,40 @@
 package pl.edu.pw.elka.sag.ontology.predicates;
 
 import jade.content.Predicate;
-import pl.edu.pw.elka.sag.ontology.concepts.Direction;
+import pl.edu.pw.elka.sag.ontology.concepts.Car;
 
 public class HasPriorityPredicate implements Predicate
 {
 	private static final long serialVersionUID = -5512459289233970177L;
 	
-	private Direction higherPriorityDirection;
-	private Direction lowerPriorityDirection;
+	private Car higherPriorityCar;
+	private Car lowerPriorityCar;
 	
 	public HasPriorityPredicate() { }
 	
-	public HasPriorityPredicate(Direction higherPriorityDirection, Direction lowerPriorityDirection)
+	public HasPriorityPredicate(Car higherPriorityCar, Car lowerPriorityCar)
 	{
-		this.higherPriorityDirection = higherPriorityDirection;
-		this.lowerPriorityDirection = lowerPriorityDirection;
+		this.higherPriorityCar = higherPriorityCar;
+		this.lowerPriorityCar = lowerPriorityCar;
 	}
 
-	public Direction getHigherPriorityDirection()
+	public Car getHigherPriorityCar()
 	{
-		return higherPriorityDirection;
+		return higherPriorityCar;
 	}
 
-	public void setHigherPriorityDirection(Direction higherPriorityDirection)
+	public void setHigherPriorityCar(Car higherPriorityCar)
 	{
-		this.higherPriorityDirection = higherPriorityDirection;
+		this.higherPriorityCar = higherPriorityCar;
 	}
 
-	public Direction getLowerPriorityDirection()
+	public Car getLowerPriorityCar()
 	{
-		return lowerPriorityDirection;
+		return lowerPriorityCar;
 	}
 
-	public void setLowerPriorityDirection(Direction lowerPriorityDirection)
+	public void setLowerPriorityCar(Car lowerPriorityCar)
 	{
-		this.lowerPriorityDirection = lowerPriorityDirection;
+		this.lowerPriorityCar = lowerPriorityCar;
 	}
 }

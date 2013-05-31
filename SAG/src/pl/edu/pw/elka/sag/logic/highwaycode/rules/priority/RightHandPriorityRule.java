@@ -1,22 +1,37 @@
 package pl.edu.pw.elka.sag.logic.highwaycode.rules.priority;
 
-import pl.edu.pw.elka.sag.logic.highwaycode.rules.IPriorityRule;
-import pl.edu.pw.elka.sag.ontology.concepts.Direction;
+import pl.edu.pw.elka.sag.ontology.concepts.Car;
 import pl.edu.pw.elka.sag.ontology.predicates.HasPriorityPredicate;
 
-public class RightHandPriorityRule implements IPriorityRule
+public class RightHandPriorityRule extends PriorityRuleBase
 {
 	@Override
 	public boolean evaluate(HasPriorityPredicate predicate)
 	{
-		if (predicate.getHigherPriorityDirection() == Direction.NORTH && predicate.getLowerPriorityDirection() == Direction.WEST ||
-			predicate.getHigherPriorityDirection() == Direction.WEST && predicate.getLowerPriorityDirection() == Direction.SOUTH ||
-			predicate.getHigherPriorityDirection() == Direction.SOUTH && predicate.getLowerPriorityDirection() == Direction.EAST ||
-			predicate.getHigherPriorityDirection() == Direction.EAST && predicate.getLowerPriorityDirection() == Direction.NORTH)
+		Car higherPriorityCar = predicate.getHigherPriorityCar();
+		Car lowerPriorityCar = predicate.getLowerPriorityCar();
+		
+		if (isGoingStraight(higherPriorityCar))
 		{
-			return false;
+			return isOnTheRight(higherPriorityCar, lowerPriorityCar) ? false : true;
 		}
+		else if (isTurningRight(higherPriorityCar))
+		{
+			return true;
+		}
+		else
+		{
+			if (isOnTheRight(higherPriorityCar, lowerPriorityCar))
+			{
+				return false;
+			}
 			
-		return true;
+			if (isAcross(higherPriorityCar, lowerPriorityCar) && (isGoingStraight(lowerPriorityCar) || isTurningRight(lowerPriorityCar)))
+			{
+				return false;
+			}
+			
+			return true;
+		}
 	}
 }

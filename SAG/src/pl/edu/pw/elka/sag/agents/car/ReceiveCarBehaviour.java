@@ -67,7 +67,7 @@ public class ReceiveCarBehaviour extends CyclicBehaviour
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(AgentSearchUtilities.findHighwayCodeAgent(myAgent));
 			message.setConversationId(ConversationTypes.PRIORITY_RULE_CONVERSATION_TYPE);
-			message.setContentObject(new HasPriorityPredicate(car.getDirection(), otherCar.getDirection()));
+			message.setContentObject(new HasPriorityPredicate(car, otherCar));
 			
 			myAgent.send(message);
 		}
