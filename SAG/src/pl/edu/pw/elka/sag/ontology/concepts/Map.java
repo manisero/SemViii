@@ -58,23 +58,23 @@ public class Map implements Concept
 		gui.setCityMapRoadSide(roadSide);
 	}
 	
-	public void updateCarInfo(AID carId, MovementInfo info)
+	public void updateCar(AID carId, Car car)
 	{
 		if (!cars.containsKey(carId))
 		{
-			 DrawableCar car = new DrawableCar(info.getLocation(), info.getDirection());
-			 cars.put(carId, car);
-			 gui.addDrawableObjectToCityMap(car);
+			 DrawableCar drawable = new DrawableCar(car.getLocation(), car.getDirection());
+			 cars.put(carId, drawable);
+			 gui.addDrawableObjectToCityMap(drawable);
 		}
 		else
 		{
-			DrawableCar car = cars.get(carId);
-			car.setCarLocation(info.getLocation());
-			car.setCarDirection(info.getDirection());
+			DrawableCar drawable = cars.get(carId);
+			drawable.setCarLocation(car.getLocation());
+			drawable.setCarDirection(car.getDirection());
 		}
 	}
 	
-	public void updateTrafficLightInfo(AID trafficLightId, TrafficLight trafficLight)
+	public void updateTrafficLight(AID trafficLightId, TrafficLight trafficLight)
 	{
 		if (!trafficLights.containsKey(trafficLightId))
 		{

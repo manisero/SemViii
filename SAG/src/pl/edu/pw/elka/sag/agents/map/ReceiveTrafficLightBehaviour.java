@@ -29,7 +29,7 @@ public class ReceiveTrafficLightBehaviour extends CyclicBehaviour
 			try
 			{
 				TrafficLight info = (TrafficLight) message.getContentObject();
-				map.updateTrafficLightInfo(message.getSender(), info);			
+				map.updateTrafficLight(message.getSender(), info);			
 			}
 			catch (UnreadableException e)
 			{

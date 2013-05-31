@@ -37,6 +37,16 @@ public class Location implements Concept
 		this.y = y;
 	}
 	
+	public boolean equals(Location location)
+	{
+		if (location == null)
+		{
+			return false;
+		}
+		
+		return x == location.x && y == location.y;
+	}
+	
 	@Override
 	public String toString()
 	{

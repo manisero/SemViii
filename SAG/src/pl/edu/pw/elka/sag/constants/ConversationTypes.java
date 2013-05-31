@@ -10,6 +10,5 @@ public interface ConversationTypes
 	public static final String TRAFFIC_LIGHT_CONVERSATION_TYPE = "traffic-light";
 	public static final String TRAFFIC_LIGHT_STATUS_CONVERSATION_TYPE = "traffic-light-status";
 	
-	public static final String CAR_MOVEMENT_INFO_CONVERSATION_TYPE = "car-movement-info";
-	public static final String CAR_STATUS_INFO_CONVERSATION_TYPE = "car-status-info";
+	public static final String CAR_CONVERSATION_TYPE = "car";
 }

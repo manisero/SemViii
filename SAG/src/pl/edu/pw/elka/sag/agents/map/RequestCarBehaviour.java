@@ -10,11 +10,11 @@ import pl.edu.pw.elka.sag.agents.car.*;
 import pl.edu.pw.elka.sag.constants.*;
 import pl.edu.pw.elka.sag.util.*;
 
-public class RequestCarMovementInfoBehaviour extends TickerBehaviour
+public class RequestCarBehaviour extends TickerBehaviour
 {
 	private static final long serialVersionUID = 8617902260502949902L;
 
-	public RequestCarMovementInfoBehaviour(Agent agent, long period)
+	public RequestCarBehaviour(Agent agent, long period)
 	{
 		super(agent, period);
 	}
@@ -35,7 +35,7 @@ public class RequestCarMovementInfoBehaviour extends TickerBehaviour
 			message.addReceiver(carId);
 		}
 		
-		message.setConversationId(ConversationTypes.CAR_MOVEMENT_INFO_CONVERSATION_TYPE);
+		message.setConversationId(ConversationTypes.CAR_CONVERSATION_TYPE);
 		
 		myAgent.send(message);
 	}

@@ -1,8 +1,8 @@
 package pl.edu.pw.elka.sag.logic.highwaycode.rules;
 
-import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.predicates.*;
 
 public interface ITrafficLightRule
 {
-	public boolean evaluate(Car car, TrafficLightStatus trafficLightStatus);
+	public boolean evaluate(CanPassTrafficLightPredicate predicate);
 }
