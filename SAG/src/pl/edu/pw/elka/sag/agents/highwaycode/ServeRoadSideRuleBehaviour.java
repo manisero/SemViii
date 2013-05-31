@@ -1,19 +1,18 @@
 package pl.edu.pw.elka.sag.agents.highwaycode;
 
-import jade.core.Agent;
-import jade.lang.acl.ACLMessage;
+import jade.lang.acl.*;
 
-import java.io.IOException;
+import java.io.*;
 
-import pl.edu.pw.elka.sag.constants.ConversationTypes;
-import pl.edu.pw.elka.sag.ontology.concepts.RoadSide;
-import pl.edu.pw.elka.sag.ontology.predicates.ShouldDriveRoadSidePredicate;
+import pl.edu.pw.elka.sag.constants.*;
+import pl.edu.pw.elka.sag.ontology.concepts.*;
+import pl.edu.pw.elka.sag.ontology.predicates.*;
 
 public class ServeRoadSideRuleBehaviour extends RuleBehaviourBase
 {
 	private static final long serialVersionUID = 2651647425904036440L;
 	
-	protected ServeRoadSideRuleBehaviour(Agent agent)
+	protected ServeRoadSideRuleBehaviour(HighwayCodeAgent agent)
 	{
 		super(agent, ConversationTypes.ROAD_SIDE_RULE_CONVERSATION_TYPE);
 	}
@@ -21,7 +20,7 @@ public class ServeRoadSideRuleBehaviour extends RuleBehaviourBase
 	@Override
 	protected void fillReply(ACLMessage message, ACLMessage reply) throws IOException
 	{
-		RoadSide roadSide = getHighwayCodeAgent().getHighwayCode().getRoadSideRule().evaluate();
+		RoadSide roadSide = getHighwayCode().getRoadSideRule().evaluate();
 		reply.setContentObject(new ShouldDriveRoadSidePredicate(roadSide));
 	}
 }

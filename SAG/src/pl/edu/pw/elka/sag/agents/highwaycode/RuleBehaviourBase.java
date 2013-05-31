@@ -1,12 +1,11 @@
 package pl.edu.pw.elka.sag.agents.highwaycode;
 
-import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
-import jade.lang.acl.UnreadableException;
+import jade.core.behaviours.*;
+import jade.lang.acl.*;
 
-import java.io.IOException;
+import java.io.*;
+
+import pl.edu.pw.elka.sag.logic.highwaycode.*;
 
 public abstract class RuleBehaviourBase extends CyclicBehaviour
 {
@@ -14,7 +13,7 @@ public abstract class RuleBehaviourBase extends CyclicBehaviour
 	
 	private final MessageTemplate messageTemplate;
 	
-	protected RuleBehaviourBase(Agent agent, String conversationType)
+	protected RuleBehaviourBase(HighwayCodeAgent agent, String conversationType)
 	{
 		super(agent);
 		messageTemplate = MessageTemplate.MatchConversationId(conversationType);
@@ -48,9 +47,9 @@ public abstract class RuleBehaviourBase extends CyclicBehaviour
 		}
 	}
 	
-	protected HighwayCodeAgent getHighwayCodeAgent()
+	protected IHighwayCode getHighwayCode()
 	{
-		return (HighwayCodeAgent) myAgent;
+		return ((HighwayCodeAgent)myAgent).getHighwayCode();
 	}
 	
 	protected abstract void fillReply(ACLMessage message, ACLMessage reply) throws UnreadableException, IOException;
