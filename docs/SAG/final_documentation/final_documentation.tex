@@ -204,4 +204,50 @@ Diagram nie uwzględnia komunikacji pomiędzy mapą oraz innymi agentami (odpyty
 
 \includepdf{protocol.pdf}
 
+\section{Parametry startowe agentów}
+
+W~celu uruchomienia agentów należy podać właściwe im parametry startowe. W~tabeli \ref{tab:parameters} zostało zaprezentowane ich zestawienie.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \multirow{3}{*}{\textbf{Agent}} & \multicolumn{4}{|c|}{\textbf{Parametr}} \\
+        \cline{2-5}
+        & \multirow{2}{*}{\textbf{Nazwa}} & \multirow{2}{*}{\textbf{Typ}} & \textbf{Dozwolone} & \multirow{2}{*}{\textbf{Wymagalność}} \\
+        &&& \textbf{wartości} & \\
+        \hline
+        \multirow{12}{*}{Samochód} & Pozycja $x$ & Integer & $[0;city\_size)$ & Tak \\
+        \cline{2-5}
+        & Pozycja $y$ & Integer & $[0;city\_size)$ & Tak \\
+        \cline{2-5}
+        & Prędkość & Integer & $[0;\infty)$ & Tak \\
+        \cline{2-5}
+        & \multirow{4}{*}{Kierunek} & \multirow{4}{*}{String} & NORTH, & \multirow{4}{*}{Tak} \\
+        &&& EAST, & \\
+        &&& SOUTH, & \\
+        &&& WEST & \\
+        \cline{2-5}
+        & \multirow{3}{*}{Typ} & \multirow{3}{*}{String} & STANDARD, & \multirow{3}{*}{Tak} \\
+        &&& POLICE, & \\
+        &&& AMBULANCE & \\
+        \cline{2-5}
+        & \multirow{2}{*}{Kolor} & \multirow{2}{*}{String} & Nazwy pól & \multirow{2}{*}{Nie} \\
+        &&& \href{http://docs.oracle.com/javase/1.4.2/docs/api/java/awt/Color.html}{\texttt{java.awt.Color}} & \\
+        \hline
+        \multirow{4}{*}{Sygnalizacja} & Pozycja $x$ & Integer & $[0;city\_size)$ & Tak \\
+        \cline{2-5}
+        & Pozycja $y$ & Integer & $[0;city\_size)$ & Tak \\
+        \cline{2-5}
+        & Częstość & \multirow{2}{*}{Integer} & \multirow{2}{*}{$[0;\infty)$} & \multirow{2}{*}{Tak} \\
+        & zmiany &&& \\
+        \hline
+        Miasto & Rozmiar & Integer & $[0;\infty)$ & Tak \\
+        \hline
+    \end{tabular}
+
+    \caption{Parametry startowe agentów.}
+    \label{tab:parameters}
+\end{table}
+
 \end{document}
