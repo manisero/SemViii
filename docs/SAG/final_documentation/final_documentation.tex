@@ -1,0 +1,44 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[MeX]{polski}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{fancyvrb}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usetikzlibrary{positioning,shapes,shadows,arrows}
+
+\author{Michał Aniserowicz \href{mailto:michalaniserowicz@gmail.com}{{\small \nolinkurl{<michalaniserowicz@gmail.com>}}} \\ Jakub Turek \href{mailto:jkbturek@gmail.com}{{\small \nolinkurl{<jkbturek@gmail.com>}}}}
+\title{{\Large [SAG.A] Dokumentacja końcowa projektu} \\ Protokół MAS z~wykorzystaniem ontologii}
+\date{2 czerwca 2013r.}
+
+\begin{document}
+
+\maketitle
+
+\section{Temat projektu}
+
+Tematem projektu jest implementacja protokołu wykorzystującego ontologię w~systemie wieloagentowym. W ramach projektu opracowana została symulacja ruchu drogowego w~kwadratowej sieci ulic przypominającej plan Manhattanu. Symulacja składa się z~następujących elementów:
+
+\begin{description}
+    \item[miasto] określa ilość przecznic (wielkość przestrzeni),
+    \item[kodeks ruchu drogowego] definiuje zasady poruszania się na drodze,
+    \item[sygnalizacja świetlna] określa pierwszeństwo na części skrzyżowań,
+    \item[samochód] porusza się po mieście zgodnie z~zasadami ruchu drogowego znajdującymi się w~kodeksie.
+\end{description}
+
+Projekt obejmuje również przygotowanie graficznego interfejsu użytkownika, który pełni dwojaką funkcję:
+
+\begin{itemize}
+    \item ukazuje aktualny stan miasta w~rzucie z~góry,
+    \item pozwala na dynamiczną zmianę kodeksu ruchu drogowego.
+\end{itemize}
+
+\section{Technologia}
+
+Projekt został zaimplementowany na platformie JADE\footnote{Java Agent DEvelopment Framework - \href{http://jade.tilab.org}{jade.tilab.org}.}. Interfejs graficzny został stworzony z~użyciem natywnych bibliotek języka Java (AWT oraz Swing). Implementacja tworzona była w~środowisku Eclipse i~testowana w~systemie operacyjnym Windows 7 64-bit.
+
+\end{document}
