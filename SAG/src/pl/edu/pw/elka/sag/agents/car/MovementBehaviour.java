@@ -49,11 +49,11 @@ public class MovementBehaviour extends TickerBehaviour
 		{
 			car.setStatus(CarStatus.Driving);
 		}
-		else if (step == 4)
+		else if (step == 3)
 		{
 			requestPossibleDirections();
 		}
-		else if (step == 5)
+		else if (step == 4)
 		{
 			if (car.getNextDirection() == Direction.UNKNOWN)
 			{
@@ -62,7 +62,7 @@ public class MovementBehaviour extends TickerBehaviour
 			
 			car.setStatus(CarStatus.NearCrossroads);			
 		}
-		else if (step == 6)
+		else if (step == 7)
 		{
 			AID trafficLightId = AgentSearchUtilities.findTrafficLight(myAgent, movementInfo.getNextCrossroadsLocation());
 			
