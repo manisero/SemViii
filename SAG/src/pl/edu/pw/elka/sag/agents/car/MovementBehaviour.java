@@ -52,11 +52,11 @@ public class MovementBehaviour extends TickerBehaviour
 		{
 			car.setStatus(CarStatus.Driving);
 		}
-		else if (step == 3)
+		else if (step == 2)
 		{
 			requestPossibleDirections();
 		}
-		else if (step == 4)
+		else if (step == 3)
 		{
 			if (car.getNextDirection() == Direction.UNKNOWN)
 			{

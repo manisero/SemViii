@@ -23,16 +23,21 @@ public abstract class PriorityRuleBase implements IPriorityRule
 	
 	protected boolean isAcross(Car car, Car otherCar)
 	{
-		return DirectionUtilities.isAcross(car.getDirection(), otherCar.getDirection());
+		return DirectionUtilities.isAcross(car.getDirection(), getOtherCarDirection(otherCar));
 	}
 	
 	protected boolean isOnTheRight(Car car, Car otherCar)
 	{
-		return DirectionUtilities.isOnTheRight(car.getDirection(), otherCar.getDirection());
+		return DirectionUtilities.isOnTheRight(car.getDirection(), getOtherCarDirection(otherCar));
 	}
 	
 	protected boolean isOnTheLeft(Car car, Car otherCar)
 	{
-		return DirectionUtilities.isOnTheLeft(car.getDirection(), otherCar.getDirection());
+		return DirectionUtilities.isOnTheLeft(car.getDirection(), getOtherCarDirection(otherCar));
+	}
+	
+	private Direction getOtherCarDirection(Car otherCar)
+	{
+		return otherCar.getStatus() != CarStatus.OnCrossroads ? otherCar.getDirection() : otherCar.getPreviousDirection();
 	}
 }
