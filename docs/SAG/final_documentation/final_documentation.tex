@@ -250,4 +250,27 @@ W~celu uruchomienia agentów należy podać właściwe im parametry startowe. W~
     \label{tab:parameters}
 \end{table}
 
+\section{Graficzny interfejs użytkownika}
+
+Dwóch spośród wszystkich agentów zaimplementowanych w~symulatorze posiada dedykowany interfejs graficzny, który ułatwia korzystanie z~systemu:
+
+\begin{description}
+    \item[Mapa] Prezentuje stan agentów z~perspektywy rzutu prostopadłego z~nad miasta. Przykładowy widok interfejsu przedstawiony jest na rysunku \ref{img:map}. Różnokolorowe kropki znajdujące się na jezdni symbolizują samochody. Każdy samochód porusza się po odpowiednim pasie ruchu\footnote{W~przykładzie prezentowany jest ruch prawostronny, co oznacza, że samochody pomarańczowy oraz niebieski poruszają się w~kierunku północnym, natomiast biały i~czerwony - południowym.}. Sygnalizatory świetlne przedstawione są jako kropki ustawione tuż przed skrzyżowaniem, po stronie naturalnej dla wybranego typu ruchu\footnote{W~przypadku ruchu prawostronnego po prawej stronie jezdni, w~ruchu lewostronnym - po lewej.}. Oznacza to, że dla przedstawionej na rysunku sytuacji (ruch prawostronny) pomarańczowy samochód ma zielone światło. Mapa przedstawia wierne odwzorowanie stanu obiektów, utworzone na podstawie informacji zwrotnej otrzymanej od tych obiektów. Oznacza to skokowy, proporcjonalny do ustawionej przez parametry startowe prędkości, ruch każdego pojazdu.
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.95\textwidth]{gui_map.png}
+    \caption{Graficzny interfejs użytkownika - widok mapy.}
+    \label{img:map}
+\end{figure}
+
+    \item[Kodeks ruchu drogowego] Posiada prosty interfejs graficzny, na który składa się formularz posiadający jedno pole - rozwijaną listę dostępnych w~symulacji kodeksów ruchu drogowego. Umożliwia przełączanie pomiędzy kodeksami w~czasie działania programu. Wygląd formularza przedstawia rysunek \ref{img:highway_code_selector}.
+\end{description}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics{gui_highway_code_selector.png}
+    \caption{Graficzny interfejs użytkownika - wybór kodeksu ruchu drogowego.}
+    \label{img:highway_code_selector}
+\end{figure}
+
 \end{document}
