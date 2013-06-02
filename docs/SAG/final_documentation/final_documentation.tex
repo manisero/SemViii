@@ -127,6 +127,7 @@ Tabela \ref{tab:concepts} przedstawia koncepcje zdefiniowane w~ontologii ruchu d
 \end{table}
 
 \subsection{Predykaty}
+\label{sec:predicates}
 
 Samochody komunikują się z~innymi agentami głównie przy użyciu predykatów. Tabela \ref{tab:predicates} przedstawia zdefiniowane w~ontologii miasta predykaty.
 
@@ -187,5 +188,13 @@ W~dziedzinie predykatów, algorytm przejeżdżania przez skrzyżowanie można pr
             \item Jeżeli chociaż jeden z~predykatów jest prawdziwy, oczekuj na przejechanie samochodu przez skrzyżowanie, a~następnie powtórz algorytm od punktu 4.
         \end{enumerate}
 \end{enumerate}
+
+\section{Protokół}
+
+Wykorzystywany w~symulacji ruchu ulicznego protokół został przybliżony razem z~algorytmem opartym na predykatach w~sekcji \ref{sec:predicates}. Na następnej stronie przedstawiony jest jego większy fragment, który jest inicjowany ze strony samochodu przed wjazdem na skrzyżowanie.
+
+
+
+\includepdf{protocol.pdf}
 
 \end{document}
