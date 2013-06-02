@@ -43,6 +43,26 @@ Projekt obejmuje również przygotowanie graficznego interfejsu użytkownika, kt
 
 Projekt został zaimplementowany na platformie JADE\footnote{Java Agent DEvelopment Framework - \href{http://jade.tilab.org}{jade.tilab.org}.}. Interfejs graficzny został stworzony z~użyciem natywnych bibliotek języka Java (AWT oraz Swing). Implementacja tworzona była w~środowisku Eclipse i~testowana w~systemie operacyjnym Windows 7 64-bit.
 
+\section{Agenci}
+
+W~systemie zdefiniowanych jest pięć typów agentów:
+
+\begin{description}
+    \item[Miasto] określa rozmiar (w~przecznicach) siatki miasta. Posiada zachowania umożliwiające sprawdzanie, w~których kierunkach można przemierzyć skrzyżowanie w~określonej lokalizacji. Zakłada się, że w~jednym systemie symulacji występuje wyłącznie jeden agent miasta.
+    \item[Kodeks ruchu drogowego] określa następujące przepisy ruchu:
+        \begin{itemize}
+            \item stronę jezdni, którą poruszają się samochody,
+            \item pierwszeństwo samochodu w~zależności od jego typu,
+            \item kolor sygnalizacji świetlnej oznaczający, że można wjechać na skrzyżowanie,
+            \item wzajemne pierwszeństwo samochodów w~sytuacji, gdy na skrzyżowaniu nie ma sygnalizacji świetlnej.
+        \end{itemize}
+        
+        Zakłada się, że w~jednym systemie symulacji występuje wyłącznie jeden agent kodeksu ruchu drogowego.
+    \item[Samochód] agent poruszający się po mieście. Posiada własną funkcję celu, która zmienia się wraz z~upływem czasu. Komunikuje się z~miastem, kodeksem ruchu drogowego, sygnalizatorami świetlnymi oraz innymi samochodami. Autonomicznie decyduje o~swoim zachowaniu, to znaczy, że powinien (ale nie musi) respektować przepisy ruchu drogowego zdefiniowane w~kodeksie. Porusza się w~dziedzinie dyskretnej (skokowo), lecz w~sposób płynny (wielostopniowe przejeżdżanie przez przecznicę). Występowanie agenta jest opcjonalne, dowolna jest liczba jego instancji w~jednym systemie.
+    \item[Sygnalizator świetlny] steruje ruchem na skrzyżowaniu. Posiada dwa stany opisujące aktualny kolor (czerwony lub zielony), które ulegają cyklicznej zmianie. Reprezentuje grupę sygnalizatorów dla danego skrzyżowania (od dwóch do czterech, w~zależności od liczby przecinających się na skrzyżowaniu jezdni). Występowanie agenta jest opcjonalne, dowolna jest liczba jego instancji w~jednym systemie.
+    \item[Mapa miasta] odwzorowywuje, rzutem z~góry, stan miasta w~danej chwili czasu. Komunikuje się z~samochodami oraz sygnalizatorami świetlnymi, odpytując cyklicznie stan agentów. Występowanie agenta jest opcjonalne, dowolna jest liczba jego instancji w~jednym systemie.
+\end{description}
+
 \section{Ontologia}
 
 Wykorzystanie ontologii umożliwiło opisanie zmiennych zasad ruchu drogowego, do których stosują się samochody. Ontologia jest wykorzystywana głównie przez trzy typy agentów:
