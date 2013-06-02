@@ -6,13 +6,21 @@ public class CheckCarPriorityAction
 {
 	public boolean execute(Car car, Car otherCar)
 	{
-		if (otherCar.getStatus() == CarStatus.OnCrossroads)
-		{
-			return false;
-		}
-		
 		Direction carDirection = car.getDirection();
-		Direction otherCarDirection = otherCar.getDirection();
+		Direction otherCarDirection;
+		
+		if (otherCar.getStatus() == CarStatus.NearCrossroads)
+		{
+			otherCarDirection = otherCar.getDirection();
+		}
+		else if (otherCar.getStatus() == CarStatus.OnCrossroads)
+		{
+			otherCarDirection = otherCar.getPreviousDirection();
+		}
+		else
+		{
+			return true;
+		}
 		
 		if (carDirection == Direction.NORTH && otherCarDirection == Direction.WEST ||
 			carDirection == Direction.WEST && otherCarDirection == Direction.SOUTH ||

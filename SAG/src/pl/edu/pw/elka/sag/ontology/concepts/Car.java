@@ -11,6 +11,7 @@ public class Car implements Concept
 	private int speed;
 	private Location location;
 	private Direction direction;
+	private Direction previousDirection;
 	private Direction nextDirection;
 	private CarStatus status;
 	private CarType type;
@@ -67,6 +68,16 @@ public class Car implements Concept
 		this.direction = direction;;
 	}
 	
+	public Direction getPreviousDirection()
+	{
+		return previousDirection;
+	}
+
+	public void setPreviousDirection(Direction previousDirection)
+	{
+		this.previousDirection = previousDirection;
+	}
+
 	public Direction getNextDirection()
 	{
 		return nextDirection;

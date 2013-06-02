@@ -34,6 +34,7 @@ public class MovementBehaviour extends TickerBehaviour
 		
 		if (step == 0)
 		{
+			car.setPreviousDirection(car.getDirection());
 			car.setDirection(car.getNextDirection());
 			car.setNextDirection(Direction.UNKNOWN);
 			
@@ -44,6 +45,8 @@ public class MovementBehaviour extends TickerBehaviour
 			movementInfo.setOtherCarsChecked(0);
 			movementInfo.setHasPriority(true);
 			movementInfo.setHasTypePriority(false);
+			
+			car.setStatus(CarStatus.OnCrossroads);
 		}
 		else if (step == 1)
 		{
@@ -106,8 +109,6 @@ public class MovementBehaviour extends TickerBehaviour
 					return;
 				}
 			}
-			
-			car.setStatus(CarStatus.OnCrossroads);
 		}
 		
 		new MoveCarAction().execute(car);
