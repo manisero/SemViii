@@ -193,7 +193,14 @@ W~dziedzinie predykatów, algorytm przejeżdżania przez skrzyżowanie można pr
 
 Wykorzystywany w~symulacji ruchu ulicznego protokół został przybliżony razem z~algorytmem opartym na predykatach w~sekcji \ref{sec:predicates}. Na następnej stronie przedstawiony jest jego większy fragment, który jest inicjowany ze strony samochodu przed wjazdem na skrzyżowanie.
 
+Protokół jest w~całości oparty na ontologii. Komunikacja polega na przesyłaniu komunikatów w~postaci predykatów i~oczekiwaniu na odpowiedź. Na diagramie widoczne są dwa różne scenariusze wymiany informacji:
 
+\begin{itemize}
+    \item Przesłanie wypełnionego predykatu z~akcją \verb+QUERY_IF+. Oczekujemy na odpowiedź typu \verb+INFORM_IF+, która zawiera wartość logiczną, będącą odpowiedzią na pytanie czy dany predykat jest prawdziwy, czy też nie. Scenariusz ten wykorzystywany jest przy odpytywaniu kodeksu drogowego o~reguły dotyczące pierwszeństwa, wynikające z~typu samochodu, statusu sygnalizacji świetlnej lub względnej pozycji dwóch samochodów.
+    \item Przesłanie częściowo wypełnionego predykatu, z~określonym polem zmiennej, z~akcją \verb+QUERY_REF+. Oczekujemy na odpowiedź, która zawiera predykat (lub listę predykatów) spełniający warunek zadany przez częściowo wypełnioną informację. Oczekiwana odpowiedź jest typu \verb+INFORM_REF+.
+\end{itemize}
+
+Diagram nie uwzględnia komunikacji pomiędzy mapą oraz innymi agentami (odpytywanie o~stan), a~także fragmentu komunikacji pomiędzy samochodem i~kodeksem ruchu drogowego dotyczącej informacji, którą stroną ulicy powinien poruszać się pojazd.
 
 \includepdf{protocol.pdf}
 
