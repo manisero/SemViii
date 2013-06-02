@@ -34,6 +34,7 @@ public class MovementBehaviour extends TickerBehaviour
 		
 		if (step == 0)
 		{
+			car.setPreviousDirection(car.getDirection());
 			car.setDirection(car.getNextDirection());
 			car.setNextDirection(Direction.UNKNOWN);
 			
@@ -44,16 +45,18 @@ public class MovementBehaviour extends TickerBehaviour
 			movementInfo.setOtherCarsChecked(0);
 			movementInfo.setHasPriority(true);
 			movementInfo.setHasTypePriority(false);
+			
+			car.setStatus(CarStatus.OnCrossroads);
 		}
 		else if (step == 1)
 		{
 			car.setStatus(CarStatus.Driving);
 		}
-		else if (step == 4)
+		else if (step == 2)
 		{
 			requestPossibleDirections();
 		}
-		else if (step == 5)
+		else if (step == 3)
 		{
 			if (car.getNextDirection() == Direction.UNKNOWN)
 			{
@@ -62,7 +65,7 @@ public class MovementBehaviour extends TickerBehaviour
 			
 			car.setStatus(CarStatus.NearCrossroads);			
 		}
-		else if (step == 6)
+		else if (step == 7)
 		{
 			AID trafficLightId = AgentSearchUtilities.findTrafficLight(myAgent, movementInfo.getNextCrossroadsLocation());
 			
@@ -106,8 +109,6 @@ public class MovementBehaviour extends TickerBehaviour
 					return;
 				}
 			}
-			
-			car.setStatus(CarStatus.OnCrossroads);
 		}
 		
 		new MoveCarAction().execute(car);
