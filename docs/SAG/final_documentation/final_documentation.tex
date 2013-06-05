@@ -56,7 +56,7 @@ W~systemie zdefiniowanych jest pięć typów agentów:
             \item kolor sygnalizacji świetlnej oznaczający, że można wjechać na skrzyżowanie,
             \item wzajemne pierwszeństwo samochodów w~sytuacji, gdy na skrzyżowaniu nie ma sygnalizacji świetlnej.
         \end{itemize}
-        
+
         Zakłada się, że w~jednym systemie symulacji występuje wyłącznie jeden agent kodeksu ruchu drogowego.
     \item[Samochód] agent poruszający się po mieście. Posiada własną funkcję celu, która zmienia się wraz z~upływem czasu. Komunikuje się z~miastem, kodeksem ruchu drogowego, sygnalizatorami świetlnymi oraz innymi samochodami. Autonomicznie decyduje o~swoim zachowaniu, to znaczy, że powinien (ale nie musi) respektować przepisy ruchu drogowego zdefiniowane w~kodeksie. Porusza się w~dziedzinie dyskretnej (skokowo), lecz w~sposób płynny (wielostopniowe przejeżdżanie przez przecznicę). Występowanie agenta jest opcjonalne, dowolna jest liczba jego instancji w~jednym systemie.
     \item[Sygnalizator świetlny] steruje ruchem na skrzyżowaniu. Posiada dwa stany opisujące aktualny kolor (czerwony lub zielony), które ulegają cyklicznej zmianie. Reprezentuje grupę sygnalizatorów dla danego skrzyżowania (od dwóch do czterech, w~zależności od liczby przecinających się na skrzyżowaniu jezdni). Występowanie agenta jest opcjonalne, dowolna jest liczba jego instancji w~jednym systemie.
@@ -147,12 +147,12 @@ Samochody komunikują się z~innymi agentami głównie przy użyciu predykatów.
         Czy można & \multirow{2}{*}{Kolor światła} & \multirow{2}{*}{Integer} & $0$ (czerwone), \\
         przejechać? &&& $1$ (zielone) \\
         \hline
-        Czy ma & \multirow{2}{*}{Samochód} & \multirow{2}{*}{Samochód} & - \\
-        pierwszeństwo? &&& \\
+        Czy jest & \multirow{2}{*}{Samochód} & \multirow{2}{*}{Samochód} & - \\
+        uprzywilejowany? &&& \\
         \hline
-        Czy ma & Pozycja 1 & Pozycja & - \\
+        Czy ma & Samochód 1 & Samochód & - \\
         \cline{2-4}
-        pierwszeństwo? & Pozycja 2 & Pozycja & \\
+        pierwszeństwo? & Samochód 2 & Samochód & \\
         \hline
         Czy jeździ & \multirow{2}{*}{Strona} & \multirow{2}{*}{Integer} & $0$ (lewa), \\
         po stronie? &&& $1$ (prawa) \\
@@ -168,21 +168,21 @@ W~dziedzinie predykatów, algorytm przejeżdżania przez skrzyżowanie można pr
 \begin{enumerate}
     \item Sprawdź, w~jakich kierunkach można pokonać skrzyżowanie. Prześlij do miasta predykat ,,czy można skręcić?'' z~niewiadomą typu kierunek, wypełniając jednocześnie pozycję skrzyżowania, przez które chcesz przejechać. Oczekuj na listę predykatów, które spełniają zadany warunek.
     \item Sprawdź, czy Twój samochód posiada bezwzględne pierwszeństwo. Prześlij do kodeksu ruchu drogowego predykat ,,czy ma pierwszeństwo?'' z~pojedynczym parametrem i~oczekuj na potwierdzenie jego prawdziwości.
-        
+
         \begin{enumerate}
             \item Jeżeli predykat jest prawdziwy, wjedź na skrzyżowanie i~zakończ algorytm.
             \item Jeżeli predykat nie jest prawdziwy, kontynuuj algorytm.
         \end{enumerate}
-        
+
     \item Sprawdź, czy na skrzyżowaniu znajdują się światła. Jeżeli nie, kontynuuj algorytm od kolejnego punktu. Jeżeli tak, sprawdź kolor świateł i~wyślij do kodeksu ruchu drogowego predykat ,,czy można przejechać?'' uzupełniony kolorem światła. Oczekuj na potwierdzenie spełnienia predykatu.
-        
+
         \begin{enumerate}
             \item Jeżeli predykat jest prawdziwy, wjedź na skrzyżowanie i~zakończ algorytm.
             \item Jeżeli predykat nie jest prawdziwy, kontynuuj algorytm.
         \end{enumerate}
-        
+
     \item Sprawdź, czy w~pobliżu skrzyżowania znajdują się inne samochody. Jeżeli nie, wjedź na skrzyżowanie i~zakończ algorytm. Jeżeli tak, dla każdego samochodu wypełnij predykat ,,czy ma pierwszeństwo?'' z~dwoma parametrami i~oczekuj na potwierdzenie jego prawdziwości.
-        
+
         \begin{enumerate}
             \item Jeżeli wszystkie predykaty są fałszywe, wjedź na skrzyżowanie i~zakończ algorytm.
             \item Jeżeli chociaż jeden z~predykatów jest prawdziwy, oczekuj na przejechanie samochodu przez skrzyżowanie, a~następnie powtórz algorytm od punktu 4.
@@ -275,4 +275,4 @@ Dwóch spośród wszystkich agentów zaimplementowanych w~symulatorze posiada de
     \label{img:highway_code_selector}
 \end{figure}
 
-\end{document}
+\end{document} 
