@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using MBI.Logic.Entities;
 using MBI.Logic.Extensions;
 using MBI.Logic.Infrastructure;
@@ -15,7 +16,7 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			_settingsProvider = settingsProvider;
 		}
 
-		public Scaffold Build(Contig[] contigs, PairedEndTag[] pairedEndTags)
+		public Scaffold Build(Contig[] contigs, PairedEndTag[] pairedEndTags, CancellationToken cancellationToken)
 		{
 			var result = new Scaffold();
 			contigs.ForEach(result.Pieces.Add);
@@ -51,6 +52,8 @@ namespace MBI.Logic.DNAAssemblance._Impl
 				{
 					result.Rank += RankNotPairedPetPart(contigs, pet);
 				}
+
+				cancellationToken.ThrowIfCancellationRequested();
 			}
 
 			return result;

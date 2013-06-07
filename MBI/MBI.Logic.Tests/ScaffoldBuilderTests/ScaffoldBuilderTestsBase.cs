@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using MBI.Logic.DNAAssemblance._Impl;
 using MBI.Logic.Entities;
 using MBI.Logic.Infrastructure;
@@ -31,7 +32,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 		protected void TestRank(IEnumerable<string> contigs, PairedEndTag[] pets, int expectedRank)
 		{
 			// Act
-			var result = _scaffoldBuilder.Build(contigs.Select(x => new Contig(x)).ToArray(), pets);
+			var result = _scaffoldBuilder.Build(contigs.Select(x => new Contig(x)).ToArray(), pets, new CancellationToken());
 
 			// Assert
 			Assert.IsNotNull(result);
@@ -41,7 +42,7 @@ namespace MBI.Logic.Tests.ScaffoldBuilderTests
 		protected void TestBuild(Scaffold expectedScaffold, params PairedEndTag[] pets)
 		{
 			// Act
-			var result = _scaffoldBuilder.Build(expectedScaffold.Pieces.OfType<Contig>().ToArray(), pets);
+			var result = _scaffoldBuilder.Build(expectedScaffold.Pieces.OfType<Contig>().ToArray(), pets, new CancellationToken());
 
 			// Assert
 			Assert.IsNotNull(result);
