@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using MBI.Logic.Entities;
 using System.Linq;
 using MBI.Logic.Extensions;
@@ -7,9 +8,11 @@ namespace MBI.Logic.DNAAssemblance._Impl
 {
 	public class ContigsFilter : IContigsFilter
 	{
-		public IEnumerable<IList<Contig>> Filter(IList<Contig> contigs, IEnumerable<PairedEndTag> pairedEndTags)
+		public IEnumerable<IList<Contig>> Filter(IList<Contig> contigs, IEnumerable<PairedEndTag> pairedEndTags, CancellationToken cancellationToken)
 		{
 			var permutations = contigs.GetPermutations();
+
+			cancellationToken.ThrowIfCancellationRequested();
 
 			foreach (var pairedEndTag in pairedEndTags)
 			{
@@ -35,6 +38,8 @@ namespace MBI.Logic.DNAAssemblance._Impl
 					{
 						result.Add(combination);
 					}
+
+					cancellationToken.ThrowIfCancellationRequested();
 				}
 
 				return result;

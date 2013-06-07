@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using MBI.Logic.DNAAssemblance._Impl;
 using MBI.Logic.Entities;
 using MBI.Logic.Tests.Extensions;
@@ -26,7 +27,7 @@ namespace MBI.Logic.Tests
 			                         	};
 
 			// Act
-			var result = new ContigsFilter().Filter(new[] { contig1, contig2, contig3 }, pairedEndTags);
+			var result = new ContigsFilter().Filter(new[] { contig1, contig2, contig3 }, pairedEndTags, new CancellationToken());
 
 			// Assert
 			Assert.IsNotNull(result);
@@ -55,7 +56,7 @@ namespace MBI.Logic.Tests
 			                         	};
 
 			// Act
-			var result = new ContigsFilter().Filter(new[] { contig1, contig2, contig3 }, pairedEndTags);
+			var result = new ContigsFilter().Filter(new[] { contig1, contig2, contig3 }, pairedEndTags, new CancellationToken());
 
 			// Assert
 			Assert.IsNotNull(result);
@@ -81,7 +82,7 @@ namespace MBI.Logic.Tests
 			                         	};
 
 			// Act
-			var result = new ContigsFilter().Filter(new[] { contig1, contig2 }, pairedEndTags);
+			var result = new ContigsFilter().Filter(new[] { contig1, contig2 }, pairedEndTags, new CancellationToken());
 
 			// Assert
 			Assert.IsNotNull(result);

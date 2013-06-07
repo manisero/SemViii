@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using MBI.Logic.DNAAssemblance;
 using MBI.Logic.DNAAssemblance._Impl;
 using MBI.Logic.Entities;
 using System.Linq;
+using MBI.Logic.Infrastructure;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -37,13 +39,15 @@ namespace MBI.Logic.Tests
 			var scaffold_accepted = new Scaffold { Rank = 10 };
 			var scaffold_rejected = new Scaffold { Rank = 0 };
 
-			_contigsFilterMock.Expect(x => x.Filter(initialContigs, pairedEndTags)).Return(new[] { contigs_accepted, contigs_rejected });
+			var cancellationToken = new CancellationToken();
 
-			_scaffoldBuilderMock.Expect(x => x.Build(contigs_accepted, pairedEndTags)).Return(scaffold_accepted);
-			_scaffoldBuilderMock.Expect(x => x.Build(contigs_rejected, pairedEndTags)).Return(scaffold_rejected);
+			_contigsFilterMock.Expect(x => x.Filter(initialContigs, pairedEndTags, cancellationToken)).Return(new[] { contigs_accepted, contigs_rejected });
+
+			_scaffoldBuilderMock.Expect(x => x.Build(contigs_accepted, pairedEndTags, cancellationToken)).Return(scaffold_accepted);
+			_scaffoldBuilderMock.Expect(x => x.Build(contigs_rejected, pairedEndTags, cancellationToken)).Return(scaffold_rejected);
 
 			// Act
-			var result = _dnaAssembler.Assemble(initialContigs, pairedEndTags).ToList();
+			var result = _dnaAssembler.Assemble(initialContigs, pairedEndTags, new ProgressIndication(null), cancellationToken).ToList();
 
 			// Assert
 			Assert.IsNotNull(result);
@@ -70,14 +74,15 @@ namespace MBI.Logic.Tests
 			var scaffold2 = new Scaffold { Rank = 2 };
 			var scaffold3 = new Scaffold { Rank = 1 };
 
-			_contigsFilterMock.Expect(x => x.Filter(contigs, pairedEndTags)).Return(new[] { assembly1, assembly2, assembly3 });
+			var cancellationToken = new CancellationToken();
+			_contigsFilterMock.Expect(x => x.Filter(contigs, pairedEndTags, cancellationToken)).Return(new[] { assembly1, assembly2, assembly3 });
 
-			_scaffoldBuilderMock.Expect(x => x.Build(assembly1, pairedEndTags)).Return(scaffold1);
-			_scaffoldBuilderMock.Expect(x => x.Build(assembly2, pairedEndTags)).Return(scaffold2);
-			_scaffoldBuilderMock.Expect(x => x.Build(assembly3, pairedEndTags)).Return(scaffold3);
+			_scaffoldBuilderMock.Expect(x => x.Build(assembly1, pairedEndTags, cancellationToken)).Return(scaffold1);
+			_scaffoldBuilderMock.Expect(x => x.Build(assembly2, pairedEndTags, cancellationToken)).Return(scaffold2);
+			_scaffoldBuilderMock.Expect(x => x.Build(assembly3, pairedEndTags, cancellationToken)).Return(scaffold3);
 			
 			// Act
-			var result = _dnaAssembler.Assemble(contigs, pairedEndTags);
+			var result = _dnaAssembler.Assemble(contigs, pairedEndTags, new ProgressIndication(null), cancellationToken);
 
 			// Assert
 			Assert.IsNotNull(result);

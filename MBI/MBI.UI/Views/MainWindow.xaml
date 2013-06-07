@@ -11,7 +11,11 @@
 			<Label Content="Input file:" />
 			<Label Content="{Binding InputFileName}" />
 		</DockPanel>
-		<Button Content="Assemble" Command="{Binding Assemble}" Width="100" HorizontalAlignment="Left" />
+		<DockPanel>
+			<Button Content="Assemble" Command="{Binding Assemble}" Width="100" HorizontalAlignment="Left" />
+			<Label Content="{Binding Progress}" />
+			<Button Content="Cancel" Command="{Binding Cancel}" Width="80" Margin="20,0,0,0" HorizontalAlignment="Left" />
+		</DockPanel>
 		<DockPanel>
 			<Label Content="Output file:" />
 			<Label Content="{Binding OutputFileName}" />

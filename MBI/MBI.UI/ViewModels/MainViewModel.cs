@@ -1,8 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
+using System.IO;
+using System.Threading;
 using System.Windows.Input;
 using MBI.Logic.DNAAssemblance;
 using MBI.Logic.Entities;
+using MBI.Logic.Infrastructure;
 using MBI.Logic.Serialization;
 using MBI.UI.Commands;
 using Microsoft.Win32;
@@ -20,6 +22,13 @@ namespace MBI.UI.ViewModels
 
 		#endregion
 
+		#region Fields
+
+		private ProgressIndication _progressIndication;
+		private CancellationTokenSource _cancellationTokenSource;
+
+		#endregion
+
 		#region Properties
 
 		public ICommand ChooseFile
@@ -30,6 +39,11 @@ namespace MBI.UI.ViewModels
 		public ICommand Assemble
 		{
 			get { return new Command(ExecuteAssemblance); }
+		}
+
+		public ICommand Cancel
+		{
+			get { return new Command(CancelAssemblance); }
 		}
 
 		private string _inputFileName;
@@ -52,6 +66,11 @@ namespace MBI.UI.ViewModels
 				_outputFileName = value;
 				NotifyPropertyChanged("OutputFileName");
 			}
+		}
+
+		public string Progress
+		{
+			get { return _progressIndication != null ? string.Format("{0}%", (_progressIndication.Progress * 100.0).ToString("F")) : string.Empty; }
 		}
 
 		private string _errorMessage;
@@ -105,20 +124,63 @@ namespace MBI.UI.ViewModels
 		{
 			try
 			{
-				var scaffolds = _dnaAssembler.Assemble(Assembly.Contigs, Assembly.PairedEndTags);
+				if (Assembly == null)
+				{
+					throw new InvalidOperationException("No input file specified");
+				}
 
 				var dialog = new SaveFileDialog();
 				dialog.ShowDialog();
 
-				if (!string.IsNullOrEmpty(dialog.FileName))
+				if (string.IsNullOrEmpty(dialog.FileName))
 				{
-					_scaffoldSerializer.Serialize(scaffolds.First(), dialog.OpenFile());
-					OutputFileName = dialog.SafeFileName;
+					throw new IOException("Please choose output file");
 				}
+
+				if (_cancellationTokenSource != null)
+				{
+					_cancellationTokenSource.Dispose();
+				}
+
+				_progressIndication = new ProgressIndication(() => NotifyPropertyChanged("Progress"));
+				_cancellationTokenSource = new CancellationTokenSource();
+
+				new Thread(() => Assemblee(dialog.OpenFile(), dialog.SafeFileName, _progressIndication, _cancellationTokenSource.Token)).Start();
 			}
 			catch (Exception exception)
 			{
 				ErrorMessage = exception.Message;
+			}
+		}
+
+		private void Assemblee(Stream outputFileStream, string outputFileName, ProgressIndication progressIndication, CancellationToken cancellationToken)
+		{
+			try
+			{
+				var scaffolds = _dnaAssembler.Assemble(Assembly.Contigs, Assembly.PairedEndTags, progressIndication, cancellationToken);
+				_scaffoldSerializer.Serialize(scaffolds.First(), outputFileStream);
+
+				OutputFileName = outputFileName;
+			}
+			catch (OperationCanceledException)
+			{
+				ErrorMessage = "Operation cancelled";
+			}
+			catch (Exception exception)
+			{
+				ErrorMessage = exception.Message;
+			}
+		}
+
+		private void CancelAssemblance()
+		{
+			if (_cancellationTokenSource != null)
+			{
+				_cancellationTokenSource.Cancel();
+			}
+			else
+			{
+				ErrorMessage = "No operation in progress";
 			}
 		}
 

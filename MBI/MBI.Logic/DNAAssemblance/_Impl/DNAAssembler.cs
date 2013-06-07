@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using MBI.Logic.Entities;
 using System.Linq;
+using MBI.Logic.Infrastructure;
 
 namespace MBI.Logic.DNAAssemblance._Impl
 {
@@ -15,18 +17,22 @@ namespace MBI.Logic.DNAAssemblance._Impl
 			_scaffoldBuilder = scaffoldBuilder;
 		}
 
-		public IList<Scaffold> Assemble(Contig[] contigs, PairedEndTag[] pairedEndTags)
+		public IList<Scaffold> Assemble(Contig[] contigs, PairedEndTag[] pairedEndTags, ProgressIndication progressIndication, CancellationToken cancellationToken)
 		{
 			var result = new List<Scaffold>();
+			var combinations = _contigsFilter.Filter(contigs, pairedEndTags, cancellationToken).ToList();
 
-			foreach (var permutation in _contigsFilter.Filter(contigs, pairedEndTags))
+			for (int i = 0; i != combinations.Count; i++)
 			{
-				var scaffold = _scaffoldBuilder.Build(permutation.ToArray(), pairedEndTags);
+				var scaffold = _scaffoldBuilder.Build(combinations[i].ToArray(), pairedEndTags, cancellationToken);
 
 				if (scaffold.Rank > 0)
 				{
 					result.Add(scaffold);
 				}
+
+				progressIndication.Progress = (double)(i + 1) / combinations.Count;
+				cancellationToken.ThrowIfCancellationRequested();
 			}
 
 			return result.OrderByDescending(x => x.Rank).ToList();
