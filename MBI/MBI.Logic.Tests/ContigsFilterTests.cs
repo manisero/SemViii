@@ -3,7 +3,6 @@ using MBI.Logic.DNAAssemblance._Impl;
 using MBI.Logic.Entities;
 using MBI.Logic.Tests.Extensions;
 using NUnit.Framework;
-using System.Linq;
 
 namespace MBI.Logic.Tests
 {
