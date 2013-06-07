@@ -131,9 +131,17 @@ Program wykonany w ramach projektu tworzony był z wykorzystaniem metodyki Test 
  \item obliczanie rankingu \emph{R} \emph{scaffoldu} (krok \ref{step3_5}),
  \item odrzucenie \emph{scaffoldów} o zerowej wartości rankingu \emph{R} (krok \ref{step3}),
  \item sortowanie \emph{scaffoldów} według wartości rankingu \emph{R} (krok \ref{step4}).
- 
-Ponadto dokonano wielokrotnych ``ręcznych'' testów z wykorzystaniem przygotowanych danych wejściowych. Wynik wszystkich testów był pozytywny.
- 
 \end{itemize}
+
+Ponadto dokonano wielokrotnych ``ręcznych'' testów z wykorzystaniem przygotowanych danych wejściowych. Wynik wszystkich testów był pozytywny.
+
+\section*{Wnioski}
+
+Proces budowania poprawnego \emph{scaffoldu} wydaje się być prostą i wydajną sekwencją operacji na ciągach znaków.
+Biorąc jendak pod uwagę ilość kombinacji, które należy sprawdzić ($n!$, gdzie $n$ to liczność zadanego zbioru \emph{contigów}), nie dziwi fakt, że algorytmy tego typu
+są wymagające zarówno pamięciowo jak i obliczeniowo.
+
+Potencjalnym usprawnieniem działania algorytmu może być zastosowanie lepszej heurystyki podczas wstępnego filtrowania kombinacji \emph{contigów}.
+Obecna implementacja odrzuca tylko około połowę kombinacji, co dla zestawu dziesięciu \emph{conitgów} pozostawia do dalszego przetworzenia ok. 1,8 mln kombinacji.
 
 \end{document}
