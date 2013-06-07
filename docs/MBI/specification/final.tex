@@ -40,8 +40,8 @@ Do rozwiązania zadania użyty został algorytm typu brute-force działający na
 Algorytm przebiega według następującego schematu:
 
 \begin{enumerate}
- \item Wyznaczane są wszystkie permutacje zadanego zbioru \emph{contigów}.
- \item Permutacjie zostają wstępnie sprawdzone:
+ \item \label{step1} Wyznaczane są wszystkie permutacje zadanego zbioru \emph{contigów}.
+ \item \label{step2} Permutacje zostają wstępnie sprawdzone:
   \begin{itemize}
    \item następuje próba znalezienia sekwecji PET, której początek i koniec w całości zawiera się w dowolnej parze \emph{contigów}:
     \begin{itemize}
@@ -53,19 +53,19 @@ Algorytm przebiega według następującego schematu:
      \item w przeciwnym wypadku, permutacja zostaje odrzucona.
     \end{itemize}
   \end{itemize}
- \item Na podstawie każdej z zaakceptowanych permutacji budowany jest \emph{scaffold}:
+ \item \label{step3} Na podstawie każdej z zaakceptowanych permutacji budowany jest \emph{scaffold}:
   \begin{itemize}
    \item dla każdej sekwencji PET:
-    \begin{itemize}
-     \item następuje próba znalezienia \emph{contiga} zawierającego (w całości lub częściowo\footnote{Częściowe zawieranie sekwencji PET występuje, gdy \emph{contig} zaczyna się końcem fragmentu (tzn. początku lub końca) danej sekwencji lub kończy początkiem fragmentu tej sekwecji.}) początek sekwencji,
-     \item przeglądane są \emph{contigi} występujące po znalezionym, w celu odnalezienia \emph{contiga} zawierającego koniec sekwecji,
-     \item jeśli odległość pomiędzy znalezioną parą \emph{conitgów} dopuszcza istnienie pomiędzy nimi sekwencji PET, to  pomiędzy te \emph{contigi} wstawiany jest odpowiedniej długości \emph{gap},
-     \item jeśli w którymkolwiek z powyższych kroków nastąpiło niepowodzenie (odpowiedni \emph{conitg} nie został odnaleziony lub sprawdzenie odległości dało wynik negatywny), to wykonywane jest sprawdzenie, czy pierwszy \emph{contig} zawiera koniec sekwecji lub czy ostatni \emph{conitg} zawiera jej  początek - taka sytuacja uznawana jest za poprawną,
-     \item aktualizowany jest ranking \emph{R}, określający liczbę pokrywających się zasad początku lub końca sekwencji PET z odnalezionymi \emph{contigami}.
-    \end{itemize}
+    \begin{enumerate}
+     \item \label{step3_1} następuje próba znalezienia \emph{contiga} zawierającego (w całości lub częściowo\footnote{Częściowe pokrycie sekwencji PET występuje, gdy \emph{contig} zaczyna się końcem fragmentu (tzn. początku lub końca) danej sekwencji lub kończy początkiem fragmentu tej sekwecji. Minimalny akceptowalny stosunek części pokrytej do całości fragmentu określony jest w pliku konfiguracyjnym aplikacji.}) początek sekwencji,
+     \item \label{step3_2} przeglądane są \emph{contigi} występujące po znalezionym, w celu odnalezienia \emph{contiga} zawierającego koniec sekwecji,
+     \item \label{step3_3} jeśli odległość pomiędzy znalezioną parą \emph{conitgów} dopuszcza istnienie pomiędzy nimi sekwencji PET, to  pomiędzy te \emph{contigi} wstawiany jest odpowiedniej długości \emph{gap},
+     \item \label{step3_4} jeśli w którymkolwiek z powyższych kroków nastąpiło niepowodzenie (odpowiedni \emph{conitg} nie został odnaleziony lub sprawdzenie odległości dało wynik negatywny), to wykonywane jest sprawdzenie, czy pierwszy \emph{contig} zawiera koniec sekwecji lub czy ostatni \emph{conitg} zawiera jej  początek - taka sytuacja uznawana jest za poprawną,
+     \item \label{step3_5} aktualizowany jest ranking \emph{R}, określający liczbę pokrywających się zasad początku lub końca sekwencji PET z odnalezionymi \emph{contigami}.
+    \end{enumerate}
    \item jeżeli \emph{R} $> 0$, to dany \emph{scaffold} dodawany jest listy wynikowej algorytmu.
   \end{itemize}
- \item Uzyskana lista \emph{scaffoldów} sortowana jest według malejących wartości \emph{R}.
+ \item \label{step4} Uzyskana lista \emph{scaffoldów} sortowana jest według malejących wartości \emph{R}.
 \end{enumerate}
 
 \section*{Implementacja}
@@ -115,6 +115,25 @@ Dane wyjściowe to uporządkowana sekwencja \emph{contigów} oddzielonych znakam
 \end{itemize}
 
 \section*{Testowanie}
-TODO
+Program wykonany w ramach projektu tworzony był z wykorzystaniem metodyki Test Driven Development\footnote{http://pl.wikipedia.org/wiki/Test-driven\_development}, czego skutkiem jest znaczne pokrycie testami jednostkowymi - testów jest ok. 70. Przetestowane zostały m.in. następujące przypadki:
+\begin{itemize}
+ \item odrzucenie niepoprawnych permutacji \emph{contigów} (patrz krok \ref{step2} algorytmu),
+ \item odnalezienie całkowitego pokrycia fragmentów sekwencji PET przez sąsiadujące \emph{contigi} (kroki \ref{step3_1}, \ref{step3_2}),
+ \item odnalezienie całkowitego pokrycie fragmentów sekwencji PET przez \emph{contigi} oddalone od siebie (kroki \ref{step3_1}, \ref{step3_2}),
+ \item odnalezienie wystąpienia końca fragmentu sekwencji PET w początku \emph{contigu} (krok \ref{step3_1} / \ref{step3_2}),
+ \item odnalezienie wystąpienia początku fragmentu sekwencji PET w końcu \emph{contigu} (krok \ref{step3_1} / \ref{step3_2}),
+ \item odnalezienie całkowitego pokrycia pomimo występującego we wcześniejszym \emph{contigu} pokrycia częściowego (kroki \ref{step3_1} / \ref{step3_2}),
+ \item wstawienie \emph{gapów} pomiędzy dwa \emph{contigi} całkowicie pokrywające fragmenty sekwencji PET (krok \ref{step3_3}),
+ \item wstawienie \emph{gapów} pomiędzy dwa \emph{contigi} częściowo pokrywające fragmenty sekwencji PET (krok \ref{step3_3}),
+ \item weryfikacja odległości pomiędzy \emph{conitgami} (krok \ref{step3_3}),
+ \item odnalezienie niesparowanego końca sekwencji PET w pierszym \emph{contigu} (krok \ref{step3_4}),
+ \item odnalezienie niesparowanego początku sekwencji PET w ostatnim \emph{contigu} (krok \ref{step3_4}),
+ \item obliczanie rankingu \emph{R} \emph{scaffoldu} (krok \ref{step3_5}),
+ \item odrzucenie \emph{scaffoldów} o zerowej wartości rankingu \emph{R} (krok \ref{step3}),
+ \item sortowanie \emph{scaffoldów} według wartości rankingu \emph{R} (krok \ref{step4}).
+ 
+Ponadto dokonano wielokrotnych ``ręcznych'' testów z wykorzystaniem przygotowanych danych wejściowych. Wynik wszystkich testów był pozytywny.
+ 
+\end{itemize}
 
 \end{document}
