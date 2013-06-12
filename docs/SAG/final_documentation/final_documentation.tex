@@ -275,4 +275,23 @@ Dwóch spośród wszystkich agentów zaimplementowanych w~symulatorze posiada de
     \label{img:highway_code_selector}
 \end{figure}
 
+\section{Wnioski}
+
+Wykorzystanie protokołu korzystającego z~ontologii w~środowisku wieloagentowym umożliwiło wierną symulację ruchu drogowego:
+
+\begin{itemize}
+    \item Zebranie zasad komunikacji określonych ściśle w~postaci protokołu pozwoliło na zwiększenie autonomiczności poszczególnych agentów:
+        \begin{itemize}
+            \item Samochody poruszające się w~mieście nie znają jego topologii, co pozwala na wykorzystanie ich również w~innej strukturze miasta.
+            \item Mapa miasta nie przechowuje informacji o~jego stanie. W~dowolnej chwili wiernie odwzorowuje stan innych agentów.
+        \end{itemize}
+    \item Użycie w~protokole spójnej ontologii, opisującej dziedzinę ruchu drogowego, pozwala na:
+        \begin{itemize}
+            \item Realizację kodeksu ruchu drogowego a, jako konsekwencję, dynamiczną zmianę interpretacji przepisów ruchu drogowego w~czasie działania systemu.
+            \item Łatwe dodawanie nieuwzględnionych przepisów ruchu drogowego, poprzez stworzenie nowych predykatów oraz reguł ich ewaluacji. Kolejne predykaty nie interferują z~poprzednio zdefiniowanymi regułami ruchu.
+        \end{itemize}
+\end{itemize}
+
+Ontologia może być w~pełny sposób opisana przy pomocy klas, na które składają się wyłącznie właściwości\footnote{Dla języka Java stosowany jest termin ,,javabeans''.}. W~przypadku wykorzystania agentów osadzonych w~jednolitym środowisku opartym o~obiektowy język programowania (takim jak JADE), wygodnie jest realizować ontologię przy pomocy mechanizmu serializacji obiektów. Redukuje to narzut pracy związany z~konwertowaniem obiektów do zewnętrznego języka opisującego ontologię w~uniwersalnej gramatyce. W~ramach projektu zbadana została możliwość wykorzystania pełnej gramatyki SL\footnote{\href{http://www.fipa.org/specs/fipa00008/SC00008I.html}{FIPA SL Content Language Specification}.}.
+
 \end{document} 
